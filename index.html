@@ -1,412 +1,796 @@
-<!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso Doctoral: Fronteras en Explosivos e Ingeniería de Seguridad contra Incendios</title>
+    <title>Advanced Fire Safety Engineering: A PhD Perspective</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
+        /* CSS Custom Properties - Light Blue Theme (from template) */
+        :root {
+            --bg-color: #f0f9ff; /* Light blue background */
+            --text-color-main: #0369a1; /* Sky blue text */
+            --text-color-header: #0c4a6e; /* Darker blue for headers */
+            --text-color-accent: #075985; /* Accent blue */
+            --text-color-subtle: #0ea5e9; /* Lighter accent blue */
+            --border-color-light: #e0f2fe; /* Very light blue border */
+            --border-color-medium: #bae6fd; /* Medium blue border */
+            --border-color-dark: #7dd3fc; /* Darker blue border */
+            --accent-color: #38bdf8; /* Bright blue accent */
+            --highlight-bg: #e0f2fe; /* Background for highlights */
+            --vis-bg-color: #f8fafc; /* Background for visualizations (slightly off-white) */
+            --vis-border-color: #cbd5e1; /* Border for visualizations (light gray) */
+            --header-grad-from: #0ea5e9; /* Header gradient start */
+            --header-grad-to: #0369a1; /* Header gradient end */
+            --error-color: #ef4444; /* Red for errors/warnings */
+        }
+        /* Smooth scrolling behavior with offset for sticky header+nav */
+        html { scroll-padding-top: 110px; /* Adjust based on actual header+nav height */ }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb; /* Lighter background for academic feel */
-            color: #1f2937; /* Darker text */
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            scroll-behavior: smooth;
+            color: var(--text-color-main);
+            background-color: var(--bg-color);
+            font-size: 1rem; /* Base font size */
+            line-height: 1.7; /* Default line height */
         }
-        /* Revised animation style: subtler */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(20px); /* Reduced distance */
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Faster transition */
-        }
-        .reveal-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* Main title gradient - kept for impact, but consider removing if too distracting */
-        .gradient-text-title {
-            background: linear-gradient(to right, #1d4ed8, #5b21b6, #be185d); /* Adjusted gradient */
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-         /* Subtle gradient for other headers */
-        .gradient-text-header {
-             background: linear-gradient(to right, #1d4ed8, #5b21b6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+        main.container { padding-top: 1rem; padding-bottom: 1rem; } /* Reduced padding */
 
-        /* Section divider - more subtle */
-        .section-divider {
-            height: 1px;
-            background-color: #d1d5db; /* Light gray */
-            margin: 3rem auto;
-            width: 60%;
-            opacity: 0.8;
-        }
+        /* Fade-in animation */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .dynamic-content { animation: fadeIn 0.6s ease-out forwards; }
 
-        /* Hero background - simpler */
-        .hero-bg {
-           background-color: #eef2ff; /* Light indigo background */
-           /* Optional: subtle pattern */
-           /* background-image: url('data:image/svg+xml,...'); */
-        }
+        /* --- Interactive Element Styling --- */
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-color-accent); font-size: 0.9rem; }
+        input[type="range"], select { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color-medium); border-radius: 0.375rem; background-color: white; font-size: 0.9rem; transition: border-color 0.2s ease; }
+        input[type="range"]:focus, select:focus { outline: 2px solid transparent; outline-offset: 2px; border-color: var(--accent-color); box-shadow: 0 0 0 2px var(--highlight-bg); }
+        /* Custom range slider appearance */
+        input[type="range"] { cursor: pointer; accent-color: var(--accent-color); padding: 0; height: 0.5rem; appearance: none; background: var(--border-color-light); border-radius: 9999px; border: 1px solid var(--border-color-medium); }
+        input[type="range"]::-webkit-slider-thumb { appearance: none; width: 1rem; height: 1rem; background: var(--accent-color); border-radius: 50%; cursor: pointer; border: 1px solid var(--text-color-accent); }
+        input[type="range"]::-moz-range-thumb { width: 1rem; height: 1rem; background: var(--accent-color); border-radius: 50%; cursor: pointer; border: 1px solid var(--text-color-accent); }
+        button { background-color: var(--accent-color); color: var(--text-color-header); padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 500; transition: background-color 0.2s ease, transform 0.1s ease; border: none; cursor: pointer; }
+        button:hover { background-color: var(--border-color-dark); }
+        button:active { transform: scale(0.98); }
+        .output-box { background-color: var(--highlight-bg); border: 1px solid var(--border-color-medium); padding: 0.5rem 0.75rem; border-radius: 0.375rem; margin-top: 0.5rem; text-align: center; font-weight: 500; font-size: 0.85rem; color: var(--text-color-accent); min-height: 2.5rem; display: flex; align-items: center; justify-content: center; }
+        .interactive-container { background-color: #ffffff; border: 1px solid var(--border-color-light); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+        .visualization-box { min-height: 250px; background-color: var(--vis-bg-color); border: 1px dashed var(--vis-border-color); border-radius: 0.375rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; margin-top: 1rem; text-align: center; position: relative; overflow: hidden; transition: background-color 0.3s ease; font-size: 0.9rem; }
+        .visualization-box svg { display: block; margin: auto; max-width: 100%; height: auto; }
+        .instructional-text { font-size: 0.875rem; color: var(--text-color-subtle); margin-top: 0.5rem; margin-bottom: 1rem; text-align: center; }
+        .warning-note { font-size: 0.75rem; color: var(--error-color); text-align: center; margin-top: 0.5rem; font-style: italic; }
 
-        /* Interactive slider styles */
-        input[type=range] {
-            -webkit-appearance: none; /* Override default look */
-            appearance: none;
-            width: 100%; /* Full width */
-            height: 8px; /* Specified height */
-            background: #d1d5db; /* Slider track color */
-            border-radius: 5px; /* Rounded track */
-            outline: none; /* Remove outline */
-            opacity: 0.7; /* Slightly transparent */
-            transition: opacity .2s; /* Fade transition on hover */
-        }
-        /* Hover effect for slider track */
-        input[type=range]:hover {
-            opacity: 1;
-        }
-        /* Style for the thumb (the draggable part) - Webkit (Chrome, Safari, Edge) */
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; /* Override default look */
-            appearance: none;
-            width: 20px; /* Thumb width */
-            height: 20px; /* Thumb height */
-            background: #4f46e5; /* Indigo thumb color */
-            border-radius: 50%; /* Circular thumb */
-            cursor: pointer; /* Pointer cursor on hover */
-        }
-        /* Style for the thumb - Mozilla (Firefox) */
-        input[type=range]::-moz-range-thumb {
-            width: 20px; /* Thumb width */
-            height: 20px; /* Thumb height */
-            background: #4f46e5; /* Indigo thumb color */
-            border-radius: 50%; /* Circular thumb */
-            cursor: pointer; /* Pointer cursor on hover */
-            border: none; /* Remove default border in Firefox */
-        }
+        /* --- Table Styling --- */
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; }
+        th, td { border: 1px solid var(--border-color-medium); padding: 0.6rem; text-align: left; vertical-align: top; }
+        th { background-color: var(--highlight-bg); font-weight: 600; color: var(--text-color-accent); position: sticky; top: 110px; /* Needs to match scroll-padding-top */ z-index: 5; }
+        tbody tr:nth-child(odd) { background-color: var(--vis-bg-color); }
+        tbody tr:hover { background-color: var(--highlight-bg); }
 
-        /* Style for interactive output area */
-        .interactive-output {
-            background-color: #f3f4f6; /* Light gray background for output */
-            border-left: 4px solid #4f46e5; /* Indigo accent border */
-            padding: 1rem; /* Padding inside the output box */
-            margin-top: 1rem; /* Space above the output box */
-            border-radius: 4px; /* Slightly rounded corners */
-            font-size: 0.9rem; /* Slightly smaller font for output text */
-            color: #374151; /* Medium gray text color */
-            min-height: 100px; /* Minimum height to prevent collapsing */
-        }
+        /* --- Typography & Content Styling --- */
+        h1, h2, h3, h4 { color: var(--text-color-header); font-weight: 700; line-height: 1.3; }
+        h1 { font-size: 2.25rem; /* Tailwind text-4xl */ }
+        h2 { font-size: 1.75rem; /* Tailwind text-2xl */ border-bottom: 2px solid var(--border-color-dark); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 2rem; }
+        h3 { font-size: 1.3rem; /* ~text-xl */ margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        h4 { font-size: 1.1rem; /* ~text-lg */ margin-top: 1.25rem; margin-bottom: 0.5rem; color: var(--text-color-accent); }
+        p, li { color: var(--text-color-main); margin-bottom: 1.25rem; font-size: 0.95rem; text-align: left; /* Left-aligned text */ }
+        ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+        strong { color: var(--text-color-accent); font-weight: 600; }
+        code { background-color: var(--highlight-bg); color: var(--text-color-accent); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em; }
+        blockquote { border-left: 4px solid var(--accent-color); padding: 0.75rem 1rem; margin: 1.5rem 0; font-style: italic; color: var(--text-color-subtle); background-color: var(--highlight-bg); font-size: 0.95rem; }
+        .section-bg-white { background-color: #ffffff; } /* Class for white background sections */
+        .equation { display: block; text-align: center; margin: 1.25rem auto; font-size: 1.1rem; overflow-x: auto; /* Allow scrolling for long equations */ padding: 0.5rem 0; }
+        .key-concept { border: 1px solid var(--border-color-medium); background-color: var(--vis-bg-color); padding: 1rem; border-radius: 0.375rem; margin: 1.5rem 0; }
+        .key-concept strong { color: var(--text-color-header); }
+        figure { margin: 1.5rem auto; text-align: center; }
+        figure svg, figure img { max-width: 100%; height: auto; border: 1px solid var(--border-color-medium); border-radius: 0.375rem; margin: 0 auto 0.5rem auto; display: block; background-color: var(--vis-bg-color); }
+        figcaption, .caption { font-size: 0.8rem; color: var(--text-color-subtle); margin-top: 0.25rem; text-align: center; }
 
+        /* --- D3 Plot Styling (Copied from template) --- */
+        .d3-plot .axis path, .d3-plot .axis line { fill: none; stroke: var(--border-color-medium); shape-rendering: crispEdges; stroke-width: 1px; }
+        .d3-plot .axis text { font-size: 0.75rem; fill: var(--text-color-main); font-family: sans-serif;}
+        .d3-plot .grid line { stroke: var(--border-color-light); stroke-opacity: 0.7; shape-rendering: crispEdges; }
+        .d3-plot .grid path { stroke-width: 0; }
+        .d3-plot .line { fill: none; stroke-width: 2px; }
+        .d3-plot path { fill: none; }
+        /* Specific line colors - Adapt for Fire context */
+        .d3-plot .steel-line { stroke: var(--text-color-accent); /* Accent blue */ }
+        .d3-plot .concrete-line { stroke: var(--accent-color); /* Bright blue */ }
+        .d3-plot .timber-line { stroke: #a16207; /* Brownish for timber */ } /* Example */
+        .d3-plot .prop-yield-line { stroke: var(--text-color-accent); }
+        .d3-plot .prop-elastic-line { stroke: var(--accent-color); stroke-dasharray: 4 2; }
+        .plot-label { font-size: 0.75rem; fill: var(--text-color-accent); text-anchor: middle; font-family: sans-serif;}
+
+        /* --- Footer Styling --- */
+        footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color-medium); }
+        footer p { font-size: 0.8rem; line-height: 1.5; text-align: center; color: var(--text-color-main);}
+        footer a { color: var(--text-color-subtle); text-decoration: underline; }
+        footer a:hover { color: var(--text-color-header); }
     </style>
 </head>
+
 <body class="antialiased">
 
-    <header class="hero-bg min-h-[70vh] flex flex-col items-center justify-center text-center p-8 reveal-on-scroll">
-        <h1 class="text-4xl md:text-6xl font-black mb-4 text-gray-900">
-            Fronteras en <span class="gradient-text-title">Explosivos</span> e <span class="gradient-text-title">Ingeniería de Seguridad contra Incendios</span>
-        </h1>
-        <p class="text-xl md:text-2xl text-gray-700 mb-6 max-w-3xl">
-            Un Curso Doctoral Avanzado Explorando la Ciencia y Aplicaciones de Vanguardia.
-        </p>
-         <p class="text-sm text-gray-500 mb-8 max-w-3xl">
-            Nota: Este es un esquema representativo de un curso doctoral avanzado, inspirado en la investigación actual y líderes del campo como el Dr. J.L. Torero. No representa un curso ofrecido actualmente.
-        </p>
-        <a href="#introduccion" class="mt-4 px-6 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-lg hover:bg-indigo-700 transition-colors duration-300">
-            Explorar Contenido
-        </a>
+    <header class="bg-gradient-to-r from-[var(--header-grad-from)] to-[var(--header-grad-to)] text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-5">
+            <h1 class="text-3xl font-bold">Advanced Fire Safety Engineering & Structural Fire Safety</h1>
+            <p class="text-sky-100 text-xs mt-2">A PhD-Level Exploration of Core Concepts and Research Frontiers</p>
+        </div>
     </header>
 
-    <main class="container mx-auto px-6 py-16 space-y-16 md:space-y-24">
+    <nav class="sticky top-[76px] bg-sky-50 border-b border-sky-200 z-40 mb-4"> <div class="container mx-auto px-6 py-2 text-sm">
+            <span class="font-semibold text-sky-800 mr-4">Sections:</span>
+            <a href="#fundamentals" class="text-sky-700 hover:text-sky-900 mr-3">1. Fundamentals</a> |
+            <a href="#materials" class="text-sky-700 hover:text-sky-900 mx-3">2. Materials</a> |
+            <a href="#structures" class="text-sky-700 hover:text-sky-900 mx-3">3. Structures</a> |
+            <a href="#advanced" class="text-sky-700 hover:text-sky-900 mx-3">4. Advanced Topics</a> |
+            <a href="#interactive" class="text-sky-700 hover:text-sky-900 mx-3">5. Interactive</a> |
+            <a href="#outlook" class="text-sky-700 hover:text-sky-900 ml-3">6. Outlook</a>
+        </div>
+    </nav>
 
-        <section id="introduccion" class="reveal-on-scroll">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-center gradient-text-header">Introducción: Fundamentos Avanzados</h2>
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="md:w-1/2">
-                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                        Este curso se adentra en los principios avanzados que gobiernan los fenómenos energéticos y la combustión. Se abordarán temas como la termodinámica de no equilibrio, la cinética química detallada en llamas y detonaciones (e.g., mecanismos GRI-Mech, San Diego), y la mecánica de continuos aplicada a materiales bajo cargas extremas (e.g., modelos constitutivos para altas tasas de deformación).
-                    </p>
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        Se analizarán críticamente los modelos teóricos y computacionales (e.g., DNS, LES en combustión; hidrocódigos con modelos de detonación como ZND, CJ) y las técnicas experimentales de diagnóstico avanzado (LDV, PLIF, Schlieren de alta velocidad) utilizadas en la investigación de frontera.
-                    </p>
-                </div>
-                <div class="md:w-1/2">
-                     <img src="https://placehold.co/600x400/e0e7ff/4338ca?text=Modelado+Avanzado" alt="[Imagen de Modelado Avanzado]" class="rounded-lg shadow-xl mx-auto" onerror="this.src='https://placehold.co/600x400/e0e7ff/4338ca?text=Error+Imagen'; this.alt='Error al cargar imagen de Modelado Avanzado';">
-                </div>
+    <main class="container mx-auto px-6 py-2">
+
+        <section id="fundamentals" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">1. Fundamentals: Beyond Standard Fire Curves</h2>
+            <p>This module moves beyond introductory concepts to the core physics governing fire development and its interaction with structures, essential for advanced analysis and Performance-Based Design (PBD).</p>
+            <ul>
+                <li><strong>Enclosure Fire Dynamics:</strong> We critically examine zone models (e.g., CFAST) versus CFD (e.g., FDS). Focus areas include ventilation-controlled vs. fuel-controlled regimes, the concept of Heat Release Rate Per Unit Area (HRRPUA), flashover criteria (e.g., Thomas, McCaffrey), and the limitations of plume theories (e.g., McCaffrey's correlations for centerline temperature \( \Delta T_0 \)) in complex geometries.
+                    <div class="equation">
+                    \( \Delta T_0 = K \left( \frac{\dot{Q}^2}{z^5} \right)^{1/3} \) (Illustrative McCaffrey form)
+                    </div>
+                </li>
+                <li><strong>Heat Transfer to Structures:</strong> Advanced analysis requires understanding combined convective (\(h_c\)) and radiative (\(\dot{q}''_{rad}\)) heat transfer. We explore calculation methods for configuration factors, gas emissivity models (e.g., RADCAL, gray gas), and the impact of boundary layer effects on \(h_c\). The net heat flux to a structural element is key:
+                    <div class="equation">
+                    \( \dot{q}''_{net} = h_c (T_{gas} - T_{surf}) + \epsilon_{surf} \sigma ( \epsilon_{gas} T_{gas}^4 - \alpha_{surf} T_{surf}^4 ) \) (Simplified form)
+                    </div>
+                </li>
+                <li><strong>Thermo-Mechanical Basics:</strong> Introduction to temperature-dependent material properties – thermal expansion (\(\alpha_{th}\)), conductivity (\(k\)), specific heat (\(c_p\)), density (\(\rho\)), and crucially, mechanical properties like Young's modulus (\(E_{\theta}\)), yield strength (\(f_{y,\theta}\)), and creep. Understanding thermal diffusivity (\(a = k / (\rho c_p)\)) is vital for heat penetration.</li>
+            </ul>
+            <div class="key-concept mt-6">
+                <strong>PhD Challenge:</strong> How do uncertainties in fire scenarios (HRR, ventilation) and material properties propagate through heat transfer and structural models? How can UQ methods be applied in fire safety engineering?
             </div>
         </section>
 
-        <div class="section-divider reveal-on-scroll"></div>
+        <section id="materials" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">2. Material Behaviour at Elevated Temperatures</h2>
+            <p>Accurate structural fire analysis hinges on understanding how materials degrade under thermal exposure. This section delves into the complex behaviour of key structural materials.</p>
 
-        <section id="explosivos" class="reveal-on-scroll">
-            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text-header">Ciencia y Tecnología de Explosivos</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 reveal-on-scroll hover:shadow-lg transition-shadow duration-300">
-                    <h3 class="text-xl font-bold mb-3 text-indigo-700">Modelado de Detonación</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        Análisis de teorías de detonación (CJ, ZND, no-ideal). Aplicación de hidrocódigos (e.g., AUTODYN, LS-DYNA) y desarrollo de modelos de iniciación y crecimiento de la reacción (e.g., Lee-Tarver).
-                    </p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 reveal-on-scroll hover:shadow-lg transition-shadow duration-300" style="transition-delay: 0.1s;">
-                    <h3 class="text-xl font-bold mb-3 text-indigo-700">Materiales Energéticos</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        Caracterización y desarrollo de explosivos de baja sensibilidad (IM), co-cristales, nanolaminados reactivos (nanothermites). Relación estructura-propiedad y química de descomposición.
-                    </p>
-                </div>
-                 <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 reveal-on-scroll hover:shadow-lg transition-shadow duration-300" style="transition-delay: 0.2s;">
-                    <h3 class="text-xl font-bold mb-3 text-indigo-700">Seguridad y Efectos</h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        Evaluación de sensibilidad (impacto, fricción, ESD). Predicción de efectos de la onda expansiva (blast). Interacción explosión-estructura. Fragmentación. Normativas (e.g., UN TDG).
-                    </p>
-                </div>
-            </div>
+            <h3 class="text-xl font-semibold mt-6 mb-2">2.1 Steel</h3>
+            <ul>
+                <li><strong>Property Degradation:</strong> Reduction in yield strength (\(f_{y,\theta}\)) and elastic modulus (\(E_{s,\theta}\)) following established models (e.g., Eurocode 3 Part 1-2). Discussion of strain hardening disappearance and increased ductility at high temperatures.</li>
+                <li><strong>Thermal Expansion & Creep:</strong> Significance of thermal expansion (\(\alpha_{s}\)) in generating restraint forces. Introduction to high-temperature creep models (e.g., Harmathy, Fields & Fields) and their importance in long-duration fires or under high stress.</li>
+                <li><strong>Phase Transformations:</strong> Brief overview of microstructural changes (e.g., ferrite to austenite) and their (often secondary) impact on mechanical properties compared to general thermal softening.</li>
+            </ul>
 
-            <div class="bg-indigo-50 p-8 rounded-lg shadow-inner border border-indigo-200 reveal-on-scroll">
-                 <h3 class="text-2xl font-bold mb-6 text-center text-indigo-800">Explorador Conceptual de Iniciación</h3>
-                 <p class="text-sm text-center text-gray-600 mb-6 max-w-2xl mx-auto">
-                    Esta herramienta ilustra conceptualmente cómo la proporción entre iniciador, booster y carga principal afecta las características de una voladura. <strong class="text-red-700">No es una guía práctica y no representa formulaciones reales.</strong> Los explosivos son peligrosos y deben ser manejados únicamente por profesionales cualificados.
-                 </p>
-                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                     <div class="md:col-span-2 space-y-4">
-                         <div>
-                            <label for="initiator" class="block text-sm font-medium text-gray-700">Iniciador (% Conceptual: Sensibilidad Alta, Baja Energía)</label>
-                            <input type="range" id="initiator" name="initiator" min="1" max="10" value="2" class="mt-1">
-                            <span id="initiator-value" class="text-sm text-indigo-600 font-semibold">2%</span>
-                         </div>
-                         <div>
-                            <label for="booster" class="block text-sm font-medium text-gray-700">Booster (% Conceptual: Sensibilidad Media, Alta Potencia)</label>
-                            <input type="range" id="booster" name="booster" min="5" max="30" value="10" class="mt-1">
-                            <span id="booster-value" class="text-sm text-indigo-600 font-semibold">10%</span>
-                         </div>
-                          <div>
-                            <label for="main_charge" class="block text-sm font-medium text-gray-700">Carga Principal (% Conceptual: Baja Sensibilidad, Alta Energía Total)</label>
-                            <input type="range" id="main_charge" name="main_charge" min="60" max="94" value="88" class="mt-1">
-                            <span id="main_charge-value" class="text-sm text-indigo-600 font-semibold">88%</span>
-                         </div>
-                     </div>
-                     <div class="md:col-span-1">
-                         <p class="font-semibold text-gray-800 mb-2">Implicaciones Conceptuales:</p>
-                         <div id="mixer-output" class="interactive-output space-y-2">
-                            <p>Ajuste los deslizadores para ver las implicaciones...</p>
-                         </div>
-                     </div>
-                 </div>
-            </div>
-             <p class="text-center text-gray-500 text-sm mt-8 reveal-on-scroll">
-                (Futuras secciones podrían incluir: Visualizador de Onda Expansiva, Comparador de Parámetros de Explosivos)
-             </p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">2.2 Concrete</h3>
+            <ul>
+                <li><strong>Thermo-Physical Properties:</strong> Complex changes in conductivity, specific heat (due to moisture evaporation), and density. Importance of aggregate type (siliceous vs. carbonate).</li>
+                <li><strong>Thermo-Mechanical Properties:</strong> Significant degradation of compressive strength (\(f_{c,\theta}\)) and elastic modulus (\(E_{c,\theta}\)) (e.g., Eurocode 2 Part 1-2 models). Discussion of transient thermal strain (load-induced thermal strain - LITS) and its critical role.</li>
+                <li><strong>Spalling:</strong> Mechanisms of explosive spalling (pore pressure build-up, thermal stress gradients). Factors influencing spalling risk (concrete mix, moisture content, heating rate, stress state). Mitigation strategies (polypropylene fibres, reinforcement detailing).</li>
+                <li><strong>Post-Fire Behaviour:</strong> Residual strength assessment and the challenges of predicting long-term performance after cooling.</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">2.3 Timber</h3>
+            <ul>
+                <li><strong>Charring:</strong> Kinetics of char formation, charring rate models (e.g., Eurocode 5 Part 1-2, 1D vs. 2D effects at corners), influence of density and species. Concept of zero-strength layer and effective residual cross-section.</li>
+                <li><strong>Mechanical Properties:</strong> Degradation of strength and stiffness in the heated wood layer beneath the char. Influence of temperature and moisture content.</li>
+                <li><strong>Connections:</strong> Critical behaviour of timber connections (e.g., steel dowels, plates) in fire due to charring around fasteners and steel heating.</li>
+                <li><strong>Advanced Timber Products:</strong> Behaviour of engineered wood products (Glulam, CLT, LVL) including glue-line performance and delamination risks.</li>
+            </ul>
+             <blockquote class="my-4">
+                Material models in codes (e.g., Eurocodes) provide a baseline, but PhD research often involves refining these models, investigating advanced materials (composites, intumescents), or studying behaviour under non-standard fire exposures.
+            </blockquote>
         </section>
 
-        <div class="section-divider reveal-on-scroll"></div>
-
-        <section id="ingenieria-incendios" class="reveal-on-scroll">
-             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text-header">Ingeniería de Seguridad contra Incendios</h2>
-             <div class="flex flex-col-reverse md:flex-row items-center gap-8">
-                 <div class="md:w-1/2">
-                     <img src="https://placehold.co/600x400/ede9fe/5b21b6?text=Simulación+FDS" alt="[Imagen de Simulación de Incendio FDS]" class="rounded-lg shadow-xl mx-auto" onerror="this.src='https://placehold.co/600x400/ede9fe/5b21b6?text=Error+Imagen'; this.alt='Error al cargar imagen de Simulación FDS';">
-                </div>
-                <div class="md:w-1/2">
-                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                        Enfoque en el **Diseño Basado en Prestaciones (PBD)** según marcos internacionales (e.g., Eurocódigos, SFPE). Uso avanzado de herramientas de simulación como **FDS (Fire Dynamics Simulator)** para modelar la dinámica del fuego, el movimiento del humo y la visibilidad.
-                    </p>
-                     <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4 text-base">
-                        <li>Análisis de escenarios de incendio complejos (túneles, atrios, fachadas ventiladas).</li>
-                        <li>Comportamiento de materiales bajo fuego: ensayos estándar (cono calorimétrico, SBI) y modelos de pirólisis.</li>
-                        <li>Diseño y análisis de sistemas de protección activa (rociadores ESFR, water mist, control de humos) y pasiva (materiales ignífugos, sectorización).</li>
-                        <li>Modelado de la evacuación (e.g., Pathfinder, STEPS) y análisis del comportamiento humano.</li>
-                        <li>Análisis de la respuesta estructural al fuego (e.g., mediante SAFIR, OpenSees).</li>
+        <section id="structures" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">3. Structural Fire Engineering Analysis</h2>
+            <p>This section focuses on methods for analysing the performance of structures and structural elements under fire conditions, bridging material behaviour and system response.</p>
+            <ul>
+                <li><strong>Analysis Levels:</strong> Progression from member/element analysis (isolated beams, columns using simplified methods or section analysis) to sub-assembly (e.g., connections, floor bays) and full structural system analysis (typically requiring advanced FEM).</li>
+                <li><strong>Fire Models:</strong> Application of standard fire curves (ISO 834, ASTM E119) versus natural/parametric fire models (e.g., Eurocode 1 Part 1-2 parametric curves, zone models, CFD) to define thermal exposure. Importance of the cooling phase.
+                    <div class="equation">
+                     \theta_g = 20 + 1325 (1 - 0.324 e^{-0.2t^*} - 0.204 e^{-1.7t^*} - 0.472 e^{-19t^*}) \quad \text{(Eurocode Parametric - Heating Phase Example)}
+                    </div>
+                     Where \(t^*\) depends on ventilation, thermal properties, etc.
+                </li>
+                <li><strong>Structural Modelling Approaches:</strong>
+                    <ul>
+                        <li><strong>Simple Calculation Methods:</strong> Tabulated data, critical temperature methods, simplified zone methods (e.g., Rankine approach for columns). Strengths and limitations.</li>
+                        <li><strong>Advanced Calculation Methods (FEM):</strong> Necessity for capturing geometric and material non-linearities at elevated temperatures. Sequential vs. coupled thermal-stress analysis. Choice of elements (beam, shell, solid), material models, and solution strategies (e.g., Newton-Raphson, arc-length methods). Software examples: ABAQUS, ANSYS, SAFIR, OpenSees.</li>
                     </ul>
-                     <p class="text-lg text-gray-700 leading-relaxed">
-                        Se enfatiza la cuantificación de incertidumbres y el análisis de riesgo en el marco del PBD.
-                    </p>
-                      <p class="text-center text-gray-500 text-sm mt-8 reveal-on-scroll">
-                        (Futuras secciones podrían incluir: Explorador de Curvas de Fuego, Comparador de Materiales)
-                     </p>
-                </div>
+                </li>
+                 <li><strong>Key Structural Phenomena in Fire:</strong> Thermal bowing/expansion and restraint forces, catenary/membrane action in composite slabs, local and global buckling of steel members, connection failure modes, concrete cracking and crushing, progressive collapse initiation and propagation.</li>
+                <li><strong>Robustness and Resilience:</strong> Designing structures to withstand localised failure without disproportionate collapse. Role of redundancy, tying forces, and alternative load paths.</li>
+            </ul>
+             <div class="key-concept mt-6">
+                <strong>PhD Challenge:</strong> Developing efficient and validated numerical models that capture the complex interaction between fire dynamics, heat transfer, material degradation, and non-linear structural behaviour, especially for novel materials and structural systems.
             </div>
         </section>
 
-        <div class="section-divider reveal-on-scroll"></div>
+         <section id="advanced" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">4. Advanced Topics & Research Frontiers</h2>
+            <p>Exploring current challenges and cutting-edge research areas in Fire Safety Engineering.</p>
+             <ul>
+                <li><strong>Performance-Based Design (PBD):</strong> Framework, defining safety objectives, design fire scenarios (probabilistic vs. deterministic), development of acceptance criteria (structural integrity, tenability), uncertainty analysis, regulatory challenges.</li>
+                 <li><strong>Fire Testing & Diagnostics:</strong> Role and limitations of standard tests (furnace tests for resistance ratings) vs. large-scale experimental tests. Advanced diagnostics: Digital Image Correlation (DIC) for strain measurement, fibre optic sensors (FOS) for distributed temperature/strain, calorimetry for HRR.</li>
+                <li><strong>Quantitative Risk Assessment (QRA):</strong> Application of probabilistic methods to fire safety. Event tree/fault tree analysis, consequence modelling, F-N curves, integration with structural reliability.</li>
+                <li><strong>Novel Construction & Materials:</strong> Fire performance of mass timber structures (CLT connections, delamination), modular construction (inter-module fire spread), façade systems (combustibility, cavity barriers), structural glass, FRP strengthening/members, phase change materials, intumescent coatings mechanisms.</li>
+                <li><strong>Human Behaviour & Evacuation Modelling:</strong> Agent-Based Modelling (ABM) of occupant movement, decision-making under stress, influence of smoke/toxicity, validation against drills and real incidents. Linking evacuation models (e.g., Pathfinder, FDS+Evac) with fire dynamics simulations.</li>
+                <li><strong>Sustainability & Resilience:</strong> Life cycle assessment incorporating fire scenarios, designing for post-fire repairability, impact of green building features on fire safety, wildland-urban interface (WUI) fires.</li>
+            </ul>
+             <blockquote class="my-4">
+                Research in fire safety is increasingly interdisciplinary, requiring expertise in fluid dynamics, heat transfer, material science, structural mechanics, human factors, statistics, and computational modelling.
+            </blockquote>
+        </section>
 
-        <section id="inspiracion" class="reveal-on-scroll">
-            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center gradient-text-header">Inspiración y Liderazgo en el Campo</h2>
-            <div class="flex flex-col md:flex-row items-center bg-white p-8 rounded-lg shadow-md border border-gray-200">
-                 <div class="md:w-1/3 mb-6 md:mb-0 md:mr-8 flex-shrink-0">
-                    <img src="https://placehold.co/400x400/d1d5db/1f2937?text=Investigador" alt="[Imagen genérica de Investigador]" class="rounded-full shadow-lg mx-auto border-4 border-indigo-300 w-48 h-48 md:w-64 md:h-64 object-cover" onerror="this.src='https://placehold.co/400x400/d1d5db/1f2937?text=Error+Imagen'; this.alt='Error al cargar imagen de Investigador';">
+        <section id="interactive" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">5. Interactive Exploration: Material Property Degradation</h2>
+            <p>Understanding the reduction factors for key mechanical properties is fundamental. This tool visualizes the conceptual degradation curves based on Eurocode models.</p>
+
+            <div class="interactive-container mt-4">
+                <h4 class="text-lg font-semibold mb-2">Explore Material Property Reduction Factors</h4>
+                <p class="instructional-text">Select a material and property to see how its relative strength or stiffness changes with temperature according to simplified Eurocode models. Note: These are simplified representations for educational purposes.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div>
+                        <label for="materialSelect">Material:</label>
+                        <select id="materialSelect" name="materialSelect" class="cursor-pointer">
+                            <option value="steel" selected>Structural Steel</option>
+                            <option value="concrete">Normal Weight Concrete (Siliceous)</option>
+                            </select>
+                    </div>
+                    <div>
+                        <label for="propertySelect">Property:</label>
+                        <select id="propertySelect" name="propertySelect" class="cursor-pointer">
+                            <option value="yield" selected>Yield Strength (f_y,θ / f_y or f_c,θ / f_c)</option>
+                            <option value="elastic">Elastic Modulus (E_θ / E)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="temperatureSlider">Temperature (°C):</label>
+                        <input type="range" id="temperatureSlider" name="temperatureSlider" min="20" max="1200" value="400" step="10">
+                        <div class="output-box">T = <span id="temperatureValue">400</span> °C | k ≈ <span id="reductionFactorValue">0.00</span></div>
+                    </div>
                 </div>
-                <div class="md:w-2/3">
-                    <h3 class="text-2xl font-bold mb-3 text-indigo-700">Investigación de Vanguardia</h3>
-                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                        Este curso se inspira en las contribuciones de líderes mundiales en ingeniería de seguridad contra incendios y ciencia de explosivos, como el **Prof. José Luis Torero** (actualmente en University College London) y otros pioneros en instituciones como *Imperial College, Lund University, FM Global, Sandia National Labs*, etc.
-                    </p>
-                    <p class="text-lg text-gray-700 leading-relaxed">
-                        Se estudiarán trabajos seminales y actuales en áreas como la dinámica del fuego en condiciones extremas (microgravedad, túneles), comportamiento de materiales compuestos, explosivos insensibles, modelado multi-escala y análisis de riesgo avanzado. El objetivo es conectar a los estudiantes con las preguntas abiertas y los desafíos que definen la investigación actual.
-                    </p>
-                     <a href="https://www.sfpe.org/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 mt-4 inline-block font-semibold">
-                        Visitar SFPE (Society of Fire Protection Engineers) &rarr;
-                     </a>
+                <div class="visualization-box">
+                    <div id="material-property-plot" class="w-full h-72 d3-plot"></div>
+                    <p class="text-xs mt-2 caption">Conceptual plot of Reduction Factor (k) vs. Temperature (°C). Vertical line indicates selected temperature.</p>
                 </div>
+                 <p class="warning-note">Disclaimer: Uses simplified Eurocode models. Actual behaviour can vary significantly. Consult relevant standards for design.</p>
             </div>
         </section>
 
-         <div class="section-divider reveal-on-scroll"></div>
+        <section id="outlook" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">6. Outlook: Challenges & Future Directions</h2>
+            <p>Fire Safety Engineering faces significant challenges driven by evolving construction practices, new materials, climate change, and increasing societal expectations for safety and resilience.</p>
+            <ul class="list-disc list-inside space-y-1 pl-4">
+                <li><strong>Integrating Multi-Physics:** Developing robustly validated, computationally efficient models that fully couple fire dynamics, heat transfer, structural response, and potentially human behaviour remains a grand challenge.</li>
+                <li><strong>Data-Driven Approaches:** Leveraging machine learning and AI for faster analysis, surrogate modelling, interpreting experimental data, and improving risk assessment.</li>
+                <li><strong>Material Innovation & Characterization:** Understanding and predicting the fire performance of sustainable materials (e.g., bamboo, earth construction), advanced composites, and materials under extreme heating rates.</li>
+                <li><strong>Resilience-Based Design:** Moving beyond life safety to explicitly design for structural repairability, reduced downtime, and maintaining functionality after fire events.</li>
+                <li><strong>Wildland-Urban Interface (WUI):** Addressing the growing threat of WUI fires through improved building codes, community planning, and understanding firebrand attack.</li>
+            </ul>
+            <p>A PhD in this field offers the opportunity to contribute to solving these critical problems, advancing scientific understanding and developing innovative engineering solutions to enhance safety and resilience in the built environment.</p>
+        </section>
 
-        <section id="curso" class="reveal-on-scroll text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6 gradient-text-header">Estructura del Curso (Propuesta)</h2>
-            <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto mb-8">
-                Diseñado para estudiantes de doctorado, este curso combinaría módulos temáticos avanzados, seminarios de investigación con análisis crítico de publicaciones recientes (*journal club*), talleres de modelado computacional (uso de software relevante como FDS, Autodyn, Cantera) y el desarrollo de un proyecto de investigación original o revisión sistemática.
+        <footer class="mt-16 pt-8 border-t border-sky-200 text-sm text-sky-700">
+            <p>
+                This webpage provides a conceptual outline for a PhD-level exploration of Advanced Fire Safety Engineering.
+                <br>
+                Content is illustrative and inspired by current research frontiers and educational approaches in the field. Key references include Eurocodes, SFPE Handbooks, and leading academic journals.
             </p>
-            <div class="flex justify-center">
-                 <a href="mailto:info.phdcurso.hipotetico@institucion.edu?subject=Consulta%20Curso%20Doctoral%20(Esquema)" class="px-8 py-4 bg-indigo-600 text-white font-bold rounded-lg shadow-lg hover:bg-indigo-700 transition-colors duration-300">
-                    Contacto para Consultas (Hipotético)
-                </a>
-            </div>
-        </section>
+             <p class="mt-4 text-center text-xs text-sky-600">PhD Course Concept: Advanced Fire Safety Engineering (Bisby/Edinburgh Perspective)</p>
+        </footer>
 
     </main>
 
-    <footer class="bg-gray-800 text-gray-300 text-center p-6 mt-16 md:mt-24">
-        <p>&copy; 2025 Esquema Conceptual de Curso Doctoral.</p>
-        <p class="text-sm mt-2">Contenido con fines ilustrativos y académicos.</p>
-    </footer>
-
     <script>
         /**
-         * Checks if an element is at least partially within the browser viewport.
-         * @param {Element} element The DOM element to check.
-         * @returns {boolean} True if the element is in the viewport, false otherwise.
+         * Sets up a range slider with value display and optional log scale.
+         * (Re-using the robust setupSlider function from the template)
+         * @param {string} sliderId - The ID of the range input element.
+         * @param {string} valueId - The ID of the element to display the value.
+         * @param {object} options - Configuration options (fixedDigits, logScale, callback, valueFormatFn).
          */
-        function isInViewport(element) {
-            const rect = element.getBoundingClientRect();
-            return (
-                rect.top < (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.bottom >= 0 &&
-                rect.left >= 0 &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
-        }
-
-        /**
-         * Adds the 'visible' class to elements with 'reveal-on-scroll'
-         * when they enter the viewport.
-         */
-        function revealElementsOnScroll() {
-            const elements = document.querySelectorAll('.reveal-on-scroll');
-            elements.forEach(element => {
-                if (isInViewport(element)) {
-                    element.classList.add('visible');
-                }
-                // Optional: remove class if element scrolls out of view upwards
-                // else if (!isInViewport(element) && element.classList.contains('visible')) {
-                //    element.classList.remove('visible');
-                // }
-            });
-        }
-
-        /**
-         * Sets up the interactive explosive mixer sliders and output display.
-         */
-        function setupMixer() {
-            // Get references to DOM elements
-            const initiatorSlider = document.getElementById('initiator');
-            const boosterSlider = document.getElementById('booster');
-            const mainChargeSlider = document.getElementById('main_charge');
-            const initiatorValueSpan = document.getElementById('initiator-value');
-            const boosterValueSpan = document.getElementById('booster-value');
-            const mainChargeValueSpan = document.getElementById('main_charge-value');
-            const outputDiv = document.getElementById('mixer-output');
-
-            // Ensure all elements exist before proceeding
-            if (!initiatorSlider || !boosterSlider || !mainChargeSlider ||
-                !initiatorValueSpan || !boosterValueSpan || !mainChargeValueSpan || !outputDiv) {
-                console.error("Mixer elements not found. Aborting setup.");
+        function setupSlider(sliderId, valueId, options = {}) {
+            const slider = document.getElementById(sliderId);
+            const valueDisplay = document.getElementById(valueId);
+            if (!slider || !valueDisplay) {
+                console.warn(`Slider setup failed: Elements not found for ${sliderId} or ${valueId}`);
                 return;
             }
 
-            /**
-             * Updates the output display based on current slider values.
-             * Provides conceptual implications of the mixture percentages.
-             */
-            function updateMixerOutput() {
-                const initiator = parseInt(initiatorSlider.value);
-                const booster = parseInt(boosterSlider.value);
-                const mainCharge = parseInt(mainChargeSlider.value);
+            const { fixedDigits = 0, logScale = false, callback = null, valueFormatFn = null } = options;
 
-                // Update displayed percentages next to sliders
-                initiatorValueSpan.textContent = `${initiator}%`;
-                boosterValueSpan.textContent = `${booster}%`;
-                mainChargeValueSpan.textContent = `${mainCharge}%`;
+            const minAttr = parseFloat(slider.min);
+            const maxAttr = parseFloat(slider.max);
+            let safeMin = isNaN(minAttr) ? (logScale ? 1e-6 : 0) : (logScale ? Math.max(1e-9, minAttr) : minAttr);
+            let safeMax = isNaN(maxAttr) ? safeMin * (logScale ? 1000 : 100) : (logScale ? Math.max(safeMin * 1.1, maxAttr) : Math.max(safeMin + 1e-9, maxAttr));
 
-                // Array to hold implication messages
-                let implications = [];
-
-                // --- Conceptual Implications Logic ---
-
-                // Initiator implications
-                if (initiator < 3) {
-                    implications.push("<strong>Iniciador bajo:</strong> Riesgo incrementado de fallo de iniciación del booster, especialmente en condiciones adversas o con boosters menos sensibles.");
-                } else if (initiator > 7) {
-                     implications.push("<strong>Iniciador alto:</strong> Mayor coste y sensibilidad general del sistema. Podría ser innecesario si el booster es suficientemente sensible. Aumenta riesgo de iniciación accidental.");
-                } else {
-                     implications.push("<strong>Iniciador:</strong> Proporción estándar, generalmente adecuada para iniciar boosters comunes de forma fiable.");
-                }
-
-                // Booster implications
-                if (booster < 8) {
-                    implications.push("<strong>Booster bajo:</strong> Riesgo significativo de fallo de iniciación de la carga principal (especialmente si es poco sensible como ANFO puro). Puede resultar en una detonación parcial o nula.");
-                } else if (booster > 20) {
-                    implications.push("<strong>Booster alto:</strong> Aumenta notablemente el coste. Genera una onda de choque inicial muy potente, lo que puede causar sobre-rotura (pulverización) cerca del barreno y reducir la eficiencia en la fractura lejana.");
-                } else {
-                     implications.push("<strong>Booster:</strong> Rango típico para iniciar cargas principales estándar de forma eficaz, equilibrando fiabilidad y coste.");
-                }
-
-                 // Main Charge implications
-                 if (mainCharge < 70) {
-                     implications.push("<strong>Carga principal baja:</strong> Menor energía total liberada para realizar trabajo (fragmentación, desplazamiento). Puede ser insuficiente para el objetivo deseado.");
-                 } else if (mainCharge > 90 && booster < 10) {
-                     implications.push("<strong>Carga principal alta con booster bajo:</strong> Requiere un booster muy eficiente para asegurar la iniciación completa y estable de toda la columna explosiva.");
-                 }
-                 else {
-                     implications.push("<strong>Carga principal:</strong> Proporciona la mayor parte de la energía. Su tipo (e.g., ANFO vs Emulsión) determina la resistencia al agua y la densidad de energía.");
-                 }
-
-                 // Specific interaction notes (conceptual examples)
-                 if (booster > 15 && mainCharge < 80) {
-                     implications.push("<em>Interacción:</em> Alto booster con carga principal reducida sugiere un enfoque en la potencia inicial sobre la energía total (e.g., para rocas muy duras, corte preciso, o cargas de diámetro pequeño).");
-                 }
-                 if (initiator < 3 && booster < 8) {
-                     implications.push("<strong class='text-red-600'>ADVERTENCIA CONCEPTUAL: Combinación de bajo iniciador y bajo booster maximiza el riesgo de fallo total de detonación. Configuración muy poco fiable.</strong>");
-                 }
-
-
-                // Display implications in the output div
-                // Use innerHTML carefully; here it's safe as we control the content.
-                outputDiv.innerHTML = implications.map(imp => `<p class="mb-1">${imp}</p>`).join('');
+            if (safeMax <= safeMin) {
+                safeMax = safeMin * (logScale ? 10 : 2);
+                if (safeMax <= safeMin) safeMax = safeMin + 1;
             }
 
-            // Add event listeners to sliders to update output on change
-            initiatorSlider.addEventListener('input', updateMixerOutput);
-            boosterSlider.addEventListener('input', updateMixerOutput);
-            mainChargeSlider.addEventListener('input', updateMixerOutput);
+            slider.logMinVal = safeMin;
+            slider.logMaxVal = safeMax;
 
-            // Initial calculation and display when the page loads
-            updateMixerOutput();
+            function calculateActualValue() {
+                const rawValue = parseFloat(slider.value);
+                if (isNaN(rawValue)) {
+                    slider.actualValue = logScale ? slider.logMinVal : safeMin; return;
+                }
+                if (logScale) {
+                    const minLog = Math.log10(slider.logMinVal); const maxLog = Math.log10(slider.logMaxVal);
+                    const range = maxLog - minLog;
+                    const sliderMinInternal = 0; const sliderMaxInternal = 100;
+                    const sliderRangeInternal = sliderMaxInternal - sliderMinInternal;
+                    if (sliderRangeInternal <= 0 || !isFinite(range) || range <= 0) { slider.actualValue = slider.logMinVal; return; }
+                    const normalizedSliderValue = Math.max(0, Math.min(1, (rawValue - sliderMinInternal) / sliderRangeInternal));
+                    const valueLog = minLog + normalizedSliderValue * range;
+                    slider.actualValue = Math.pow(10, valueLog);
+                } else { slider.actualValue = rawValue; }
+                if (!isFinite(slider.actualValue)) { slider.actualValue = logScale ? slider.logMinVal : safeMin; }
+            }
+
+            function updateDisplayAndTriggerCallback() {
+                const currentSlider = document.getElementById(sliderId);
+                const currentValueDisplay = document.getElementById(valueId);
+                if (!currentSlider || !currentValueDisplay) return;
+                try {
+                    calculateActualValue();
+                    const valToFormat = slider.actualValue;
+                    let displayVal;
+                    if (typeof valueFormatFn === 'function') {
+                        displayVal = valueFormatFn(valToFormat); // Use custom formatting function if provided
+                    } else if (typeof valToFormat !== 'number' || !isFinite(valToFormat)) {
+                        displayVal = "NaN";
+                    } else if (logScale && Math.abs(valToFormat) > 1e-9 && Math.abs(valToFormat) < 0.01) {
+                        displayVal = valToFormat.toExponential(fixedDigits);
+                    } else {
+                        displayVal = valToFormat.toFixed(fixedDigits);
+                    }
+                    currentValueDisplay.textContent = displayVal;
+                    if (typeof callback === 'function') { callback(); }
+                } catch (e) {
+                    console.error("Error updating slider display/callback for", sliderId, e);
+                    currentValueDisplay.textContent = "Error";
+                }
+            }
+
+            const initialValueAttr = slider.getAttribute('value');
+            let initialActualValue = initialValueAttr ? parseFloat(initialValueAttr) : (logScale ? slider.logMinVal : safeMin);
+            initialActualValue = Math.max(safeMin, Math.min(safeMax, initialActualValue));
+            if (!isFinite(initialActualValue)) { initialActualValue = logScale ? slider.logMinVal : safeMin; }
+
+            if (logScale) {
+                const minLog = Math.log10(slider.logMinVal); const maxLog = Math.log10(slider.logMaxVal);
+                const range = maxLog - minLog; let initialSliderPos = 0;
+                if (range > 0 && initialActualValue > 0 && isFinite(range)) {
+                    const valueLog = Math.log10(initialActualValue);
+                    initialSliderPos = Math.round(((valueLog - minLog) / range) * 100);
+                }
+                slider.min = "0"; slider.max = "100"; slider.step = "1"; slider.value = initialSliderPos;
+            } else {
+                slider.min = safeMin.toString(); slider.max = safeMax.toString();
+                const range = safeMax - safeMin; let step = (range > 0) ? (range / 100) : 1e-6;
+                if (range > 0) { const magnitude = Math.pow(10, Math.floor(Math.log10(step))); step = Math.max(1e-6, magnitude / 10); }
+                slider.step = step.toExponential(1); slider.value = initialActualValue;
+            }
+            slider.oninput = updateDisplayAndTriggerCallback;
+            calculateActualValue(); updateDisplayAndTriggerCallback();
         }
 
-        // --- Event Listeners ---
-        // Run setup functions after the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-             revealElementsOnScroll(); // Initial check for elements in view
-             setupMixer();             // Setup the interactive mixer
-        });
-        // Listen for scroll events to trigger animations
-        window.addEventListener('scroll', revealElementsOnScroll);
+        /**
+         * Sets up the SVG and main group ('g') element for a D3 plot.
+         * (Re-using the robust setupPlotArea function from the template)
+         * @param {string} targetId - ID of the container div or the SVG element itself.
+         * @param {object} margin - Margin object {top, right, bottom, left}.
+         * @param {boolean} [isDirectSvg=false] - True if targetId is an SVG element.
+         * @returns {object} { g: d3 selection of the main group, dims: plot dimensions object }.
+         * @throws {Error} If target element not found or dimensions are invalid.
+         */
+        function setupPlotArea(targetId, margin, isDirectSvg = false) {
+             let svg, g;
+             let containerWidth, containerHeight;
+
+             if (isDirectSvg) {
+                 svg = d3.select(`#${targetId}`);
+                 if (svg.empty()) { throw new Error(`Target SVG #${targetId} not found.`); }
+                 containerWidth = parseFloat(svg.attr("width")) || 400;
+                 containerHeight = parseFloat(svg.attr("height")) || 200;
+                 svg.selectAll("g").remove(); // Clear only groups
+                 g = svg.append("g").attr("id", `${targetId}-plot-group`).attr("class", "d3-plot");
+             } else {
+                 const plotDiv = document.getElementById(targetId);
+                 if (!plotDiv) { throw new Error(`Plot container #${targetId} not found.`); }
+                 containerWidth = plotDiv.clientWidth; containerHeight = plotDiv.clientHeight;
+                 if (!containerWidth || !containerHeight || containerWidth <= 0 || containerHeight <= 0) {
+                     // Attempt to use parent's size if div has no size itself (common in flex/grid)
+                     const parent = plotDiv.parentElement;
+                     if(parent && parent.clientWidth > 0 && parent.clientHeight > 0){
+                         containerWidth = parent.clientWidth;
+                         containerHeight = parent.clientHeight;
+                          // Set div height explicitly if it was 0
+                         if(plotDiv.clientHeight <= 0) plotDiv.style.height = `${containerHeight}px`;
+                     } else {
+                        throw new Error(`Plot container #${targetId} has invalid dimensions: ${containerWidth}x${containerHeight}.`);
+                     }
+                 }
+                 svg = d3.select(plotDiv).select("svg");
+                 if (svg.empty()) { svg = d3.select(plotDiv).append("svg"); }
+                 svg.attr("width", "100%").attr("height", "100%")
+                    .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
+                    .attr("preserveAspectRatio", "xMidYMid meet");
+                 svg.selectAll("*").remove(); // Clear everything inside SVG
+                 g = svg.append("g").attr("class", "d3-plot");
+             }
+             g.attr("transform", `translate(${margin.left},${margin.top})`);
+             const plotWidth = containerWidth - margin.left - margin.right;
+             const plotHeight = containerHeight - margin.top - margin.bottom;
+             if (plotWidth <= 0 || plotHeight <= 0) {
+                 throw new Error(`Plot area for #${targetId} invalid after margins: ${plotWidth}x${plotHeight}.`);
+             }
+             const dims = { containerWidth, containerHeight, plotWidth, plotHeight };
+             return { g, dims };
+         }
+
+        /**
+         * Draws X and Y axes on a D3 plot group.
+         * (Re-using the robust drawAxes function from the template)
+         * @param {object} g - The D3 selection of the group element to draw in.
+         * @param {function} xScale - The D3 scale for the X axis.
+         * @param {function} yScaleLeft - The D3 scale for the left Y axis.
+         * @param {function|null} yScaleRight - The D3 scale for the right Y axis (or null).
+         * @param {object} dims - Plot dimensions object from setupPlotArea.
+         * @param {object} margin - Margin object.
+         * @param {object} labels - Axis labels and formatting options.
+         */
+        function drawAxes(g, xScale, yScaleLeft, yScaleRight, dims, margin, labels) {
+            // X Axis (Bottom)
+            g.append("g").attr("class", "x axis")
+             .attr("transform", `translate(0,${dims.plotHeight})`)
+             .call(d3.axisBottom(xScale).ticks(labels.xTicks || 5).tickFormat(labels.xFormat || d3.format(".0f"))); // Default format integer
+            // X Axis Label
+            g.append("text").attr("class", "plot-label").attr("x", dims.plotWidth / 2)
+             .attr("y", dims.plotHeight + margin.bottom - (labels.xOffset || 5)).attr("text-anchor", "middle").text(labels.x || "X Axis");
+
+            // Y Axis (Left)
+            const yAxisLeft = g.append("g").attr("class", "y axis left-axis")
+                             .call(d3.axisLeft(yScaleLeft).ticks(labels.yLeftTicks || 5).tickFormat(labels.yLeftFormat || d3.format(".1f")));
+            if (labels.yLeftColor) {
+                yAxisLeft.selectAll("path, line").style("stroke", labels.yLeftColor); yAxisLeft.selectAll("text").style("fill", labels.yLeftColor);
+            }
+            // Y Axis Label (Left)
+            g.append("text").attr("class", "plot-label").attr("transform", "rotate(-90)")
+             .attr("y", -margin.left + (labels.yLeftOffset || 15)).attr("x", -dims.plotHeight / 2)
+             .attr("text-anchor", "middle").style("fill", labels.yLeftColor || 'var(--text-color-accent)').text(labels.yLeft || "Left Y Axis");
+
+            // Y Axis (Right) - Optional
+            if (yScaleRight && labels.yRight) {
+                const yAxisRight = g.append("g").attr("class", "y axis right-axis")
+                                  .attr("transform", `translate(${dims.plotWidth},0)`)
+                                  .call(d3.axisRight(yScaleRight).ticks(labels.yRightTicks || 5).tickFormat(labels.yRightFormat || d3.format(".1f")));
+                if (labels.yRightColor) {
+                    yAxisRight.selectAll("path, line").style("stroke", labels.yRightColor); yAxisRight.selectAll("text").style("fill", labels.yRightColor);
+                }
+                // Y Axis Label (Right)
+                g.append("text").attr("class", "plot-label").attr("transform", "rotate(90)")
+                 .attr("y", -dims.plotWidth - margin.right + (labels.yRightOffset || 15)).attr("x", dims.plotHeight / 2)
+                 .attr("text-anchor", "middle").style("fill", labels.yRightColor || 'var(--text-color-accent)').text(labels.yRight || "Right Y Axis");
+            }
+        }
+
+        /**
+         * Draws a line on the plot.
+         * (Re-using the robust drawLine function from the template)
+         * @param {object} g - The D3 selection of the group element.
+         * @param {Array} plotData - The data array for the line.
+         * @param {function} lineGenerator - The D3 line generator function.
+         * @param {string} cssClass - CSS class(es) to apply to the line path.
+         */
+         function drawLine(g, plotData, lineGenerator, cssClass) {
+             // Remove existing line with the same class first
+             g.selectAll(`path.line.${cssClass.split(' ')[0]}`).remove(); // Use first class for selection
+             // Append new line
+             g.append("path")
+              .datum(plotData)
+              .attr("class", `line ${cssClass} d3-plot`)
+              .attr("d", lineGenerator)
+              .attr("fill", "none")
+              .attr("stroke-width", 2);
+         }
+
+        /**
+         * Displays an error message within a plot area.
+         * (Re-using the robust displayPlotError function from the template)
+         * @param {string} targetId - ID of the container div or SVG element.
+         * @param {string} [message="Error rendering plot."] - The error message.
+         * @param {boolean} [isDirectSvg=false] - True if targetId is an SVG element.
+         */
+        function displayPlotError(targetId, message = "Error rendering plot.", isDirectSvg = false) {
+            try {
+                const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+                const { g, dims } = setupPlotArea(targetId, margin, isDirectSvg);
+                g.append("text").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight / 2)
+                 .text(message).style("font-size", "10px").attr("fill", "red").attr("text-anchor", "middle");
+            } catch (e) {
+                console.error(`Failed to display error in target ${targetId}: ${e.message}`);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) { targetElement.innerHTML = `<p style="color: red; font-size: 10px; text-align: center;">${message}</p>`; }
+            }
+        }
+
+        // --- Eurocode Material Property Functions ---
+
+        /**
+         * Calculates the reduction factor for steel yield strength (EC3).
+         * @param {number} T - Temperature in Celsius.
+         * @returns {number} Reduction factor k_y,theta (between 0 and 1).
+         */
+        function steelYieldReduction(T) {
+            if (T < 400) return 1.0;
+            if (T < 500) return 1.0 - (T - 400) * (1.0 - 0.78) / 100;
+            if (T < 600) return 0.78 - (T - 500) * (0.78 - 0.47) / 100;
+            if (T < 700) return 0.47 - (T - 600) * (0.47 - 0.23) / 100;
+            if (T < 800) return 0.23 - (T - 700) * (0.23 - 0.11) / 100;
+            if (T < 900) return 0.11 - (T - 800) * (0.11 - 0.06) / 100;
+            if (T < 1000) return 0.06 - (T - 900) * (0.06 - 0.04) / 100;
+            if (T < 1100) return 0.04 - (T - 1000) * (0.04 - 0.02) / 100;
+            if (T < 1200) return 0.02 - (T - 1100) * (0.02 - 0.0) / 100;
+            return 0.0;
+        }
+
+        /**
+         * Calculates the reduction factor for steel elastic modulus (EC3).
+         * @param {number} T - Temperature in Celsius.
+         * @returns {number} Reduction factor k_E,theta (between 0 and 1).
+         */
+        function steelElasticModulusReduction(T) {
+            if (T < 100) return 1.0;
+            if (T < 200) return 1.0 - (T - 100) * (1.0 - 0.9) / 100;
+            if (T < 300) return 0.9 - (T - 200) * (0.9 - 0.8) / 100;
+            if (T < 400) return 0.8 - (T - 300) * (0.8 - 0.7) / 100;
+            if (T < 500) return 0.7 - (T - 400) * (0.7 - 0.6) / 100;
+            if (T < 600) return 0.6 - (T - 500) * (0.6 - 0.31) / 100;
+            if (T < 700) return 0.31 - (T - 600) * (0.31 - 0.13) / 100;
+            if (T < 800) return 0.13 - (T - 700) * (0.13 - 0.09) / 100;
+            if (T < 900) return 0.09 - (T - 800) * (0.09 - 0.0675) / 100;
+            if (T < 1000) return 0.0675 - (T - 900) * (0.0675 - 0.045) / 100;
+            if (T < 1100) return 0.045 - (T - 1000) * (0.045 - 0.0225) / 100;
+            if (T < 1200) return 0.0225 - (T - 1100) * (0.0225 - 0.0) / 100;
+            return 0.0;
+        }
+
+        /**
+         * Calculates the reduction factor for concrete compressive strength (EC2, Siliceous).
+         * @param {number} T - Temperature in Celsius.
+         * @returns {number} Reduction factor k_c,theta (between 0 and 1).
+         */
+        function concreteStrengthReduction(T) {
+            if (T <= 100) return 1.0;
+            if (T <= 200) return 1.0 - (T - 100) * (1.0 - 0.95) / 100;
+            if (T <= 300) return 0.95 - (T - 200) * (0.95 - 0.85) / 100;
+            if (T <= 400) return 0.85 - (T - 300) * (0.85 - 0.75) / 100;
+            if (T <= 500) return 0.75 - (T - 400) * (0.75 - 0.60) / 100;
+            if (T <= 600) return 0.60 - (T - 500) * (0.60 - 0.45) / 100;
+            if (T <= 700) return 0.45 - (T - 600) * (0.45 - 0.30) / 100;
+            if (T <= 800) return 0.30 - (T - 700) * (0.30 - 0.15) / 100;
+            if (T <= 900) return 0.15 - (T - 800) * (0.15 - 0.08) / 100;
+            if (T <= 1000) return 0.08 - (T - 900) * (0.08 - 0.04) / 100;
+            if (T <= 1100) return 0.04 - (T - 1000) * (0.04 - 0.01) / 100;
+            if (T <= 1200) return 0.01 - (T - 1100) * (0.01 - 0.0) / 100;
+            return 0.0;
+        }
+
+        /**
+         * Calculates the reduction factor for concrete elastic modulus (EC2 approximation).
+         * Note: EC2 relates E_c,theta to f_c,theta via strain at peak stress, this is a simplification.
+         * Using a similar shape to strength reduction for simplicity here.
+         * @param {number} T - Temperature in Celsius.
+         * @returns {number} Reduction factor k_E,theta (between 0 and 1).
+         */
+        function concreteElasticModulusReduction(T) {
+             // Simplified: Assume modulus reduction follows a similar but faster path than strength
+            if (T <= 100) return 1.0;
+            if (T <= 200) return 1.0 - (T - 100) * (1.0 - 0.85) / 100; // Faster drop
+            if (T <= 300) return 0.85 - (T - 200) * (0.85 - 0.70) / 100;
+            if (T <= 400) return 0.70 - (T - 300) * (0.70 - 0.55) / 100;
+            if (T <= 500) return 0.55 - (T - 400) * (0.55 - 0.35) / 100;
+            if (T <= 600) return 0.35 - (T - 500) * (0.35 - 0.20) / 100;
+            if (T <= 700) return 0.20 - (T - 600) * (0.20 - 0.10) / 100;
+            if (T <= 800) return 0.10 - (T - 700) * (0.10 - 0.05) / 100;
+            if (T <= 900) return 0.05 - (T - 800) * (0.05 - 0.02) / 100;
+            if (T <= 1000) return 0.02 - (T - 900) * (0.02 - 0.00) / 100; // Assume ~0 by 1000C
+            return 0.0;
+        }
+
+        // --- Interactive Material Plot Logic ---
+
+        /** Updates the material property degradation plot */
+        function updateMaterialPlot() {
+            const plotDivId = "material-property-plot";
+            const context = "Material Property Plot";
+            try {
+                // Get selected values
+                const materialSelect = document.getElementById('materialSelect');
+                const propertySelect = document.getElementById('propertySelect');
+                const tempSlider = document.getElementById('temperatureSlider');
+                if (!materialSelect || !propertySelect || !tempSlider || typeof tempSlider.actualValue === 'undefined') {
+                    throw new Error("Material plot controls not found or not initialized.");
+                }
+                const material = materialSelect.value;
+                const property = propertySelect.value;
+                const selectedTemp = tempSlider.actualValue;
+
+                // --- Plot Setup ---
+                const margin = {top: 20, right: 30, bottom: 40, left: 40};
+                const { g, dims } = setupPlotArea(plotDivId, margin); // Setup in the div
+
+                // --- Data Generation ---
+                const tempRange = d3.range(20, 1201, 10); // Temperatures from 20 to 1200 C
+                let reductionFn; // Function to calculate reduction factor
+
+                if (material === 'steel') {
+                    reductionFn = (property === 'yield') ? steelYieldReduction : steelElasticModulusReduction;
+                } else if (material === 'concrete') {
+                    reductionFn = (property === 'yield') ? concreteStrengthReduction : concreteElasticModulusReduction;
+                } else {
+                    throw new Error(`Unsupported material type: ${material}`);
+                }
+
+                const plotData = tempRange.map(T => {
+                    const k = reductionFn(T);
+                    return { temp: T, k: (isFinite(k) && k >= 0) ? k : null }; // Ensure k is valid
+                }).filter(d => d.k !== null); // Remove points with invalid k
+
+                 if (plotData.length < 2) {
+                     throw new Error("Not enough valid data points generated for material plot.");
+                 }
+
+                // --- Scales ---
+                const xScale = d3.scaleLinear().domain([0, 1200]).range([0, dims.plotWidth]); // Temp 0-1200 C
+                const yScale = d3.scaleLinear().domain([0, 1.1]).range([dims.plotHeight, 0]); // Reduction factor 0-1.1
+
+                // --- Draw Axes ---
+                drawAxes(g, xScale, yScale, null, dims, margin, {
+                    x: "Temperature (°C)", xOffset: 10,
+                    yLeft: "Reduction Factor (k)", yLeftOffset: 15, yLeftFormat: d3.format(".1f")
+                });
+
+                // --- Draw Line ---
+                const lineGen = d3.line()
+                    .x(d => xScale(d.temp))
+                    .y(d => yScale(d.k))
+                    .defined(d => d.k !== null && isFinite(xScale(d.temp)) && isFinite(yScale(d.k)));
+
+                // Determine line class based on material/property for styling
+                 let lineClass = 'prop-yield-line'; // Default
+                 if (material === 'steel') lineClass = (property === 'yield') ? 'prop-yield-line' : 'prop-elastic-line';
+                 else if (material === 'concrete') lineClass = (property === 'yield') ? 'concrete-line' : 'concrete-line prop-elastic-line'; // Use concrete color, maybe dashed for elastic
+
+                drawLine(g, plotData, lineGen, lineClass);
+
+                // --- Draw Vertical Line and Point at Selected Temperature ---
+                const selectedK = reductionFn(selectedTemp);
+                if (isFinite(selectedK) && selectedK >= 0) {
+                    // Update the reduction factor display in the slider output box
+                    const kValueSpan = document.getElementById('reductionFactorValue');
+                    if(kValueSpan) kValueSpan.textContent = selectedK.toFixed(2);
+
+                    const xPos = xScale(selectedTemp);
+                    const yPos = yScale(selectedK);
+
+                    // Vertical line
+                    g.append("line")
+                        .attr("class", "selected-temp-line")
+                        .attr("x1", xPos)
+                        .attr("y1", dims.plotHeight)
+                        .attr("x2", xPos)
+                        .attr("y2", yPos)
+                        .style("stroke", "var(--error-color)") // Use error color for emphasis
+                        .attr("stroke-dasharray", "3 3");
+
+                    // Point on the curve
+                    g.append("circle")
+                        .attr("class", "selected-temp-point")
+                        .attr("cx", xPos)
+                        .attr("cy", yPos)
+                        .attr("r", 4)
+                        .style("fill", "var(--error-color)"); // Use error color
+                } else {
+                     // Clear reduction factor if invalid
+                     const kValueSpan = document.getElementById('reductionFactorValue');
+                     if(kValueSpan) kValueSpan.textContent = "N/A";
+                }
+
+            } catch (error) {
+                console.error(`Error updating ${context}:`, error);
+                displayPlotError(plotDivId, `Material Plot Error: ${error.message}`);
+                 // Clear reduction factor on error
+                 const kValueSpan = document.getElementById('reductionFactorValue');
+                 if(kValueSpan) kValueSpan.textContent = "Err";
+            }
+        }
+
+
+        // --- Global Setup Functions ---
+
+        /** Initializes all interactive elements on the page */
+        function setupAllInteractives() {
+            try {
+                // Material Property Plot Controls
+                const materialSelect = document.getElementById('materialSelect');
+                const propertySelect = document.getElementById('propertySelect');
+                const tempSlider = document.getElementById('temperatureSlider');
+
+                if (materialSelect) materialSelect.onchange = updateMaterialPlot;
+                if (propertySelect) propertySelect.onchange = updateMaterialPlot;
+
+                // Setup temperature slider with custom value formatting
+                setupSlider('temperatureSlider', 'temperatureValue', {
+                    fixedDigits: 0,
+                    callback: updateMaterialPlot,
+                    valueFormatFn: (val) => `T = ${val.toFixed(0)} °C | k ≈ ` // Update only temp part
+                });
+
+            } catch (error) {
+                console.error("Error setting up one or more interactive elements:", error);
+            }
+        }
+
+        /** Renders all plots that should be visible on initial page load */
+        function renderAllPlotsInitial() {
+             const initialRenderFunctions = [
+                 updateMaterialPlot // Render the material plot initially
+             ];
+             initialRenderFunctions.forEach(renderFunc => {
+                 try { renderFunc(); }
+                 catch (e) { console.error(`Error during initial call to ${renderFunc.name}:`, e); }
+             });
+         }
+
+        /** Sets up smooth scrolling for internal navigation links */
+        function setupSmoothScrolling(){
+            try {
+                document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement) {
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            // Estimate header (76px) + nav (~34px) height = ~110px
+                            const headerOffset = 110 + 10; // Add 10px buffer
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                        } else { console.warn("Smooth scroll target not found:", targetId); }
+                    });
+                });
+            } catch (e) { console.error("Error setting up smooth scrolling:", e); }
+        }
+
+        // --- Initialization on DOM Load ---
+        document.addEventListener('DOMContentLoaded', function () {
+             try {
+                 setupAllInteractives(); // Setup sliders and selectors first
+                 renderAllPlotsInitial(); // Then render plots using initial values
+                 setupSmoothScrolling();
+                 // Typeset MathJax
+                 if (typeof MathJax !== 'undefined' && typeof MathJax.typesetPromise === 'function') {
+                     setTimeout(() => {
+                         MathJax.typesetPromise().catch((err) => console.error('MathJax typesetting failed:', err));
+                     }, 100); // Slightly longer delay might be needed if plots affect layout
+                 } else { console.warn("MathJax or typesetPromise not available."); }
+             } catch (error) {
+                 console.error("CRITICAL ERROR during initial setup:", error);
+                 alert("A critical error occurred during page initialization. Some interactive elements may not work.");
+             }
+         });
 
     </script>
 
