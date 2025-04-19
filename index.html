@@ -13,33 +13,31 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        /* CSS Custom Properties - Orange/Fire Theme */
+        /* CSS Custom Properties - Light Blue Theme (Restored from Template) */
         :root {
-            --bg-color-dark: #1f2937; /* Dark Gray-Blue background */
-            --bg-color-medium: #374151; /* Medium Gray */
-            --bg-color-light: #4b5563; /* Lighter Gray */
-            --text-color-light: #f9fafb; /* Very Light Gray / Off-white text */
-            --text-color-medium: #d1d5db; /* Medium Gray text */
-            --text-color-dark: var(--bg-color-dark); /* Dark text for light backgrounds */
-            --accent-orange: #f97316; /* Vibrant Orange */
-            --accent-red: #ef4444; /* Red */
-            --accent-yellow: #eab308; /* Yellow */
-            --border-color-light: #4b5563; /* Lighter Gray border */
-            --border-color-medium: #6b7280; /* Medium Gray border */
-            --highlight-bg: #374151; /* Medium Gray for highlights on dark bg */
-            --vis-bg-color: #111827; /* Very Dark Gray for visualization backgrounds */
-            --vis-border-color: #4b5563; /* Lighter Gray border for visualizations */
-            --header-grad-from: var(--accent-orange);
-            --header-grad-to: var(--accent-red);
-            --error-color: var(--accent-red);
+            --bg-color: #f0f9ff; /* Light blue background */
+            --text-color-main: #0369a1; /* Sky blue text */
+            --text-color-header: #0c4a6e; /* Darker blue for headers */
+            --text-color-accent: #075985; /* Accent blue */
+            --text-color-subtle: #0ea5e9; /* Lighter accent blue */
+            --border-color-light: #e0f2fe; /* Very light blue border */
+            --border-color-medium: #bae6fd; /* Medium blue border */
+            --border-color-dark: #7dd3fc; /* Darker blue border */
+            --accent-color: #38bdf8; /* Bright blue accent */
+            --highlight-bg: #e0f2fe; /* Background for highlights */
+            --vis-bg-color: #f8fafc; /* Background for visualizations (slightly off-white) */
+            --vis-border-color: #cbd5e1; /* Border for visualizations (light gray) */
+            --header-grad-from: #0ea5e9; /* Header gradient start */
+            --header-grad-to: #0369a1; /* Header gradient end */
+            --error-color: #ef4444; /* Red for errors/warnings */
         }
         /* Smooth scrolling behavior */
         html { scroll-padding-top: 110px; /* Adjust based on actual header+nav height */ }
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
-            color: var(--text-color-medium); /* Default text color */
-            background-color: var(--bg-color-dark);
+            color: var(--text-color-main);
+            background-color: var(--bg-color);
             font-size: 1rem;
             line-height: 1.7;
         }
@@ -49,66 +47,68 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .dynamic-content { animation: fadeIn 0.6s ease-out forwards; }
 
-        /* --- Interactive Element Styling (Dark Theme Adaptation) --- */
-        label { color: var(--accent-orange); } /* Orange labels */
-        input[type="range"], select { border: 1px solid var(--border-color-medium); background-color: var(--bg-color-light); color: var(--text-color-light); }
-        input[type="range"]:focus, select:focus { border-color: var(--accent-orange); box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.3); /* Orange focus ring */ }
+        /* --- Interactive Element Styling (Light Blue Theme Adaptation) --- */
+        label { color: var(--text-color-accent); }
+        input[type="range"], select { border: 1px solid var(--border-color-medium); background-color: white; color: var(--text-color-main); }
+        input[type="range"]:focus, select:focus { border-color: var(--accent-color); box-shadow: 0 0 0 2px var(--highlight-bg); }
         /* Custom range slider appearance */
-        input[type="range"] { accent-color: var(--accent-orange); background: var(--bg-color-light); border: 1px solid var(--border-color-medium); }
-        input[type="range"]::-webkit-slider-thumb { background: var(--accent-orange); border: 1px solid var(--text-color-light); }
-        input[type="range"]::-moz-range-thumb { background: var(--accent-orange); border: 1px solid var(--text-color-light); }
-        button { background-color: var(--accent-orange); color: var(--text-color-light); }
-        button:hover { background-color: #fb923c; } /* Lighter orange hover */
-        .output-box { background-color: var(--bg-color-medium); border: 1px solid var(--border-color-light); color: var(--text-color-light); }
-        .critical-diameter-output { color: var(--accent-yellow); font-size: 1.1rem; font-weight: 600; }
-        .interactive-container { background-color: var(--bg-color-medium); border: 1px solid var(--border-color-light); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
-        .visualization-box { background-color: var(--vis-bg-color); border: 1px dashed var(--vis-border-color); }
-        .instructional-text { color: var(--accent-yellow); }
-        .warning-note { color: var(--accent-red); font-weight: 500; }
+        input[type="range"] { cursor: pointer; accent-color: var(--accent-color); padding: 0; height: 0.5rem; appearance: none; background: var(--border-color-light); border-radius: 9999px; border: 1px solid var(--border-color-medium); }
+        input[type="range"]::-webkit-slider-thumb { appearance: none; width: 1rem; height: 1rem; background: var(--accent-color); border-radius: 50%; cursor: pointer; border: 1px solid var(--text-color-accent); }
+        input[type="range"]::-moz-range-thumb { width: 1rem; height: 1rem; background: var(--accent-color); border-radius: 50%; cursor: pointer; border: 1px solid var(--text-color-accent); }
+        button { background-color: var(--accent-color); color: var(--text-color-header); }
+        button:hover { background-color: var(--border-color-dark); }
+        .output-box { background-color: var(--highlight-bg); border: 1px solid var(--border-color-medium); color: var(--text-color-accent); }
+        .critical-diameter-output { color: var(--text-color-header); font-size: 1.1rem; font-weight: 600; }
+        .rpn-output { color: var(--text-color-header); font-size: 1.1rem; font-weight: 600; }
+        .interactive-container { background-color: #ffffff; border: 1px solid var(--border-color-light); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+        .visualization-box { background-color: var(--vis-bg-color); border: 1px dashed var(--vis-border-color); min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; margin-top: 1rem; text-align: center; position: relative; overflow: hidden; transition: background-color 0.3s ease; font-size: 0.9rem; }
+        .visualization-box svg { display: block; margin: auto; max-width: 100%; height: auto; }
+        .instructional-text { color: var(--text-color-subtle); }
+        .warning-note { color: var(--error-color); font-weight: 500; }
 
-        /* --- Table Styling (Dark Theme Adaptation) --- */
+        /* --- Table Styling (Light Blue Theme Adaptation) --- */
         table { }
-        th, td { border: 1px solid var(--border-color-medium); color: var(--text-color-medium); }
-        th { background-color: var(--bg-color-light); color: var(--accent-orange); top: 110px; /* Match scroll-padding */ }
-        tbody tr:nth-child(odd) { background-color: var(--bg-color-medium); }
+        th, td { border: 1px solid var(--border-color-medium); color: var(--text-color-main); }
+        th { background-color: var(--highlight-bg); color: var(--text-color-accent); top: 110px; }
+        tbody tr:nth-child(odd) { background-color: var(--vis-bg-color); }
         tbody tr:hover { background-color: var(--highlight-bg); }
 
-        /* --- Typography & Content Styling (Dark Theme Adaptation) --- */
-        h1, h2, h3, h4 { color: var(--text-color-light); } /* Light headers */
-        h2 { border-bottom: 2px solid var(--accent-orange); } /* Orange border */
-        h4 { color: var(--accent-orange); }
-        p, li { color: var(--text-color-medium); text-align: left; } /* Lighter text */
-        strong { color: var(--accent-yellow); } /* Yellow for emphasis */
-        code { background-color: var(--highlight-bg); color: var(--accent-yellow); }
-        blockquote { border-left: 4px solid var(--accent-orange); color: var(--text-color-light); background-color: var(--highlight-bg); }
-        .section-bg-darker { background-color: var(--vis-bg-color); } /* Class for very dark sections */
-        .equation { background-color: var(--bg-color-medium); padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color-light); color: var(--text-color-light); }
-        .key-concept { border: 1px solid var(--border-color-medium); background-color: var(--bg-color-light); }
-        .key-concept strong { color: var(--accent-orange); }
+        /* --- Typography & Content Styling (Light Blue Theme Adaptation) --- */
+        h1, h2, h3, h4 { color: var(--text-color-header); }
+        h2 { border-bottom: 2px solid var(--border-color-dark); } /* Blue border */
+        h4 { color: var(--text-color-accent); }
+        p, li { color: var(--text-color-main); text-align: left; }
+        strong { color: var(--text-color-accent); }
+        code { background-color: var(--highlight-bg); color: var(--text-color-accent); }
+        blockquote { border-left: 4px solid var(--accent-color); color: var(--text-color-subtle); background-color: var(--highlight-bg); }
+        .section-bg-white { background-color: #ffffff; } /* Class for white sections */
+        .equation { background-color: var(--highlight-bg); padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color-light); color: var(--text-color-main); display: block; text-align: center; margin: 1.25rem auto; font-size: 1.1rem; overflow-x: auto; }
+        .key-concept { border: 1px solid var(--border-color-medium); background-color: var(--vis-bg-color); }
+        .key-concept strong { color: var(--text-color-header); }
         figure svg, figure img { border: 1px solid var(--border-color-medium); background-color: var(--vis-bg-color); }
-        figcaption, .caption { color: var(--text-color-medium); }
+        figcaption, .caption { color: var(--text-color-subtle); }
 
-        /* --- D3 Plot Styling (Dark Theme Adaptation) --- */
+        /* --- D3 Plot Styling (Light Blue Theme Adaptation) --- */
         .d3-plot .axis path, .d3-plot .axis line { stroke: var(--border-color-medium); }
-        .d3-plot .axis text { fill: var(--text-color-medium); }
+        .d3-plot .axis text { fill: var(--text-color-main); }
         .d3-plot .grid line { stroke: var(--border-color-light); }
         /* Specific line colors */
-        .d3-plot .lfl-line { stroke: var(--accent-orange); }
-        .d3-plot .ufl-line { stroke: var(--accent-red); }
-        .plot-label { fill: var(--accent-yellow); }
+        .d3-plot .lfl-line { stroke: var(--accent-color); } /* Bright blue for LFL */
+        .d3-plot .ufl-line { stroke: var(--error-color); } /* Red for UFL */
+        .plot-label { fill: var(--text-color-accent); }
 
         /* --- Footer Styling --- */
         footer { border-top: 1px solid var(--border-color-medium); }
-        footer p { color: var(--text-color-medium);}
-        footer a { color: var(--accent-orange); }
-        footer a:hover { color: var(--accent-yellow); }
+        footer p { color: var(--text-color-main);}
+        footer a { color: var(--text-color-subtle); }
+        footer a:hover { color: var(--text-color-header); }
 
         /* --- Header/Nav Specific --- */
          header { background: linear-gradient(to right, var(--header-grad-from), var(--header-grad-to)); }
-         nav { background-color: var(--bg-color-light); border-bottom: 1px solid var(--border-color-medium); top: 88px; /* Adjusted for header height */ }
-         nav a { color: var(--text-color-light); }
-         nav a:hover { color: var(--accent-yellow); }
-         nav span { color: var(--accent-yellow); }
+         nav { background-color: var(--border-color-light); border-bottom: 1px solid var(--border-color-medium); top: 88px; /* Adjusted for header height */ }
+         nav a { color: var(--text-color-accent); }
+         nav a:hover { color: var(--text-color-header); }
+         nav span { color: var(--text-color-header); }
 
     </style>
 </head>
@@ -117,420 +117,286 @@
 
     <header class="bg-gradient-to-r from-[var(--header-grad-from)] to-[var(--header-grad-to)] text-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-5">
-            <h1 class="text-3xl font-bold">Advanced Mining Explosives & Industrial Fire Protection</h1>
-            <p class="text-orange-100 text-xs mt-2">A PhD-Level Exploration Integrating Detonation Physics, Initiation Science, Aerosol Hazards, and Fire Mitigation Strategies</p>
+            {/* Adjusted Title based on review suggestions */}
+            <h1 class="text-3xl font-bold">PhD Course: Managing High-Energy Release Hazards</h1>
+            <p class="text-sky-100 text-xs mt-2">An Advanced Exploration of Fire Dynamics, Explosives Technology, Structural Response, and Risk Assessment for Industrial & Extractive Environments</p>
         </div>
     </header>
 
     <nav class="sticky top-[88px] bg-sky-50 border-b border-sky-200 z-40 mb-4"> <div class="container mx-auto px-6 py-2 text-sm flex flex-wrap justify-center">
+            {/* Updated Nav based on potential reframing */}
             <span class="font-semibold text-sky-800 mr-3 mb-1 sm:mb-0">Sections:</span>
-            <a href="#aerosol_fire" class="text-sky-700 hover:text-sky-900 mr-3 mb-1 sm:mb-0">1. Aerosol Fire/Explosion</a> |
-            <a href="#explosives_perf" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">2. Explosives Performance</a> |
-            <a href="#initiation" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">3. Initiation & Sensitivity</a> |
-            <a href="#fire_protection" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">4. Fire Protection</a> |
-            <a href="#modeling" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">5. Advanced Modelling</a> |
-            <a href="#interactive" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">6. Interactive</a> |
-            <a href="#outlook" class="text-sky-700 hover:text-sky-900 ml-3 mb-1 sm:mb-0">7. Outlook</a>
+            <a href="#hazard_fundamentals" class="text-sky-700 hover:text-sky-900 mr-3 mb-1 sm:mb-0">1. Hazard Fundamentals</a> |
+            <a href="#fire_dynamics" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">2. Fire Dynamics & Aerosols</a> |
+            <a href="#detonation_physics" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">3. Detonation Physics</a> |
+            <a href="#initiation_sensitivity" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">4. Initiation & Sensitivity</a> |
+            <a href="#structural_response" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">5. Structural Response</a> |
+            <a href="#risk_mitigation" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">6. Risk & Mitigation</a> |
+            <a href="#modeling" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">7. Modelling</a> |
+            <a href="#interactive" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">8. Interactive</a> |
+            <a href="#outlook" class="text-sky-700 hover:text-sky-900 ml-3 mb-1 sm:mb-0">9. Outlook</a>
         </div>
     </nav>
 
     <main class="container mx-auto px-6 py-2">
 
-        <section id="aerosol_fire" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
-            <h2 class="text-2xl font-bold">1. Advanced Fire Dynamics & Aerosol Hazards</h2>
-            <p>Moving beyond bulk liquid flammability, this section addresses the distinct and often underestimated hazards of flammable aerosols (mists/sprays), drawing heavily on the review by Yuan et al. (2021).</p>
+        {/* Section 1: Hazard Fundamentals (NEW - Framing Section) */}
+        <section id="hazard_fundamentals" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">1. Fundamentals of High-Energy Release Hazards</h2>
+            <p>This doctoral course adopts a fundamental physics and engineering approach to understanding, predicting, and mitigating hazards associated with rapid energy release in industrial and extractive environments. We bridge the traditionally separate fields of fire science and explosives engineering by focusing on the underlying principles governing combustion, deflagration, detonation, blast wave propagation, and their interaction with structures and materials.</p>
             <ul>
-                <li><strong>The Aerosol Hazard Paradigm:** Emphasis on the inadequacy of flashpoint as the sole criterion for liquid flammability when aerosolization occurs (Yuan et al., Fig 1a). Discussion of the multi-dimensional flammability region for aerosols depending on concentration, temperature, and crucially, <strong>droplet size distribution</strong> (SMD, D3,2) (Yuan et al., Fig 1b).</li>
-                <li><strong>Aerosol Generation & Characterization:** Mechanisms relevant to industrial/mining scenarios: pressure release through orifices/leaks (e.g., hydraulic fluids, fuels), mechanical agitation, two-phase flow releases. Introduction to characterization techniques (Laser Diffraction, PIV, Phase Doppler) and key parameters (SMD). Correlations for droplet size prediction (e.g., Table 5 in Yuan et al. for injectors, Krishna et al. 2003a for leaks).</li>
-                <li><strong>Aerosol Flammability Limits:** Exploration of the complex relationship between droplet size and LFL/UFL. Discussion of the observed LFL reduction for larger droplets (>10-20 µm) and potential explanations (sedimentation effects, local stoichiometry, flame-droplet interaction - Yuan et al., Fig 6). Acknowledgment of contradictory findings in recent literature and the need for standardized testing. Higher UFL observed for aerosols compared to vapors.</li>
-                <li><strong>Aerosol Explosion Dynamics:** Measurement and significance of explosion parameters: Maximum Pressure (\(P_{max}\)) and Deflagration Index (\(K_a\), \(K_a = V^{1/3} (dP/dt)_{max}\)). Influence of experimental scale (vessel volume) on measured \(P_{max}\) and \(K_a\) (Yuan et al., Fig 11). Role of volatility and droplet size on explosion severity (Yuan et al., Fig 9, 10).</li>
-                 <li><strong>Deflagration-to-Detonation Transition (DDT):** Potential for DDT in aerosol clouds (Yuan et al., Fig 12). Review of experimental evidence (e.g., nitromethane, IPN, JP-10 - Yuan et al., Fig 13, 14) and factors influencing DDT propensity (concentration, confinement, ignition strength). Links to gas-phase and dust explosion DDT mechanisms.</li>
+                <li><strong>Thermodynamics & Kinetics:** Review of chemical thermodynamics (enthalpy of formation/reaction, equilibrium calculations - CEA codes) and chemical kinetics (Arrhenius law, reaction mechanisms, characteristic timescales) applied to combustion and detonation processes.</li>
+                <li><strong>Fluid Dynamics & Transport Phenomena:** Principles of compressible flow, shock physics (Rankine-Hugoniot relations), turbulent mixing, multi-phase flow (aerosols, dusts), heat and mass transfer under extreme conditions.</li>
+                <li><strong>Continuum Mechanics & Material Science:** Stress/strain relationships, constitutive models for materials (metals, concrete, rock, polymers) under high strain rates and elevated temperatures, fracture mechanics, failure criteria.</li>
+                <li><strong>Core Distinction:** Establishing the fundamental differences between deflagration (subsonic reaction wave driven by thermal diffusion) and detonation (supersonic wave driven by shock compression), and the conditions leading to transition (DDT).</li>
             </ul>
             <div class="key-concept mt-6">
-                <strong>PhD Challenge (Aerosols):</strong> Developing standardized, quantitative test methods for aerosol flammability/explosion parameters (\(K_a\), MIE, LFL/UFL vs SMD) and resolving the contradictions regarding LFL behaviour. Understanding and modelling aerosol DDT remains a critical research gap.
+                <strong>Course Philosophy:** To equip PhD researchers with the fundamental knowledge and analytical tools to tackle complex safety challenges involving fire, explosion, and blast hazards across diverse industrial settings, moving beyond prescriptive rules towards first-principles understanding and performance-based solutions.
             </div>
         </section>
 
-        <section id="explosives_perf" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
-            <h2 class="text-2xl font-bold">2. Mining Explosives: Performance & Non-Ideal Behaviour</h2>
-            <p>Focus shifts to the characterization and prediction of performance for explosives commonly used in mining, emphasizing deviations from ideal detonation theory.</p>
-            <ul>
-                <li><strong>Non-Ideal Detonation Theory:** Limitations of CJ theory for large-diameter, potentially non-homogeneous mining charges (ANFO, Emulsions, Heavy ANFO). Introduction to Detonation Shock Dynamics (DSD) framework: dependence of normal detonation velocity (\(D_n\)) on local front curvature (\(\kappa\)). Concept of failure diameter (\(d_f\)) and its dependence on charge properties and confinement. Impact of reaction zone length on non-ideal behaviour.</li>
-                <li><strong>Equation of State (EOS) for Detonation Products:** Critical review of EOS models used in hydrocodes for performance simulation (Ideal Gas, JWL, BKW, thermochemical codes like CHEETAH, EXPLO5). Parameterization challenges, sensitivity analysis, and impact of EOS choice on predicted detonation pressure (\(P_{det}\)), VOD, and energy release characteristics (e.g., Gurney energy).</li>
-                <li><strong>Performance Metrics & Measurement:**
-                    <ul>
-                        <li><strong>Velocity of Detonation (VOD):** Techniques: point probes (ionization, optical), continuous resistance wires, high-speed digital video analysis. Importance of steady-state VOD vs. run-up distance.</li>
-                        <li><strong>Detonation Pressure:** Measurement challenges. Underwater explosion tests (shock wave & bubble energy), plate dent tests (brisance comparison), in-situ gauges (manganin, PVDF - survivability issues).</li>
-                        <li><strong>Energy Output:** Cylinder expansion test (comparison of work potential), calorimetry (heat of detonation), seismic measurements. Relationship between theoretical energy (thermo-chemical codes) and delivered energy (work done on rock).</li>
-                    </ul>
-                </li>
-                <li><strong>Rock Interaction & Fragmentation:** Coupling explosive performance (pressure-time profile, gas energy) with rock mass properties (strength, structure, impedance) to predict fragmentation size distribution and blast damage extent. Introduction to blast modelling concepts (e.g., Kuz-Ram model limitations, numerical approaches using hydrocodes + fracture models).</li>
+        {/* Section 2: Fire Dynamics & Aerosol Hazards (Enhanced Content, Renumbered) */}
+        <section id="fire_dynamics" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">2. Advanced Fire Dynamics & Aerosol Hazards</h2>
+            <p>Examining fire development in enclosures and the specific, often misunderstood, hazards of flammable aerosols, drawing from Yuan et al. (2021).</p>
+            {/* Enhanced content from previous version remains here */}
+             <ul>
+                <li><strong>The Aerosol Hazard Paradigm:** Inadequacy of flashpoint; multi-dimensional flammability region (Concentration, Temp, SMD) (Yuan Fig 1).</li>
+                <li><strong>Aerosol Generation & Characterization:** Mechanisms (pressure atomization, flashing); Characterization (SMD, D3,2); Measurement techniques (Laser Diffraction); Predictive correlations (Yuan Table 5).</li>
+                <li><strong>Aerosol Flammability Limits (LFL/UFL):** Complex SMD influence; LFL reduction phenomenon and mechanisms (Yuan Fig 6); Contradictory literature; Higher UFL for aerosols.</li>
+                <li><strong>Aerosol Explosion Dynamics:** \(P_{max}\) & \(K_a\); Scale effects (Yuan Fig 11); Influence of volatility, SMD (Yuan Fig 9, 10). Equation: \( K_a = V^{1/3} (dP/dt)_{max} \).</li>
+                <li><strong>DDT in Aerosols:** Potential and evidence (IPN, JP-10, NM - Yuan Fig 13, 14); Influencing factors; Links to gas/dust DDT (Yuan Fig 12).</li>
+                <li><strong>Enclosure Fire Dynamics (Advanced):** Zone vs. CFD models (FDS); Ventilation control vs. fuel control; HRRPUA; Flashover criteria; Plume theory limitations; Advanced heat transfer (convection, radiation modelling - RADCAL, gray gas). Equation: \( \dot{q}''_{net} = h_c (T_{gas} - T_{surf}) + \epsilon_{surf} \sigma ( \epsilon_{gas} T_{gas}^4 - \alpha_{surf} T_{surf}^4 ) \).</li>
+            </ul>
+            <div class="key-concept mt-6">
+                <strong>PhD Challenge (Aerosols/Fire):</strong> Standardized aerosol testing; Resolving LFL contradictions; Predictive DDT criteria; Validated CFD for complex enclosure fires including aerosol behaviour.
+            </div>
+        </section>
+
+        {/* Section 3: Detonation Physics (Enhanced Content, Renumbered) */}
+        <section id="detonation_physics" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">3. Detonation Physics & Non-Ideal Behaviour</h2>
+            <p>Delving into the physics of detonation waves, particularly the non-ideal behaviour characteristic of commercial explosives used in mining and demolition.</p>
+            {/* Enhanced content from previous version remains here */}
+             <ul>
+                <li><strong>Non-Ideal Detonation Theory:** Beyond CJ; Detonation Shock Dynamics (DSD) \(D_n(\kappa)\); Reaction zone structure \(l_{rz}\); Curvature effects; Failure diameter \(d_f\); Role of confinement.</li>
+                <li><strong>Equation of State (EOS) & Thermochemistry:** Review of EOS models (Ideal Gas, JWL, BKW); Thermochemical codes (CHEETAH, EXPLO5); Parameterization challenges; Impact on predicted \(P_{det}, D_{det}\), energy.</li>
+                <li><strong>Performance Metrics & Measurement:** VOD (probes, video); Pressure (underwater tests, gauges, plate dent); Energy (cylinder expansion, calorimetry).</li>
+                <li><strong>Rock Interaction & Fragmentation:** Stress wave propagation; Dynamic fracture; Shock vs. heave energy; Blast design influence; Numerical models (Kuz-Ram limitations, Hydrocode+Fracture/DEM).</li>
             </ul>
              <div class="key-concept mt-6">
-                <strong>PhD Challenge (Performance):</strong> Developing accurate, validated reactive flow models and EOS for non-ideal explosives, and bridging the gap between predicted explosive output and actual rock fragmentation results through integrated modelling and advanced diagnostics.
+                <strong>PhD Challenge (Detonation):</strong> Develop predictive EOS/reactive burn models for non-ideal explosives under mining conditions; Improve quantitative links between explosive properties, blast design, geology, and fragmentation.
             </div>
         </section>
 
-        <section id="initiation" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
-             <h2 class="text-2xl font-bold">3. Initiation Systems & Explosive Sensitivity</h2>
-             <p>Reliable and safe initiation is paramount in blasting. This section examines the science behind initiation trains and the factors governing explosive sensitivity.</p>
-             <ul>
-                 <li><strong>The Initiation Train:** Sequence from detonator to booster to main charge. Principles of energy transfer and pressure amplification at each stage.
-                    <ul>
-                        <li><strong>Detonators:** Function of primary vs. secondary explosives. Characterization of output (VOD, shock pressure profile, timing accuracy - especially for electronic detonators). Reliability considerations.</li>
-                        <li><strong>Boosters (Primers):** Requirements: sufficient sensitivity to be initiated by detonator, sufficient output (pressure, duration, critical diameter) to initiate main charge reliably. Common materials (cast/pressed TNT, Pentolite, RDX/PETN compositions). Booster selection criteria based on main charge type and diameter.</li>
-                    </ul>
-                 </li>
-                 <li><strong>Shock Initiation & SDT:** Physics of Shock-to-Detonation Transition (SDT). Role of "hot spots" (void collapse, shear banding, friction) in initiating reaction. Pop-plots (\(X_{SDT}\) vs. Pressure) for characterizing shock sensitivity. Importance of shock pulse duration. Run distance to detonation.</li>
-                 <li><strong>Critical Diameter (\(d_c\)):** The minimum charge diameter that can sustain a steady detonation. Strong dependence on explosive type (sensitivity, reaction zone length), confinement (material, thickness), and initiation strength (booster output). Failure mechanisms below \(d_c\) (wave divergence, quenching).</li>
-                 <li><strong>Sensitivity Assessment:** Overview of standard tests for characterizing sensitivity to various stimuli:
-                     <ul>
-                         <li><strong>Shock Sensitivity:** UN Gap Test, wedge test.</li>
-                         <li><strong>Impact Sensitivity:** Drop weight tests (e.g., BAM, Rotter).</li>
-                         <li><strong>Friction Sensitivity:** BAM friction apparatus.</li>
-                         <li><strong>Thermal Sensitivity:** DSC/TGA, cook-off tests.</li>
-                     </ul>
-                     Interpretation of test results and their relevance to safety in handling, transport, and storage (e.g., HAZMAT classification). Limitations of small-scale tests for predicting large-scale behaviour.
-                 </li>
+        {/* Section 4: Initiation & Sensitivity (Enhanced Content, Renumbered) */}
+        <section id="initiation_sensitivity" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+             <h2 class="text-2xl font-bold">4. Initiation Systems & Explosive Sensitivity</h2>
+             <p>Examining the science and technology of reliably initiating explosives while ensuring safety through understanding sensitivity to various stimuli.</p>
+             {/* Enhanced content from previous version remains here */}
+              <ul>
+                 <li><strong>The Initiation Train:** Detonator output characterization (shock profile, timing - electronics); Booster selection (sensitivity, output, impedance matching); SDT physics at interfaces.</li>
+                 <li><strong>Shock Initiation & SDT:** Hot spot mechanisms (void collapse, shear); Critical energy/pressure criteria (\(P^n \tau\)); Pop-plots; Reactive burn models (Lee-Tarver); Run distance \(X_{SDT}\).</li>
+                 <li><strong>Critical Diameter (\(d_c\)) & Failure Diameter (\(d_f\)):** Distinction; Dependence on formulation, confinement, initiation; Experimental methods (cones, rate sticks).</li>
+                 <li><strong>Sensitivity Assessment:** Standard tests (UN Gap, BAM Impact/Friction); Interpretation for handling/transport safety; Limitations; Advanced concepts (critical shock pressure, thermal stability - DSC/ARC/Cook-off).</li>
              </ul>
              <blockquote class="my-4">
-                 Understanding the interplay between booster characteristics, main charge sensitivity (\(d_c\)), and confinement is crucial for designing effective and reliable blasting patterns while minimizing risks of misfires or sympathetic detonation.
+                 Understanding the complex interplay between initiation system parameters, explosive sensitivity (often linked to microstructure), and confinement is crucial for both performance optimisation and hazard mitigation (e.g., preventing sympathetic detonation).
              </blockquote>
         </section>
 
-        <section id="fire_protection" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
-            <h2 class="text-2xl font-bold">4. Fire Protection in Mining & Industrial Contexts</h2>
-            <p>Applying fire science principles to the specific challenges encountered in mining operations and related heavy industries, including hazards identified in the Yuan et al. (2021) review.</p>
-             <ul>
-                <li><strong>Specific Fire Hazards:**
-                    <ul>
-                        <li><strong>Flammable Liquids/Aerosols:** Hydraulic fluid leaks (high pressure atomization risk), fuel storage/transfer areas, solvent usage. Applying aerosol flammability concepts (Section 1) to hazard assessment.</li>
-                        <li><strong>Conveyor Belts:** Major fire risk due to friction, electrical faults, material ignition. Fire propagation along belts, smoke production in confined spaces. Fire-resistant belt materials and detection/suppression systems.</li>
-                        <li><strong>Mobile Equipment:** Engine fires, electrical faults, hydraulic leaks on large mining vehicles (diesel or increasingly, battery electric - BEV). BEV fire risks (thermal runaway).</li>
-                        <li><strong>Electrical Systems:** High-voltage installations, substations, cables. Arc flash hazards, cable fires.</li>
-                        <li><strong>Spontaneous Combustion:** Coal stockpiles, sulfide ore bodies. Monitoring (temperature, gas - CO, CO2), prevention (compaction, inerting), control strategies.</li>
-                    </ul>
-                </li>
-                 <li><strong>Ventilation & Fire Control:** Critical role of mine ventilation systems in both normal operation and fire scenarios. Strategies for smoke control, reversal, inertization using ventilation. Challenges in complex networks. Use of CFD for ventilation planning and fire simulation.</li>
-                <li><strong>Detection & Suppression Systems:**
-                    <ul>
-                        <li><strong>Detection:** Heat detectors (linear, spot), smoke detectors (optical, ionization - challenges in dusty environments), gas detectors (CO, CH4), flame detectors (UV, IR). Early warning systems.</li>
-                        <li><strong>Suppression:** Water-based systems (sprinklers, deluge, water mist - potential effectiveness for aerosol/equipment fires), foam systems (AFFF, high expansion for large volumes), inert gas systems (N2, CO2 - for enclosed spaces, electrical rooms), dry chemical systems, specialized vehicle suppression systems. System design considerations for harsh environments.</li>
-                    </ul>
-                </li>
-                 <li><strong>Risk Assessment & Management:** Applying principles from Yuan et al. (Fig 15) and standard methodologies (HAZID, HAZOP, LOPA) to mining/industrial fire/explosion scenarios. Consequence modelling (fire spread, smoke transport, potential for gas/dust/aerosol explosions). Emergency preparedness and response planning. Regulatory frameworks (e.g., MSHA, ATEX, relevant NFPA codes).</li>
-             </ul>
-             <div class="key-concept mt-6">
-                <strong>PhD Challenge (Fire Protection):</strong> Developing reliable fire detection and suppression strategies for complex, harsh environments (e.g., underground mines, large industrial plants), validating CFD models for smoke/fire spread in intricate geometries, and addressing emerging risks like BEV fires.
+        {/* Section 5: Structural Response to Fire & Blast (NEW/Refocused) */}
+        <section id="structural_response" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">5. Structural Response to Fire & Blast Loads</h2>
+            <p>Analyzing the behaviour of structures subjected to extreme thermal (fire) and dynamic (blast) loading conditions encountered in industrial and mining environments.</p>
+            <ul>
+                <li><strong>Material Behaviour Under Extreme Conditions:** Review of temperature-dependent mechanical properties (\(E_\theta, f_{y,\theta}, f_{c,\theta}\) - Section 2) and introduction to high strain-rate material behaviour (e.g., Johnson-Cook, Cowper-Symonds models for metals). Importance of creep under sustained fire loading vs. dynamic strength increase under blast.</li>
+                <li><strong>Structural Fire Engineering Analysis:** Methods (simple vs. advanced FEM - SAFIR, OpenSees, ABAQUS); Thermal analysis (heat transfer); Mechanical analysis (thermal expansion, restraint, buckling, membrane action, connection behaviour); Progressive collapse assessment under fire.</li>
+                <li><strong>Blast Loading on Structures:** Characterization of blast waves (Friedlander waveform: peak pressure, duration, impulse); Load application in hydrocodes/FEM (pressure-time histories, FSI); Structural response modes (direct pressure, drag, diffraction); Failure criteria under dynamic loads (breaching, spalling, global collapse).</li>
+                <li><strong>Combined Hazards:** Potential for fire following explosion (or vice-versa). Challenges in modelling sequential or combined loading scenarios. Post-event structural assessment and integrity.</li>
+                <li><strong>Protective Structures:** Design principles for fire-rated compartments and blast-resistant structures (e.g., bunkers, control rooms, mine refuge chambers). Role of material selection, structural form, and detailing.</li>
+            </ul>
+            <div class="key-concept mt-6">
+                <strong>PhD Challenge (Structures):** Develop high-fidelity, validated models for structural response under combined/sequential fire and blast loading. Improve understanding of connection behaviour under extreme loads. Create efficient methods for assessing post-event structural integrity and resilience.
             </div>
         </section>
 
-        <section id="modeling" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
-            <h2 class="text-2xl font-bold">5. Advanced Modelling & Simulation</h2>
-            <p>Computational modelling plays a crucial role in understanding and predicting complex phenomena in both fire protection and explosives engineering.</p>
+        {/* Section 6: Risk Assessment & Mitigation (Enhanced Content, Renumbered) */}
+        <section id="risk_mitigation" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">6. Risk Assessment & Mitigation Strategies</h2>
+            <p>Applying systematic methodologies for identifying, analysing, and mitigating fire and explosion risks in mining and industrial settings, incorporating advanced techniques discussed in Soltani et al. (2024).</p>
+            {/* Enhanced content from previous version remains here, including Fuzzy/MCDM */}
              <ul>
-                <li><strong>CFD for Fire & Ventilation:** Advanced applications of CFD (e.g., FDS, OpenFOAM) for:
+                <li><strong>Hazard Identification:** Techniques (HAZID, HAZOP, What-if) applied to fire (aerosols, conveyors, electrical, spontaneous combustion) and explosives (handling, storage, misfires, flyrock, fumes, security) scenarios in mining. Use of incident databases (e.g., Yuan et al. review).</li>
+                <li><strong>Advanced Risk Assessment Methods:** Limitations of classical RPN (Fine-Kinney). Introduction to Fuzzy Logic for handling uncertainty (TFNs, linguistic variables - Soltani Table 7). Application of MCDM:
                     <ul>
-                        <li>Simulating fire growth and smoke propagation in large, complex geometries (mine drifts, tunnels, process plants).</li>
-                        <li>Evaluating effectiveness of ventilation strategies for smoke control and inertization.</li>
-                        <li>Predicting heat transfer to structures for input into structural fire analysis.</li>
-                        <li>Modelling performance of suppression systems (sprinklers, water mist).</li>
-                        <li>Challenges: Turbulence modelling, combustion sub-models (e.g., EDC, flamelet), radiation modelling, soot prediction, computational cost, validation against experiments.</li>
+                       <li><strong>FBWM:** For weighting criteria (e.g., Consequence, Probability, Exposure) robustly (Soltani Eq 8, Table 11).</li>
+                       <li><strong>GRA:** For ranking risks based on similarity to ideal reference (Soltani Eq 16, 17, Table 14). Discussion of specific high-ranked blasting risks from Soltani et al. (R12, R15, R23).</li>
                     </ul>
                 </li>
-                 <li><strong>Hydrocodes for Blasting & Explosions:** Use of explicit finite element / finite difference codes (e.g., AUTODYN, LS-DYNA, CTH) for:
+                 <li><strong>Consequence Modelling:** Use of CFD (FDS) for fire/smoke spread; Hydrocodes (AUTODYN) or empirical models for blast wave propagation and structural damage assessment; Aerosol dispersion models (e.g., CCPS RELEASE).</li>
+                 <li><strong>Mitigation & Control Strategies:**
                      <ul>
-                        <li>Simulating detonation wave propagation using programmed burn or reactive flow models coupled with appropriate EOS.</li>
-                        <li>Predicting blast wave generation and propagation in air and ground/rock.</li>
-                        <li>Modelling structural response to blast loading (fluid-structure interaction - FSI).</li>
-                        <li>Simulating rock fragmentation using coupled hydrocode + discrete element (DEM) or damage models.</li>
-                        <li>Challenges: Accurate EOS/reactive burn models for non-ideal explosives, realistic material models for rock/concrete under high strain rates, computational expense for large 3D models, validation.</li>
+                        <li><strong>Fire:** Ventilation control, detection systems (FO-DTS, advanced gas/smoke), suppression (water mist, foam, inerting, vehicle systems), passive protection (coatings, barriers), emergency response planning, refuge chambers.</li>
+                        <li><strong>Explosives:** Storage regulations (magazine design), handling procedures (anti-static - R12), initiation system safety (electronic detonators), blast design optimization (fragmentation, flyrock control), fume clearance (ventilation), security protocols.</li>
                     </ul>
                  </li>
-                 <li><strong>Coupled & Multi-Scale Modelling:** Emerging research areas:
-                     <ul>
-                        <li>Coupling CFD fire models with FEM structural analysis codes for comprehensive fire-structure interaction.</li>
-                        <li>Linking micro-scale material models (e.g., hot spot formation, char oxidation) to macro-scale simulations.</li>
-                        <li>Integrating blast models with geomechanical codes for large-scale stability analysis.</li>
-                        <li>Coupling evacuation models with CFD fire simulations.</li>
-                    </ul>
-                 </li>
+                 <li><strong>Regulatory Context:** Overview of relevant frameworks (e.g., ATEX, MSHA, NFPA codes, UN transport regulations). Role of QRA and PBD in demonstrating safety.</li>
+             </ul>
+             <div class="key-concept mt-6">
+                <strong>PhD Challenge (Risk/Mitigation):** Integrate advanced consequence models (CFD, Hydrocodes) within probabilistic risk assessment frameworks (QRA). Develop dynamic risk assessment tools incorporating real-time monitoring data. Optimize mitigation strategies using simulation and cost-benefit analysis. Validate fuzzy/MCDM approaches against real-world incident data.
+            </div>
+        </section>
+
+        {/* Section 7: Advanced Modelling & Simulation (Renumbered) */}
+        <section id="modeling" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">7. Advanced Modelling & Simulation</h2>
+             {/* Content from previous version remains here */}
+             <p>Computational modelling is indispensable for tackling the complexity of fire, explosion, and blast phenomena at a PhD level.</p>
+             <ul>
+                <li>CFD for Fire & Ventilation: FDS, OpenFOAM; Challenges (turbulence, combustion, radiation, soot, V&V, HPC).</li>
+                <li>Hydrocodes for Blasting & Explosions: AUTODYN, LS-DYNA; Challenges (EOS/reactive burn models, rock/concrete models, V&V, FSI).</li>
+                <li>Coupled & Multi-Scale Modelling: CFD-FEM, micro-macro links, blast-geomechanics, evacuation-fire coupling, UQ methods.</li>
              </ul>
               <blockquote class="my-4">
-                Validation against well-characterized experiments at various scales is essential for building confidence in advanced simulation tools used for safety assessment and design optimization.
+                A key focus for PhD research is often the development, implementation, and rigorous validation of novel numerical methods or sub-models within these advanced simulation frameworks.
             </blockquote>
         </section>
 
-        <section id="interactive" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
-            <h2 class="text-2xl font-bold">6. Interactive Exploration Tools</h2>
-            <p>Explore key concepts discussed in the course through interactive visualizations. These tools use simplified models for educational illustration.</p>
+        {/* Section 8: Interactive Exploration (Renumbered & Expanded) */}
+        <section id="interactive" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">8. Interactive Exploration Tools</h2>
+            <p>Explore key concepts discussed in the course through interactive visualizations. These tools use simplified models for educational illustration ONLY and should not be used for design or safety decisions.</p>
 
+            {/* Interactive 1: Explosives Initiation Concept */}
             <div class="interactive-container mt-4">
                 <h3 class="text-xl font-semibold mb-2 text-center">Explosives Initiation Concept</h3>
                 <p class="instructional-text">Explore the conceptual relationship between booster output, main charge sensitivity, confinement, and the resulting critical diameter required for reliable initiation.</p>
+                 {/* Sliders and output div from previous version */}
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-                     <div>
-                         <label for="boosterOutputSlider">Booster Output (Conceptual):</label>
-                         <input type="range" id="boosterOutputSlider" name="boosterOutputSlider" min="1" max="10" value="5" step="1">
-                         <div class="output-box"><span id="boosterOutputValue">5</span> (Rel. Units)</div>
-                     </div>
-                      <div>
-                         <label for="chargeSensitivitySlider">Main Charge Sensitivity:</label>
-                         <input type="range" id="chargeSensitivitySlider" name="chargeSensitivitySlider" min="1" max="5" value="3" step="1">
-                         <div class="output-box"><span id="chargeSensitivityValue">Medium</span></div>
-                     </div>
-                     <div>
-                         <label for="confinementSlider">Confinement Level:</label>
-                         <input type="range" id="confinementSlider" name="confinementSlider" min="1" max="4" value="2" step="1">
-                         <div class="output-box"><span id="confinementValue">Low</span></div>
-                     </div>
-                     <div class="flex flex-col items-center justify-center">
-                          <label class="text-center">Conceptual Critical Diameter:</label>
-                          <div id="criticalDiameterOutput" class="output-box critical-diameter-output w-full">-- mm</div>
-                     </div>
+                     <div> <label for="boosterOutputSlider">Booster Output (Conceptual):</label> <input type="range" id="boosterOutputSlider" name="boosterOutputSlider" min="1" max="10" value="5" step="1"> <div class="output-box"><span id="boosterOutputValue">5</span> (Rel. Units)</div> </div>
+                     <div> <label for="chargeSensitivitySlider">Main Charge Sensitivity:</label> <input type="range" id="chargeSensitivitySlider" name="chargeSensitivitySlider" min="1" max="5" value="3" step="1"> <div class="output-box"><span id="chargeSensitivityValue">Medium</span></div> </div>
+                     <div> <label for="confinementSlider">Confinement Level:</label> <input type="range" id="confinementSlider" name="confinementSlider" min="1" max="4" value="2" step="1"> <div class="output-box"><span id="confinementValue">Low</span></div> </div>
+                     <div class="flex flex-col items-center justify-center"> <label class="text-center">Conceptual Critical Diameter:</label> <div id="criticalDiameterOutput" class="output-box critical-diameter-output w-full">-- mm</div> </div>
                  </div>
-                 <div id="initiation-explanation" class="interactive-output mt-6 text-sm text-left space-y-1" style="border-left-color: var(--accent-orange); background-color: var(--vis-bg-color);">
-                    <p>Adjust sliders to see how parameters conceptually influence the critical diameter needed for initiation.</p>
-                 </div>
-                  <p class="warning-note mt-4">Warning: Highly simplified conceptual model for educational purposes ONLY. Does not represent real explosives or provide design data. Explosives are extremely dangerous.</p>
+                 <div id="initiation-explanation" class="interactive-output mt-6 text-sm text-left space-y-1" style="border-left-color: var(--accent-color); background-color: var(--vis-bg-color);"> <p>Adjust sliders...</p> </div>
+                 <p class="warning-note mt-4">Warning: Highly simplified conceptual model. Explosives are extremely dangerous.</p>
             </div>
 
+            {/* Divider */}
             <div class="my-10 border-t border-dashed border-[var(--border-color-medium)]"></div>
 
+            {/* Interactive 2: Aerosol Flammability Concept */}
             <div class="interactive-container mt-4">
                 <h3 class="text-xl font-semibold mb-2 text-center">Aerosol Flammability Limits Concept</h3>
                 <p class="instructional-text">Visualize the conceptual effect of aerosol Sauter Mean Diameter (SMD) on the Lower and Upper Flammability Limits (LFL/UFL), based on trends discussed in Yuan et al. (2021).</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <div>
-                        <label for="smdSlider">Droplet SMD (µm):</label>
-                        <input type="range" id="smdSlider" name="smdSlider" min="5" max="500" value="50" step="5">
-                        <div class="output-box">SMD = <span id="smdValue">50</span> µm</div>
-                    </div>
-                     <div>
-                         <label>Conceptual Flammability Range:</label>
-                         <div id="flammabilityRangeOutput" class="output-box">LFL: -- g/m³ | UFL: -- g/m³</div>
-                     </div>
+                 {/* Sliders and plot div from previous version */}
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div> <label for="smdSlider">Droplet SMD (µm):</label> <input type="range" id="smdSlider" name="smdSlider" min="5" max="500" value="50" step="5"> <div class="output-box">SMD = <span id="smdValue">50</span> µm</div> </div>
+                    <div> <label>Conceptual Flammability Range:</label> <div id="flammabilityRangeOutput" class="output-box">LFL: -- g/m³ | UFL: -- g/m³</div> </div>
                 </div>
-                <div class="visualization-box">
-                    <div id="aerosol-flammability-plot" class="w-full h-64 d3-plot"></div>
-                    <p class="text-xs mt-2 caption">Conceptual plot of Flammability Limits (g/m³) vs. Droplet SMD (µm). Dashed lines represent gas-phase limits. Note the potential LFL reduction and UFL increase for certain droplet sizes.</p>
-                </div>
-                 <p class="warning-note mt-4">Disclaimer: Illustrative model based on general trends and conflicting literature data (see Yuan et al., 2021). Actual limits are substance-specific and require experimental determination.</p>
+                <div class="visualization-box"> <div id="aerosol-flammability-plot" class="w-full h-64 d3-plot"></div> <p class="text-xs mt-2 caption">Conceptual plot: Limits (g/m³, log) vs. SMD (µm). Dashed lines = gas limits.</p> </div>
+                <p class="warning-note mt-4">Disclaimer: Illustrative model based on general trends and conflicting literature. Actual limits require experiments.</p>
+            </div>
+
+             {/* Divider */}
+            <div class="my-10 border-t border-dashed border-[var(--border-color-medium)]"></div>
+
+             {/* Interactive 3: Fuzzy Risk Prioritization Concept */}
+            <div class="interactive-container mt-4">
+                <h3 class="text-xl font-semibold mb-2 text-center">Fuzzy Risk Prioritization Concept (Fine-Kinney)</h3>
+                <p class="instructional-text">Explore how linguistic assessments of Consequence, Probability, and Exposure, combined with criteria weights (from Soltani et al.), influence a conceptual Risk Priority Number (RPN) using fuzzy logic principles.</p>
+                 {/* Selects and output div from previous version */}
+                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 items-end">
+                     <div> <label for="consequenceSelect">Consequence (C):</label> <select id="consequenceSelect" name="consequenceSelect" class="cursor-pointer"> <option value="VL">Very Low (VL)</option> <option value="L">Low (L)</option> <option value="LM">Low-Moderate (LM)</option> <option value="M" selected>Moderate (M)</option> <option value="AH">Almost High (AH)</option> <option value="H">High (H)</option> <option value="VH">Very High (VH)</option> </select> <div class="output-box text-xs">Weight (w_C) ≈ 0.538</div> </div>
+                     <div> <label for="probabilitySelect">Probability (P):</label> <select id="probabilitySelect" name="probabilitySelect" class="cursor-pointer"> <option value="VL">Very Low (VL)</option> <option value="L" selected>Low (L)</option> <option value="LM">Low-Moderate (LM)</option> <option value="M">Moderate (M)</option> <option value="AH">Almost High (AH)</option> <option value="H">High (H)</option> <option value="VH">Very High (VH)</option> </select> <div class="output-box text-xs">Weight (w_P) ≈ 0.294</div> </div>
+                     <div> <label for="exposureSelect">Exposure (E):</label> <select id="exposureSelect" name="exposureSelect" class="cursor-pointer"> <option value="VL">Very Low (VL)</option> <option value="L">Low (L)</option> <option value="LM" selected>Low-Moderate (LM)</option> <option value="M">Moderate (M)</option> <option value="AH">Almost High (AH)</option> <option value="H">High (H)</option> <option value="VH">Very High (VH)</option> </select> <div class="output-box text-xs">Weight (w_E) ≈ 0.167</div> </div>
+                     <div class="flex flex-col items-center justify-center"> <label class="text-center">Conceptual Weighted RPN:</label> <div id="rpnOutput" class="output-box rpn-output w-full">--</div> <div id="rpnRiskLevel" class="text-sm font-semibold mt-1">--</div> </div>
+                 </div>
+                 <div id="risk-explanation" class="interactive-output mt-6 text-sm text-left space-y-1" style="border-left-color: var(--accent-color); background-color: var(--vis-bg-color);"> <p>Select linguistic ratings...</p> </div>
+                 <p class="warning-note mt-4">Note: Simplified calculation for illustration. Real fuzzy risk assessment involves more complex methods.</p>
             </div>
 
         </section>
 
-        <section id="outlook" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
-            <h2 class="text-2xl font-bold">7. Outlook: Challenges & Future Directions</h2>
-             {/* Content from previous version remains here, slightly adapted */}
-             <p>Mining explosives technology and industrial fire protection face significant challenges driven by deeper extraction, automation, new energy sources (BEVs), stricter environmental regulations, and the need for enhanced safety and operational efficiency.</p>
+        {/* Section 9: Outlook (Renumbered) */}
+        <section id="outlook" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">9. Outlook: Challenges & Future Directions</h2>
+             {/* Content from previous version remains here */}
+             <p>Research and development in managing high-energy release hazards remain critical for improving safety, efficiency, and sustainability in essential industries.</p>
              <h3 class="text-xl font-semibold mt-4 mb-2">Key Research Directions:</h3>
             <ul class="list-disc list-inside space-y-1 pl-4">
-                <li>Development and validation of high-fidelity, multi-physics simulation tools (reactive flow, CFD, FEM, DEM).</li>
-                <li>Improved understanding and characterization of non-ideal explosive behaviour and aerosol combustion/explosion phenomena (including DDT).</li>
-                <li>Advanced diagnostics for in-situ measurement during detonation and fire events.</li>
-                <li>Development of novel, safer energetic materials and advanced fire suppression agents/systems.</li>
-                <li>Data-driven approaches (AI/ML) for prediction, optimization, and risk assessment.</li>
-                <li>Enhanced fire safety strategies for new technologies (e.g., battery electric vehicles in mines).</li>
-                <li>Integration of safety, environmental impact, and economic considerations in design and operation.</li>
+                <li>Integrating Multi-Physics & Multi-Scale Modelling (Detonation, Fire, Structure, Geomechanics).</li>
+                <li>Data-Driven Approaches & AI/ML in Risk, Performance Prediction, and Diagnostics.</li>
+                <li>Advanced Material Characterization & Development (Energetics, Fire/Blast Resistive Materials).</li>
+                <li>Resilience-Based Design Frameworks for Extreme Events.</li>
+                <li>Validation through Advanced, Multi-Scale Experimental Techniques.</li>
+                <li>Human Factors, Automation Safety, and Emergency Management in Complex Systems.</li>
+                <li>Addressing Hazards of New Technologies (e.g., BEVs, Hydrogen) in Industrial/Mining Contexts.</li>
             </ul>
-            <p>A PhD focusing on these areas offers the chance to make significant contributions to the safety, efficiency, and sustainability of vital industries.</p>
+            <p>A PhD focusing on these interdisciplinary areas offers the chance to develop cutting-edge solutions with significant real-world impact.</p>
         </section>
 
         <footer class="mt-16 pt-8 border-t border-sky-200 text-sm text-sky-700">
              <p>
-                This webpage provides a conceptual outline for a PhD-level exploration of Advanced Mining Explosives and Industrial Fire Protection.
+                This webpage provides a conceptual outline for a PhD-level exploration of Managing High-Energy Release Hazards.
                 <br>
-                Content is illustrative, inspired by current research (e.g., Yuan et al., Process Saf. Environ. Prot. 146 (2021) 499-514) and educational approaches. Consult primary literature and standards for detailed study.
+                Content is illustrative, inspired by current research (e.g., Yuan et al., 2021; Soltani et al., 2024) and educational approaches. Consult primary literature and standards.
             </p>
-             <p class="mt-4 text-center text-xs text-sky-600">PhD Course Concept: Adv. Mining Explosives & Industrial Fire Protection (Orange Theme)</p>
+             <p class="mt-4 text-center text-xs text-sky-600">PhD Course Concept: Managing High-Energy Release Hazards (Light Blue Theme, Enhanced)</p>
         </footer>
 
     </main>
 
     <script>
         /**
-         * Sets up a range slider with value display and optional log scale.
+         * Sets up a range slider or select element with value display and callback.
+         * Handles linear/log scales for sliders, maps select values.
          */
-        function setupSlider(sliderId, valueId, options = {}) { /* ... [Function as in previous version] ... */
-            const slider = document.getElementById(sliderId);
-            const valueDisplay = document.getElementById(valueId);
-            if (!slider || !valueDisplay) { console.warn(`Slider setup failed: Elements not found for ${sliderId} or ${valueId}`); return; }
-            const { fixedDigits = 0, logScale = false, callback = null, valueFormatFn = null } = options;
-            const minAttr = parseFloat(slider.min); const maxAttr = parseFloat(slider.max);
-            let safeMin = isNaN(minAttr) ? (logScale ? 1e-6 : 0) : (logScale ? Math.max(1e-9, minAttr) : minAttr);
-            let safeMax = isNaN(maxAttr) ? safeMin * (logScale ? 1000 : 100) : (logScale ? Math.max(safeMin * 1.1, maxAttr) : Math.max(safeMin + 1e-9, maxAttr));
-            if (safeMax <= safeMin) { safeMax = safeMin * (logScale ? 10 : 2); if (safeMax <= safeMin) safeMax = safeMin + 1; }
-            slider.logMinVal = safeMin; slider.logMaxVal = safeMax;
+        function setupControl(controlId, valueId, options = {}) { /* ... [Function as in previous version] ... */
+             const control = document.getElementById(controlId); const valueDisplay = document.getElementById(valueId); if (!control || !valueDisplay) { console.warn(`Control setup failed: Elements not found for ${controlId} or ${valueId}`); return; } const { fixedDigits = 0, logScale = false, callback = null, valueFormatFn = null, isSelect = false, selectMap = null } = options; control.isSelect = isSelect; control.logScale = logScale; control.fixedDigits = fixedDigits; control.valueFormatFn = valueFormatFn; control.callback = callback; control.selectMap = selectMap;
+             if (!isSelect) { const minAttr = parseFloat(control.min); const maxAttr = parseFloat(control.max); let safeMin = isNaN(minAttr) ? (logScale ? 1e-6 : 0) : (logScale ? Math.max(1e-9, minAttr) : minAttr); let safeMax = isNaN(maxAttr) ? safeMin * (logScale ? 1000 : 100) : (logScale ? Math.max(safeMin * 1.1, maxAttr) : Math.max(safeMin + 1e-9, maxAttr)); if (safeMax <= safeMin) { safeMax = safeMin * (logScale ? 10 : 2); if (safeMax <= safeMin) safeMax = safeMin + 1; } control.logMinVal = safeMin; control.logMaxVal = safeMax; const initialValueAttr = control.getAttribute('value'); let initialActualValue = initialValueAttr ? parseFloat(initialValueAttr) : (logScale ? control.logMinVal : safeMin); initialActualValue = Math.max(safeMin, Math.min(safeMax, initialActualValue)); if (!isFinite(initialActualValue)) { initialActualValue = logScale ? control.logMinVal : safeMin; }
+             if (logScale) { const minLog = Math.log10(control.logMinVal); const maxLog = Math.log10(control.logMaxVal); const range = maxLog - minLog; let initialSliderPos = 0; if (range > 0 && initialActualValue > 0 && isFinite(range)) { const valueLog = Math.log10(initialActualValue); initialSliderPos = Math.round(((valueLog - minLog) / range) * 100); } control.min = "0"; control.max = "100"; control.step = "1"; control.value = initialSliderPos; } else { control.min = safeMin.toString(); control.max = safeMax.toString(); const range = safeMax - safeMin; let step = (range > 0) ? (range / 100) : 1e-6; if (range > 0) { const magnitude = Math.pow(10, Math.floor(Math.log10(step))); step = Math.max(1e-6, magnitude / 10); } control.step = step.toExponential(1); control.value = initialActualValue; } }
+             function updateControl() { const currentControl = document.getElementById(controlId); const currentValueDisplay = document.getElementById(valueId); if (!currentControl || !currentValueDisplay) return; let actualValue; let displayValueText;
+             if (currentControl.isSelect) { actualValue = currentControl.value; displayValueText = currentControl.selectMap ? (currentControl.selectMap[actualValue] || actualValue) : actualValue; } else { const rawValue = parseFloat(currentControl.value); if (isNaN(rawValue)) { actualValue = currentControl.logScale ? currentControl.logMinVal : parseFloat(currentControl.min); } else if (currentControl.logScale) { const minLog = Math.log10(currentControl.logMinVal); const maxLog = Math.log10(currentControl.logMaxVal); const range = maxLog - minLog; const sliderMinInternal = 0; const sliderMaxInternal = 100; const sliderRangeInternal = sliderMaxInternal - sliderMinInternal; if (sliderRangeInternal <= 0 || !isFinite(range) || range <= 0) { actualValue = currentControl.logMinVal; } else { const normalizedSliderValue = Math.max(0, Math.min(1, (rawValue - sliderMinInternal) / sliderRangeInternal)); const valueLog = minLog + normalizedSliderValue * range; actualValue = Math.pow(10, valueLog); } } else { actualValue = rawValue; } if (!isFinite(actualValue)) { actualValue = currentControl.logScale ? currentControl.logMinVal : parseFloat(currentControl.min); }
+             if (typeof currentControl.valueFormatFn === 'function') { displayValueText = currentControl.valueFormatFn(actualValue); } else if (typeof actualValue !== 'number' || !isFinite(actualValue)) { displayValueText = "NaN"; } else if (currentControl.logScale && Math.abs(actualValue) > 1e-9 && Math.abs(actualValue) < 0.01) { displayValueText = actualValue.toExponential(currentControl.fixedDigits); } else { displayValueText = actualValue.toFixed(currentControl.fixedDigits); } }
+             currentControl.actualValue = actualValue; currentValueDisplay.textContent = displayValueText; if (typeof currentControl.callback === 'function') { try { currentControl.callback(); } catch (e) { console.error(`Error in callback for ${controlId}:`, e); } } }
+             control.oninput = updateControl; updateControl(); // Initial update
+        }
 
-            function calculateActualValue() { const rawValue = parseFloat(slider.value); if (isNaN(rawValue)) { slider.actualValue = logScale ? slider.logMinVal : safeMin; return; } if (logScale) { const minLog = Math.log10(slider.logMinVal); const maxLog = Math.log10(slider.logMaxVal); const range = maxLog - minLog; const sliderMinInternal = 0; const sliderMaxInternal = 100; const sliderRangeInternal = sliderMaxInternal - sliderMinInternal; if (sliderRangeInternal <= 0 || !isFinite(range) || range <= 0) { slider.actualValue = slider.logMinVal; return; } const normalizedSliderValue = Math.max(0, Math.min(1, (rawValue - sliderMinInternal) / sliderRangeInternal)); const valueLog = minLog + normalizedSliderValue * range; slider.actualValue = Math.pow(10, valueLog); } else { slider.actualValue = rawValue; } if (!isFinite(slider.actualValue)) { slider.actualValue = logScale ? slider.logMinVal : safeMin; } }
-            function updateDisplayAndTriggerCallback() { const currentSlider = document.getElementById(sliderId); const currentValueDisplay = document.getElementById(valueId); if (!currentSlider || !currentValueDisplay) return; try { calculateActualValue(); const valToFormat = slider.actualValue; let displayVal; if (typeof valueFormatFn === 'function') { displayVal = valueFormatFn(valToFormat); } else if (typeof valToFormat !== 'number' || !isFinite(valToFormat)) { displayVal = "NaN"; } else if (logScale && Math.abs(valToFormat) > 1e-9 && Math.abs(valToFormat) < 0.01) { displayVal = valToFormat.toExponential(fixedDigits); } else { displayVal = valToFormat.toFixed(fixedDigits); } currentValueDisplay.textContent = displayVal; if (typeof callback === 'function') { callback(); } } catch (e) { console.error("Error updating slider display/callback for", sliderId, e); currentValueDisplay.textContent = "Error"; } }
-            const initialValueAttr = slider.getAttribute('value'); let initialActualValue = initialValueAttr ? parseFloat(initialValueAttr) : (logScale ? slider.logMinVal : safeMin); initialActualValue = Math.max(safeMin, Math.min(safeMax, initialActualValue)); if (!isFinite(initialActualValue)) { initialActualValue = logScale ? slider.logMinVal : safeMin; }
-            if (logScale) { const minLog = Math.log10(slider.logMinVal); const maxLog = Math.log10(slider.logMaxVal); const range = maxLog - minLog; let initialSliderPos = 0; if (range > 0 && initialActualValue > 0 && isFinite(range)) { const valueLog = Math.log10(initialActualValue); initialSliderPos = Math.round(((valueLog - minLog) / range) * 100); } slider.min = "0"; slider.max = "100"; slider.step = "1"; slider.value = initialSliderPos; } else { slider.min = safeMin.toString(); slider.max = safeMax.toString(); const range = safeMax - safeMin; let step = (range > 0) ? (range / 100) : 1e-6; if (range > 0) { const magnitude = Math.pow(10, Math.floor(Math.log10(step))); step = Math.max(1e-6, magnitude / 10); } slider.step = step.toExponential(1); slider.value = initialActualValue; }
-            slider.oninput = updateDisplayAndTriggerCallback; calculateActualValue(); updateDisplayAndTriggerCallback();
-         }
-
-        /**
-         * Sets up the SVG and main group ('g') element for a D3 plot.
-         */
+        /** Sets up the SVG and main group ('g') element for a D3 plot. */
         function setupPlotArea(targetId, margin, isDirectSvg = false) { /* ... [Function as in previous version] ... */
-             let svg, g; let containerWidth, containerHeight;
-             if (isDirectSvg) { svg = d3.select(`#${targetId}`); if (svg.empty()) { throw new Error(`Target SVG #${targetId} not found.`); } containerWidth = parseFloat(svg.attr("width")) || 400; containerHeight = parseFloat(svg.attr("height")) || 200; svg.selectAll("g").remove(); g = svg.append("g").attr("id", `${targetId}-plot-group`).attr("class", "d3-plot"); } else { const plotDiv = document.getElementById(targetId); if (!plotDiv) { throw new Error(`Plot container #${targetId} not found.`); } containerWidth = plotDiv.clientWidth; containerHeight = plotDiv.clientHeight; if (!containerWidth || !containerHeight || containerWidth <= 0 || containerHeight <= 0) { const parent = plotDiv.parentElement; if(parent && parent.clientWidth > 0 && parent.clientHeight > 0){ containerWidth = parent.clientWidth; containerHeight = parent.clientHeight; if(plotDiv.clientHeight <= 0) plotDiv.style.height = `${containerHeight}px`; } else { throw new Error(`Plot container #${targetId} has invalid dimensions: ${containerWidth}x${containerHeight}.`); } } svg = d3.select(plotDiv).select("svg"); if (svg.empty()) { svg = d3.select(plotDiv).append("svg"); } svg.attr("width", "100%").attr("height", "100%").attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`).attr("preserveAspectRatio", "xMidYMid meet"); svg.selectAll("*").remove(); g = svg.append("g").attr("class", "d3-plot"); }
-             g.attr("transform", `translate(${margin.left},${margin.top})`); const plotWidth = containerWidth - margin.left - margin.right; const plotHeight = containerHeight - margin.top - margin.bottom; if (plotWidth <= 0 || plotHeight <= 0) { throw new Error(`Plot area for #${targetId} invalid after margins: ${plotWidth}x${plotHeight}.`); } const dims = { containerWidth, containerHeight, plotWidth, plotHeight }; return { g, dims };
+             let svg, g; let containerWidth, containerHeight; if (isDirectSvg) { svg = d3.select(`#${targetId}`); if (svg.empty()) { throw new Error(`Target SVG #${targetId} not found.`); } containerWidth = parseFloat(svg.attr("width")) || 400; containerHeight = parseFloat(svg.attr("height")) || 200; svg.selectAll("g").remove(); g = svg.append("g").attr("id", `${targetId}-plot-group`).attr("class", "d3-plot"); } else { const plotDiv = document.getElementById(targetId); if (!plotDiv) { throw new Error(`Plot container #${targetId} not found.`); } containerWidth = plotDiv.clientWidth; containerHeight = plotDiv.clientHeight; if (!containerWidth || !containerHeight || containerWidth <= 0 || containerHeight <= 0) { const parent = plotDiv.parentElement; if(parent && parent.clientWidth > 0 && parent.clientHeight > 0){ containerWidth = parent.clientWidth; containerHeight = parent.clientHeight; if(plotDiv.clientHeight <= 0) plotDiv.style.height = `${containerHeight}px`; } else { throw new Error(`Plot container #${targetId} has invalid dimensions: ${containerWidth}x${containerHeight}.`); } } svg = d3.select(plotDiv).select("svg"); if (svg.empty()) { svg = d3.select(plotDiv).append("svg"); } svg.attr("width", "100%").attr("height", "100%").attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`).attr("preserveAspectRatio", "xMidYMid meet"); svg.selectAll("*").remove(); g = svg.append("g").attr("class", "d3-plot"); } g.attr("transform", `translate(${margin.left},${margin.top})`); const plotWidth = containerWidth - margin.left - margin.right; const plotHeight = containerHeight - margin.top - margin.bottom; if (plotWidth <= 0 || plotHeight <= 0) { throw new Error(`Plot area for #${targetId} invalid after margins: ${plotWidth}x${plotHeight}.`); } const dims = { containerWidth, containerHeight, plotWidth, plotHeight }; return { g, dims };
          }
 
-        /**
-         * Draws X and Y axes on a D3 plot group.
-         */
+        /** Draws X and Y axes on a D3 plot group. */
         function drawAxes(g, xScale, yScaleLeft, yScaleRight, dims, margin, labels) { /* ... [Function as in previous version] ... */
-             g.append("g").attr("class", "x axis").attr("transform", `translate(0,${dims.plotHeight})`).call(d3.axisBottom(xScale).ticks(labels.xTicks || 5).tickFormat(labels.xFormat || d3.format(".0f"))); g.append("text").attr("class", "plot-label").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight + margin.bottom - (labels.xOffset || 5)).attr("text-anchor", "middle").text(labels.x || "X Axis"); const yAxisLeft = g.append("g").attr("class", "y axis left-axis").call(d3.axisLeft(yScaleLeft).ticks(labels.yLeftTicks || 5).tickFormat(labels.yLeftFormat || d3.format(".1f"))); if (labels.yLeftColor) { yAxisLeft.selectAll("path, line").style("stroke", labels.yLeftColor); yAxisLeft.selectAll("text").style("fill", labels.yLeftColor); } g.append("text").attr("class", "plot-label").attr("transform", "rotate(-90)").attr("y", -margin.left + (labels.yLeftOffset || 15)).attr("x", -dims.plotHeight / 2).attr("text-anchor", "middle").style("fill", labels.yLeftColor || 'var(--text-color-accent)').text(labels.yLeft || "Left Y Axis"); if (yScaleRight && labels.yRight) { const yAxisRight = g.append("g").attr("class", "y axis right-axis").attr("transform", `translate(${dims.plotWidth},0)`).call(d3.axisRight(yScaleRight).ticks(labels.yRightTicks || 5).tickFormat(labels.yRightFormat || d3.format(".1f"))); if (labels.yRightColor) { yAxisRight.selectAll("path, line").style("stroke", labels.yRightColor); yAxisRight.selectAll("text").style("fill", labels.yRightColor); } g.append("text").attr("class", "plot-label").attr("transform", "rotate(90)").attr("y", -dims.plotWidth - margin.right + (labels.yRightOffset || 15)).attr("x", dims.plotHeight / 2).attr("text-anchor", "middle").style("fill", labels.yRightColor || 'var(--text-color-accent)').text(labels.yRight || "Right Y Axis"); }
-         }
+            g.append("g").attr("class", "x axis").attr("transform", `translate(0,${dims.plotHeight})`).call(d3.axisBottom(xScale).ticks(labels.xTicks || 5).tickFormat(labels.xFormat || d3.format(".0f"))); g.append("text").attr("class", "plot-label").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight + margin.bottom - (labels.xOffset || 5)).attr("text-anchor", "middle").text(labels.x || "X Axis"); const yAxisLeft = g.append("g").attr("class", "y axis left-axis").call(d3.axisLeft(yScaleLeft).ticks(labels.yLeftTicks || 5).tickFormat(labels.yLeftFormat || d3.format(".1f"))); if (labels.yLeftColor) { yAxisLeft.selectAll("path, line").style("stroke", labels.yLeftColor); yAxisLeft.selectAll("text").style("fill", labels.yLeftColor); } g.append("text").attr("class", "plot-label").attr("transform", "rotate(-90)").attr("y", -margin.left + (labels.yLeftOffset || 15)).attr("x", -dims.plotHeight / 2).attr("text-anchor", "middle").style("fill", labels.yLeftColor || 'var(--text-color-accent)').text(labels.yLeft || "Left Y Axis"); if (yScaleRight && labels.yRight) { const yAxisRight = g.append("g").attr("class", "y axis right-axis").attr("transform", `translate(${dims.plotWidth},0)`).call(d3.axisRight(yScaleRight).ticks(labels.yRightTicks || 5).tickFormat(labels.yRightFormat || d3.format(".1f"))); if (labels.yRightColor) { yAxisRight.selectAll("path, line").style("stroke", labels.yRightColor); yAxisRight.selectAll("text").style("fill", labels.yRightColor); } g.append("text").attr("class", "plot-label").attr("transform", "rotate(90)").attr("y", -dims.plotWidth - margin.right + (labels.yRightOffset || 15)).attr("x", dims.plotHeight / 2).attr("text-anchor", "middle").style("fill", labels.yRightColor || 'var(--text-color-accent)').text(labels.yRight || "Right Y Axis"); }
+        }
 
-        /**
-         * Draws a line on the plot.
-         */
+        /** Draws a line on the plot. */
          function drawLine(g, plotData, lineGenerator, cssClass) { /* ... [Function as in previous version] ... */
              g.selectAll(`path.line.${cssClass.split(' ')[0]}`).remove(); g.append("path").datum(plotData).attr("class", `line ${cssClass} d3-plot`).attr("d", lineGenerator).attr("fill", "none").attr("stroke-width", 2);
          }
 
-        /**
-         * Displays an error message within a plot area.
-         */
+        /** Displays an error message within a plot area. */
         function displayPlotError(targetId, message = "Error rendering plot.", isDirectSvg = false) { /* ... [Function as in previous version] ... */
              try { const margin = { top: 10, right: 10, bottom: 10, left: 10 }; const { g, dims } = setupPlotArea(targetId, margin, isDirectSvg); g.append("text").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight / 2).text(message).style("font-size", "10px").attr("fill", "red").attr("text-anchor", "middle"); } catch (e) { console.error(`Failed to display error in target ${targetId}: ${e.message}`); const targetElement = document.getElementById(targetId); if (targetElement) { targetElement.innerHTML = `<p style="color: red; font-size: 10px; text-align: center;">${message}</p>`; } }
          }
 
         // --- Interactive Explosives Initiation Logic ---
-        /** Updates the explosives initiation conceptual display */
-        function updateExplosivesInitiation() { /* ... [Function as in previous version, minor text update] ... */
+        function updateExplosivesInitiation() { /* ... [Function as in previous version] ... */
              const context = "Explosives Initiation Interactive"; try { const boosterSlider = document.getElementById('boosterOutputSlider'); const sensitivitySlider = document.getElementById('chargeSensitivitySlider'); const confinementSlider = document.getElementById('confinementSlider'); const criticalDiameterOutput = document.getElementById('criticalDiameterOutput'); const explanationDiv = document.getElementById('initiation-explanation'); if (!boosterSlider || !sensitivitySlider || !confinementSlider || !criticalDiameterOutput || !explanationDiv || typeof boosterSlider.actualValue === 'undefined' || typeof sensitivitySlider.actualValue === 'undefined' || typeof confinementSlider.actualValue === 'undefined') { throw new Error("Elements not found/initialized."); } const boosterOutput = boosterSlider.actualValue; const sensitivity = sensitivitySlider.actualValue; const confinement = confinementSlider.actualValue; const sensitivityLabels = ["Very Low", "Low", "Medium", "High", "Very High"]; const confinementLabels = ["None", "Low", "Medium", "High"]; document.getElementById('chargeSensitivityValue').textContent = sensitivityLabels[sensitivity - 1] || "Medium"; document.getElementById('confinementValue').textContent = confinementLabels[confinement - 1] || "Low"; const base_dc = 50; const sensFactor = Math.exp(-(sensitivity - 3) * 0.8); const boostFactor = 1 / (1 + (boosterOutput - 5) * 0.15); const confFactor = 1 / (1 + (confinement - 2) * 0.25); let conceptual_dc = base_dc * sensFactor * boostFactor * confFactor; conceptual_dc = Math.max(5, Math.min(500, conceptual_dc)); if (!isFinite(conceptual_dc)) { criticalDiameterOutput.textContent = "Error"; explanationDiv.innerHTML = `<p class="text-[var(--error-color)]">Calculation error.</p>`; return; } criticalDiameterOutput.textContent = `${conceptual_dc.toFixed(0)} mm`; let explanation = []; explanation.push(`<strong>Conceptual Result:</strong> A ${conceptual_dc.toFixed(0)} mm critical diameter.`); if (boosterOutput > 7) explanation.push("<li>Strong booster output significantly helps initiation.</li>"); if (boosterOutput < 3) explanation.push("<li>Weak booster output makes initiation difficult.</li>"); if (sensitivity > 4) explanation.push("<li>Very sensitive charge initiates easily.</li>"); if (sensitivity < 2) explanation.push("<li>Very insensitive charge requires strong booster/confinement.</li>"); if (confinement > 3) explanation.push("<li>High confinement greatly aids initiation.</li>"); if (confinement < 2) explanation.push("<li>Lack of confinement makes initiation harder.</li>"); explanation.push("<br><em>Reminder: Illustrative model only.</em>"); explanationDiv.innerHTML = explanation.join(''); } catch (error) { console.error(`Error updating ${context}:`, error); const cdOutput = document.getElementById('criticalDiameterOutput'); const expDiv = document.getElementById('initiation-explanation'); if (cdOutput) cdOutput.textContent = "Error"; if (expDiv) expDiv.innerHTML = `<p class="text-[var(--error-color)]">Error updating display.</p>`; }
-         }
+        }
 
-        // --- Interactive Aerosol Flammability Logic (NEW) ---
-        /** Updates the aerosol flammability limits conceptual plot */
-        function updateAerosolFlammabilityPlot() {
-            const plotDivId = "aerosol-flammability-plot";
-            const context = "Aerosol Flammability Plot";
-            try {
-                // Get elements
-                const smdSlider = document.getElementById('smdSlider');
-                const rangeOutput = document.getElementById('flammabilityRangeOutput');
-                 if (!smdSlider || !rangeOutput || typeof smdSlider.actualValue === 'undefined') {
-                     throw new Error("Aerosol flammability controls not found or not initialized.");
-                 }
-                const smd = smdSlider.actualValue; // Droplet SMD in µm
+        // --- Interactive Aerosol Flammability Logic ---
+        function updateAerosolFlammabilityPlot() { /* ... [Function as in previous version] ... */
+             const plotDivId = "aerosol-flammability-plot"; const context = "Aerosol Flammability Plot"; try { const smdSlider = document.getElementById('smdSlider'); const rangeOutput = document.getElementById('flammabilityRangeOutput'); if (!smdSlider || !rangeOutput || typeof smdSlider.actualValue === 'undefined') { throw new Error("Controls not found/initialized."); } const smd = smdSlider.actualValue; const margin = {top: 20, right: 30, bottom: 40, left: 50}; const { g, dims } = setupPlotArea(plotDivId, margin); const gasLFL = 50; const gasUFL = 300; const calculateLFL = (d) => { if (d < 10) return gasLFL; const dipCenter = 50; const dipWidth = 40; const dipDepth = 0.4 * gasLFL; const dip = dipDepth * Math.exp(-Math.pow(d - dipCenter, 2) / (2 * dipWidth**2)); const rise = 0.1 * gasLFL * Math.max(0, (d - 100) / 400); return Math.max(5, gasLFL - dip + rise); }; const calculateUFL = (d) => { if (d < 10) return gasUFL; const peakCenter = 70; const peakWidth = 60; const peakHeight = 2.0 * gasUFL; const peak = peakHeight * Math.exp(-Math.pow(d - peakCenter, 2) / (2 * peakWidth**2)); const decrease = 0.5 * gasUFL * Math.max(0, (d - 150) / 350); return Math.max(gasUFL * 1.1, gasUFL + peak - decrease); }; const smdRange = d3.range(5, 501, 5); const plotData = smdRange.map(d => ({ smd: d, lfl: calculateLFL(d), ufl: calculateUFL(d) })).filter(p => isFinite(p.smd) && isFinite(p.lfl) && isFinite(p.ufl)); if (plotData.length < 2) { throw new Error("No valid data points."); } const xScale = d3.scaleLinear().domain([0, 500]).range([0, dims.plotWidth]); const maxUFL = d3.max(plotData, d => d.ufl) || gasUFL * 3; const yScale = d3.scaleLog().domain([Math.max(1, gasLFL * 0.2), maxUFL * 1.2]).range([dims.plotHeight, 0]).nice(); drawAxes(g, xScale, yScale, null, dims, margin, { x: "Droplet SMD (µm)", xOffset: 10, yLeft: "Concentration (g/m³, log scale)", yLeftOffset: 20, yLeftFormat: d3.format(".0f") }); g.append("g").attr("class", "grid").call(d3.axisLeft(yScale).ticks(5, ".0f").tickSize(-dims.plotWidth).tickFormat("")); const lineGen = (yAccessor) => d3.line().x(d => xScale(d.smd)).y(d => yScale(d[yAccessor])).defined(d => d[yAccessor] !== null && isFinite(xScale(d.smd)) && isFinite(yScale(d[yAccessor]))); drawLine(g, plotData, lineGen('lfl'), 'lfl-line'); drawLine(g, plotData, lineGen('ufl'), 'ufl-line'); g.append("line").attr("x1", 0).attr("x2", dims.plotWidth).attr("y1", yScale(gasLFL)).attr("y2", yScale(gasLFL)).style("stroke", "var(--accent-color)").attr("stroke-dasharray", "2 2").style("opacity", 0.7); g.append("line").attr("x1", 0).attr("x2", dims.plotWidth).attr("y1", yScale(gasUFL)).attr("y2", yScale(gasUFL)).style("stroke", "var(--error-color)").attr("stroke-dasharray", "2 2").style("opacity", 0.7); g.append("text").attr("x", dims.plotWidth - 5).attr("y", yScale(gasLFL) - 3).text("Gas LFL").style("font-size", "8px").style("fill", "var(--accent-color)").attr("text-anchor", "end"); g.append("text").attr("x", dims.plotWidth - 5).attr("y", yScale(gasUFL) + 8).text("Gas UFL").style("font-size", "8px").style("fill", "var(--error-color)").attr("text-anchor", "end"); const selectedLFL = calculateLFL(smd); const selectedUFL = calculateUFL(smd); if (isFinite(selectedLFL) && isFinite(selectedUFL)) { rangeOutput.textContent = `LFL: ${selectedLFL.toFixed(0)} g/m³ | UFL: ${selectedUFL.toFixed(0)} g/m³`; const xPos = xScale(smd); g.selectAll(".selected-smd-line").remove(); g.append("line").attr("class", "selected-smd-line").attr("x1", xPos).attr("y1", dims.plotHeight).attr("x2", xPos).attr("y2", 0).style("stroke", "var(--accent-yellow)").attr("stroke-dasharray", "4 4"); } else { rangeOutput.textContent = "LFL: N/A | UFL: N/A"; } } catch (error) { console.error(`Error updating ${context}:`, error); displayPlotError(plotDivId, `Plot Error: ${error.message}`); const rangeOut = document.getElementById('flammabilityRangeOutput'); if(rangeOut) rangeOut.textContent = "Error"; }
+        }
 
-                // --- Plot Setup ---
-                const margin = {top: 20, right: 30, bottom: 40, left: 50}; // Increased left margin for Y-axis label
-                const { g, dims } = setupPlotArea(plotDivId, margin);
-
-                // --- Conceptual Flammability Limit Functions ---
-                // These functions are purely illustrative based on trends discussed in Yuan et al.
-                // Assumes gas LFL ~ 50 g/m³, gas UFL ~ 300 g/m³ (example values)
-                const gasLFL = 50;
-                const gasUFL = 300;
-
-                // LFL: Starts near gas LFL for small SMD, dips down for intermediate SMD, then rises slightly for very large SMD.
-                const calculateLFL = (d) => {
-                    if (d < 10) return gasLFL;
-                    // Dip function centered around ~40-60 µm
-                    const dipCenter = 50;
-                    const dipWidth = 40;
-                    const dipDepth = 0.4 * gasLFL; // Max reduction of 40%
-                    const dip = dipDepth * Math.exp(-Math.pow(d - dipCenter, 2) / (2 * dipWidth**2));
-                    // Slight rise for large droplets
-                    const rise = 0.1 * gasLFL * Math.max(0, (d - 100) / 400);
-                    return Math.max(5, gasLFL - dip + rise); // Ensure LFL > 0
-                };
-
-                // UFL: Starts near gas UFL, increases significantly for intermediate SMD, then might decrease slowly.
-                const calculateUFL = (d) => {
-                    if (d < 10) return gasUFL;
-                    // Peak function centered around ~60-80 µm
-                    const peakCenter = 70;
-                    const peakWidth = 60;
-                    const peakHeight = 2.0 * gasUFL; // Max increase factor of 2
-                    const peak = peakHeight * Math.exp(-Math.pow(d - peakCenter, 2) / (2 * peakWidth**2));
-                     // Slow decrease for very large droplets (optional)
-                     const decrease = 0.5 * gasUFL * Math.max(0, (d - 150) / 350);
-                    return Math.max(gasUFL * 1.1, gasUFL + peak - decrease); // Ensure UFL > gas UFL
-                };
-
-                // --- Data Generation ---
-                const smdRange = d3.range(5, 501, 5); // SMD range 5 to 500 µm
-                const plotData = smdRange.map(d => ({
-                    smd: d,
-                    lfl: calculateLFL(d),
-                    ufl: calculateUFL(d)
-                })).filter(p => isFinite(p.smd) && isFinite(p.lfl) && isFinite(p.ufl));
-
-                if (plotData.length < 2) { throw new Error("Not enough valid data points for aerosol plot."); }
-
-                // --- Scales ---
-                const xScale = d3.scaleLinear().domain([0, 500]).range([0, dims.plotWidth]); // SMD 0-500 µm
-                // Find max UFL for Y-axis scaling
-                const maxUFL = d3.max(plotData, d => d.ufl) || gasUFL * 3;
-                const yScale = d3.scaleLog() // Use log scale for concentration
-                                 .domain([Math.max(1, gasLFL * 0.2), maxUFL * 1.2]) // Start slightly below min LFL
-                                 .range([dims.plotHeight, 0]).nice();
-
-                // --- Draw Axes ---
-                drawAxes(g, xScale, yScale, null, dims, margin, {
-                    x: "Droplet SMD (µm)", xOffset: 10,
-                    yLeft: "Concentration (g/m³, log scale)", yLeftOffset: 20,
-                    yLeftFormat: d3.format(".0f") // Format for log scale
-                });
-
-                // Add grid lines for log scale
-                g.append("g").attr("class", "grid")
-                 .call(d3.axisLeft(yScale).ticks(5, ".0f").tickSize(-dims.plotWidth).tickFormat(""));
-
-                // --- Draw Lines ---
-                const lineGen = (yAccessor) => d3.line()
-                    .x(d => xScale(d.smd))
-                    .y(d => yScale(d[yAccessor]))
-                    .defined(d => d[yAccessor] !== null && isFinite(xScale(d.smd)) && isFinite(yScale(d[yAccessor])));
-
-                drawLine(g, plotData, lineGen('lfl'), 'lfl-line'); // Orange for LFL
-                drawLine(g, plotData, lineGen('ufl'), 'ufl-line'); // Red for UFL
-
-                // Draw horizontal lines for gas limits
-                g.append("line").attr("x1", 0).attr("x2", dims.plotWidth).attr("y1", yScale(gasLFL)).attr("y2", yScale(gasLFL))
-                 .style("stroke", "var(--accent-orange)").attr("stroke-dasharray", "2 2").style("opacity", 0.7);
-                g.append("line").attr("x1", 0).attr("x2", dims.plotWidth).attr("y1", yScale(gasUFL)).attr("y2", yScale(gasUFL))
-                 .style("stroke", "var(--accent-red)").attr("stroke-dasharray", "2 2").style("opacity", 0.7);
-                 g.append("text").attr("x", dims.plotWidth - 5).attr("y", yScale(gasLFL) - 3).text("Gas LFL").style("font-size", "8px").style("fill", "var(--accent-orange)").attr("text-anchor", "end");
-                 g.append("text").attr("x", dims.plotWidth - 5).attr("y", yScale(gasUFL) + 8).text("Gas UFL").style("font-size", "8px").style("fill", "var(--accent-red)").attr("text-anchor", "end");
-
-
-                // --- Draw Vertical Line at Selected SMD ---
-                 const selectedLFL = calculateLFL(smd);
-                 const selectedUFL = calculateUFL(smd);
-                 if (isFinite(selectedLFL) && isFinite(selectedUFL)) {
-                     // Update output box
-                     rangeOutput.textContent = `LFL: ${selectedLFL.toFixed(0)} g/m³ | UFL: ${selectedUFL.toFixed(0)} g/m³`;
-
-                     const xPos = xScale(smd);
-                     // Vertical line
-                     g.selectAll(".selected-smd-line").remove(); // Clear previous
-                     g.append("line")
-                        .attr("class", "selected-smd-line")
-                        .attr("x1", xPos)
-                        .attr("y1", dims.plotHeight)
-                        .attr("x2", xPos)
-                        .attr("y2", 0) // Span full height
-                        .style("stroke", "var(--accent-yellow)") // Yellow line
-                        .attr("stroke-dasharray", "4 4");
-                 } else {
-                     rangeOutput.textContent = "LFL: N/A | UFL: N/A";
-                 }
-
-            } catch (error) {
-                console.error(`Error updating ${context}:`, error);
-                displayPlotError(plotDivId, `Aerosol Plot Error: ${error.message}`);
-                 const rangeOut = document.getElementById('flammabilityRangeOutput');
-                 if(rangeOut) rangeOut.textContent = "Error calculating limits";
-            }
+        // --- Interactive Fuzzy Risk Prioritization Logic ---
+        function updateFuzzyRisk() { /* ... [Function as in previous version] ... */
+            const context = "Fuzzy Risk Interactive"; try { const cSelect = document.getElementById('consequenceSelect'); const pSelect = document.getElementById('probabilitySelect'); const eSelect = document.getElementById('exposureSelect'); const rpnOutput = document.getElementById('rpnOutput'); const riskLevelOutput = document.getElementById('rpnRiskLevel'); const explanationDiv = document.getElementById('risk-explanation'); if (!cSelect || !pSelect || !eSelect || !rpnOutput || !riskLevelOutput || !explanationDiv) { throw new Error("Elements not found."); } const fuzzyMap = { 'VL': { l: 0, m: 0, u: 1 }, 'L': { l: 0, m: 1, u: 3 }, 'LM': { l: 1, m: 3, u: 5 }, 'M': { l: 3, m: 5, u: 7 }, 'AH': { l: 5, m: 7, u: 9 }, 'H': { l: 7, m: 9, u: 10 }, 'VH': { l: 9, m: 10, u: 10 } }; const cVal = cSelect.value; const pVal = pSelect.value; const eVal = eSelect.value; const cFuzzy = fuzzyMap[cVal]; const pFuzzy = fuzzyMap[pVal]; const eFuzzy = fuzzyMap[eVal]; if (!cFuzzy || !pFuzzy || !eFuzzy) { throw new Error("Invalid linguistic selection."); } const defuzzify = (f) => (f.l + 4 * f.m + f.u) / 6; const cCrisp = defuzzify(cFuzzy); const pCrisp = defuzzify(pFuzzy); const eCrisp = defuzzify(eFuzzy); const wC = 0.538; const wP = 0.294; const wE = 0.167; const maxPossibleCrisp = defuzzify(fuzzyMap['VH']); const cNorm = Math.max(0, cCrisp / maxPossibleCrisp); const pNorm = Math.max(0, pCrisp / maxPossibleCrisp); const eNorm = Math.max(0, eCrisp / maxPossibleCrisp); const conceptualRPN = (wC * cNorm + wP * pNorm + wE * eNorm) * 1000; if (!isFinite(conceptualRPN)) { throw new Error("RPN calculation failed."); } let riskLevel = "Low Risk"; let riskColor = "text-green-500"; if (conceptualRPN > 600) { riskLevel = "Very High Risk"; riskColor = "text-[var(--error-color)]"; } else if (conceptualRPN > 400) { riskLevel = "High Risk"; riskColor = "text-orange-500"; } else if (conceptualRPN > 200) { riskLevel = "Substantial Risk"; riskColor = "text-yellow-500"; } else if (conceptualRPN > 100) { riskLevel = "Possible Risk"; riskColor = "text-[var(--text-color-subtle)]"; } rpnOutput.textContent = conceptualRPN.toFixed(0); riskLevelOutput.textContent = riskLevel; riskLevelOutput.className = `text-sm font-semibold mt-1 ${riskColor}`; explanationDiv.innerHTML = `<p><strong>Defuzzified Scores (~0-10):</strong> C: ${cCrisp.toFixed(1)}, P: ${pCrisp.toFixed(1)}, E: ${eCrisp.toFixed(1)}</p><p><strong>Conceptual Weighted RPN (0-1000):</strong> ${conceptualRPN.toFixed(0)}</p><p><strong>Resulting Risk Level:</strong> <span class="${riskColor} font-bold">${riskLevel}</span></p><br><em>Based on fuzzy mapping/weights from Soltani et al. (2024). RPN calc. simplified.</em>`; } catch (error) { console.error(`Error updating ${context}:`, error); const rpnOut = document.getElementById('rpnOutput'); const riskLvlOut = document.getElementById('rpnRiskLevel'); const expDiv = document.getElementById('risk-explanation'); if(rpnOut) rpnOut.textContent = "Error"; if(riskLvlOut) riskLvlOut.textContent = ""; if(expDiv) expDiv.innerHTML = `<p class="text-[var(--error-color)]">Error updating display.</p>`; }
         }
 
 
@@ -539,12 +405,17 @@
         function setupAllInteractives() {
             try {
                 // Explosives Initiation Controls
-                setupSlider('boosterOutputSlider', 'boosterOutputValue', { fixedDigits: 0, callback: updateExplosivesInitiation });
-                setupSlider('chargeSensitivitySlider', 'chargeSensitivityValue', { fixedDigits: 0, callback: updateExplosivesInitiation });
-                setupSlider('confinementSlider', 'confinementValue', { fixedDigits: 0, callback: updateExplosivesInitiation });
+                setupControl('boosterOutputSlider', 'boosterOutputValue', { fixedDigits: 0, callback: updateExplosivesInitiation });
+                setupControl('chargeSensitivitySlider', 'chargeSensitivityValue', { fixedDigits: 0, callback: updateExplosivesInitiation, selectMap: {"1": "Very Low", "2": "Low", "3": "Medium", "4": "High", "5": "Very High"} }); // Add map for display
+                setupControl('confinementSlider', 'confinementValue', { fixedDigits: 0, callback: updateExplosivesInitiation, selectMap: {"1": "None", "2": "Low", "3": "Medium", "4": "High"} }); // Add map
 
                  // Aerosol Flammability Controls
-                 setupSlider('smdSlider', 'smdValue', { fixedDigits: 0, callback: updateAerosolFlammabilityPlot });
+                 setupControl('smdSlider', 'smdValue', { fixedDigits: 0, callback: updateAerosolFlammabilityPlot });
+
+                 // Fuzzy Risk Controls (Select elements)
+                 setupControl('consequenceSelect', 'consequenceSelect', { callback: updateFuzzyRisk, isSelect: true });
+                 setupControl('probabilitySelect', 'probabilitySelect', { callback: updateFuzzyRisk, isSelect: true });
+                 setupControl('exposureSelect', 'exposureSelect', { callback: updateFuzzyRisk, isSelect: true });
 
             } catch (error) {
                 console.error("Error setting up one or more interactive elements:", error);
@@ -555,7 +426,8 @@
         function renderAllPlotsInitial() {
              const initialRenderFunctions = [
                  updateExplosivesInitiation,
-                 updateAerosolFlammabilityPlot // Add the new aerosol plot render
+                 updateAerosolFlammabilityPlot,
+                 updateFuzzyRisk
              ];
              initialRenderFunctions.forEach(renderFunc => {
                  try { renderFunc(); }
@@ -564,21 +436,8 @@
          }
 
         /** Sets up smooth scrolling for internal navigation links */
-        function setupSmoothScrolling(){ /* ... [Function as in previous version, ensure offset is correct] ... */
-             try {
-                 document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-                     anchor.addEventListener('click', function (e) {
-                         e.preventDefault(); const targetId = this.getAttribute('href'); const targetElement = document.querySelector(targetId);
-                         if(targetElement) {
-                             const elementPosition = targetElement.getBoundingClientRect().top;
-                             const headerNavHeight = (document.querySelector('header')?.offsetHeight || 88) + (document.querySelector('nav')?.offsetHeight || 34);
-                             const headerOffset = headerNavHeight + 15; // Add buffer
-                             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                             window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-                         } else { console.warn("Smooth scroll target not found:", targetId); }
-                     });
-                 });
-             } catch (e) { console.error("Error setting up smooth scrolling:", e); }
+        function setupSmoothScrolling(){ /* ... [Function as in previous version] ... */
+             try { document.querySelectorAll('nav a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function (e) { e.preventDefault(); const targetId = this.getAttribute('href'); const targetElement = document.querySelector(targetId); if(targetElement) { const headerNavHeight = (document.querySelector('header')?.offsetHeight || 88) + (document.querySelector('nav')?.offsetHeight || 34); const headerOffset = headerNavHeight + 15; const offsetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerOffset; window.scrollTo({ top: offsetPosition, behavior: "smooth" }); } else { console.warn("Smooth scroll target not found:", targetId); } }); }); } catch (e) { console.error("Error setting up smooth scrolling:", e); }
          }
 
         // --- Initialization on DOM Load ---
@@ -600,3 +459,6 @@
 
 </body>
 </html>
+
+
+
