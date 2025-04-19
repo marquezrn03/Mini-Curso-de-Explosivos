@@ -4,124 +4,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhD Course: Advanced Mining Explosives & Industrial Fire Protection</title>
+    <title>Mining Explosives & Fire Protection Fundamentals (Interactive)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        /* CSS Custom Properties - Light Blue Theme */
+        /* CSS Custom Properties - Light Orange/Fire Theme */
         :root {
-            --bg-color: #f0f9ff; /* Light blue background */
-            --text-color-main: #0369a1; /* Sky blue text */
-            --text-color-header: #0c4a6e; /* Darker blue for headers */
-            --text-color-accent: #075985; /* Accent blue */
-            --text-color-subtle: #0ea5e9; /* Lighter accent blue */
-            --border-color-light: #e0f2fe; /* Very light blue border */
-            --border-color-medium: #bae6fd; /* Medium blue border */
-            --border-color-dark: #7dd3fc; /* Darker blue border */
-            --accent-color: #38bdf8; /* Bright blue accent */
-            --highlight-bg: #e0f2fe; /* Background for highlights */
-            --vis-bg-color: #f8fafc; /* Background for visualizations (slightly off-white) */
-            --vis-border-color: #cbd5e1; /* Border for visualizations (light gray) */
-            --header-grad-from: #0ea5e9; /* Header gradient start */
-            --header-grad-to: #0369a1; /* Header gradient end */
-            --error-color: #ef4444; /* Red for errors/warnings */
+            --bg-color: #fff7ed; /* Very light orange/peach background */
+            --text-color-main: #9a3412; /* Dark orange/brown text */
+            --text-color-header: #7c2d12; /* Darker brown/red-brown for headers */
+            --text-color-accent: #f97316; /* Medium orange */
+            --text-color-subtle: #fb923c; /* Lighter orange */
+            --border-color-light: #ffedd5; /* Very light orange/peach border */
+            --border-color-medium: #fed7aa; /* Light orange border */
+            --border-color-dark: #fdba74; /* Medium orange border */
+            --accent-color: #ea580c; /* Bright red-orange accent */
+            --highlight-bg: #fffbeb; /* Light peach/yellowish background for highlights */
+            --vis-bg-color: #fefce8; /* Very light beige/off-white for visualization backgrounds */
+            --vis-border-color: #d6d3d1; /* Light gray/brown border for visualizations */
+            --header-grad-from: #fb923c; /* Header gradient start - Lighter Orange */
+            --header-grad-to: #ea580c; /* Header gradient end - Deeper Red-Orange */
         }
         /* Smooth scrolling behavior */
-        html { scroll-padding-top: 110px; }
+        html { scroll-padding-top: 76px; /* Offset for sticky header, adjust if header height changes */ }
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             color: var(--text-color-main);
             background-color: var(--bg-color);
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: 1rem; /* Base font size */
+            line-height: 1.7; /* Default line height */
         }
-        main.container { padding-top: 1rem; padding-bottom: 1rem; }
-
-        /* Fade-in animation */
+        main.container { padding-top: 2rem; padding-bottom: 1rem; }
+        /* Fade-in animation for dynamic content */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .dynamic-content { animation: fadeIn 0.6s ease-out forwards; }
+        .dynamic-content { opacity: 0; animation: fadeIn 0.7s ease-out forwards; animation-delay: 0.1s; /* Stagger load slightly */ }
 
         /* --- Interactive Element Styling --- */
         label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-color-accent); font-size: 0.9rem; }
-        input[type="range"], select { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color-medium); border-radius: 0.375rem; background-color: white; color: var(--text-color-main); font-size: 0.9rem; transition: border-color 0.2s ease; }
-        input[type="range"]:focus, select:focus { outline: 2px solid transparent; outline-offset: 2px; border-color: var(--accent-color); box-shadow: 0 0 0 2px var(--highlight-bg); }
-        input[type="range"] { cursor: pointer; accent-color: var(--accent-color); padding: 0; height: 0.5rem; appearance: none; background: var(--border-color-light); border-radius: 9999px; border: 1px solid var(--border-color-medium); }
+        input[type="number"], input[type="text"], select { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color-medium); border-radius: 0.375rem; background-color: white; font-size: 0.9rem; transition: border-color 0.2s ease; margin-bottom: 0.75rem; }
+        input[type="number"]:focus, input[type="text"]:focus, select:focus { outline: 2px solid transparent; outline-offset: 2px; border-color: var(--accent-color); box-shadow: 0 0 0 2px var(--highlight-bg); }
+        input[type="range"] { cursor: pointer; accent-color: var(--accent-color); padding: 0; height: 0.5rem; appearance: none; background: var(--border-color-light); border-radius: 9999px; border: 1px solid var(--border-color-medium); width: 100%; margin-bottom: 0.75rem; }
         input[type="range"]::-webkit-slider-thumb { appearance: none; width: 1rem; height: 1rem; background: var(--accent-color); border-radius: 50%; cursor: pointer; border: 1px solid var(--text-color-accent); }
         input[type="range"]::-moz-range-thumb { width: 1rem; height: 1rem; background: var(--accent-color); border-radius: 50%; cursor: pointer; border: 1px solid var(--text-color-accent); }
-        button { background-color: var(--accent-color); color: var(--text-color-header); padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 500; transition: background-color 0.2s ease, transform 0.1s ease; border: none; cursor: pointer; }
-        button:hover { background-color: var(--border-color-dark); }
-        .output-box { background-color: var(--highlight-bg); border: 1px solid var(--border-color-medium); color: var(--text-color-accent); padding: 0.5rem 0.75rem; border-radius: 0.375rem; margin-top: 0.5rem; text-align: center; font-weight: 500; font-size: 0.85rem; min-height: 2.5rem; display: flex; align-items: center; justify-content: center; }
-        .critical-diameter-output { color: var(--text-color-header); font-size: 1.1rem; font-weight: 600; }
-        .rpn-output { color: var(--text-color-header); font-size: 1.1rem; font-weight: 600; }
-        .interactive-container { background-color: #ffffff; border: 1px solid var(--border-color-light); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
-        .visualization-box { background-color: var(--vis-bg-color); border: 1px dashed var(--vis-border-color); min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; margin-top: 1rem; text-align: center; position: relative; overflow: hidden; transition: background-color 0.3s ease; font-size: 0.9rem; }
+        button { background-color: var(--accent-color); color: white; /* White text on orange button */ padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 500; transition: background-color 0.2s ease, transform 0.1s ease; border: none; cursor: pointer; margin-top: 0.5rem;}
+        button:hover { background-color: var(--text-color-subtle); /* Lighter orange on hover */ }
+        button:active { transform: scale(0.98); }
+        .output-box { background-color: var(--highlight-bg); border: 1px solid var(--border-color-medium); padding: 0.75rem 1rem; border-radius: 0.375rem; margin-top: 1rem; text-align: center; font-weight: 500; font-size: 0.9rem; color: var(--text-color-accent); min-height: 3rem; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; }
+        .interactive-container { background-color: #ffffff; border: 1px solid var(--border-color-light); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1.5rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+        .visualization-box { min-height: 150px; background-color: var(--vis-bg-color); border: 1px dashed var(--vis-border-color); border-radius: 0.375rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; margin-top: 1rem; text-align: center; position: relative; overflow: hidden; transition: background-color 0.3s ease; font-size: 0.9rem; }
         .visualization-box svg { display: block; margin: auto; max-width: 100%; height: auto; }
-        .instructional-text { color: var(--text-color-subtle); font-size: 0.875rem; margin-top: 0.5rem; margin-bottom: 1rem; text-align: center; }
-        .warning-note { color: var(--error-color); font-weight: 500; font-size: 0.75rem; text-align: center; margin-top: 0.5rem; font-style: italic; }
-        .warning-note strong { font-weight: bold; color: inherit; } /* Allow bold within warnings */
+        .instructional-text { font-size: 0.875rem; color: var(--text-color-subtle); margin-top: 0.5rem; margin-bottom: 1rem; text-align: center; }
+        .approximation-note { font-size: 0.75rem; color: #ef4444; /* Keep red for warnings */ text-align: center; margin-top: 0.5rem; font-style: italic; }
 
         /* --- Table Styling --- */
         table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; }
-        th, td { border: 1px solid var(--border-color-medium); color: var(--text-color-main); padding: 0.6rem; text-align: left; vertical-align: top; }
-        th { background-color: var(--highlight-bg); font-weight: 600; color: var(--text-color-accent); position: sticky; top: 110px; z-index: 5; }
-        tbody tr:nth-child(odd) { background-color: var(--vis-bg-color); }
+        th, td { border: 1px solid var(--border-color-medium); padding: 0.6rem; text-align: left; vertical-align: top; }
+        th { background-color: var(--highlight-bg); font-weight: 600; color: var(--text-color-accent); position: sticky; top: 110px; /* Adjusted for header+nav height */ z-index: 5; }
+        tbody tr:nth-child(odd) { background-color: var(--vis-bg-color); /* Use vis-bg for alternating rows */ }
         tbody tr:hover { background-color: var(--highlight-bg); }
+        tbody tr.category-row td { background-color: var(--highlight-bg); font-weight: 600; color: var(--text-color-accent); }
+        /* Responsive table handling */
+        @media (max-width: 768px) {
+            .table-container { overflow-x: auto; /* Add a container div for tables needing scroll */ }
+            .responsive-table { min-width: 600px; /* Force horizontal scroll on smaller tables too */ }
+            .responsive-table th, .responsive-table td { white-space: nowrap; padding: 0.4rem; font-size: 0.8rem; }
+            .responsive-table tr.category-row td { white-space: normal; /* Allow category rows to wrap */ }
+            .output-box { font-size: 0.85rem; padding: 0.5rem 0.75rem;}
+        }
 
         /* --- Typography & Content Styling --- */
         h1, h2, h3, h4 { color: var(--text-color-header); font-weight: 700; line-height: 1.3; }
-        h1 { font-size: 2.25rem; }
-        h2 { font-size: 1.75rem; border-bottom: 2px solid var(--border-color-dark); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 2rem; }
-        h3 { font-size: 1.3rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
-        h4 { font-size: 1.1rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: var(--text-color-accent); }
-        p, li { color: var(--text-color-main); margin-bottom: 1.25rem; font-size: 0.95rem; text-align: left; }
+        h1 { font-size: 2.25rem; /* Tailwind text-4xl */ }
+        h2 { font-size: 1.75rem; /* Tailwind text-2xl */ border-bottom: 2px solid var(--border-color-dark); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 2rem; }
+        h3 { font-size: 1.3rem; /* ~text-xl */ margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        h4 { font-size: 1.1rem; /* ~text-lg */ margin-top: 1.25rem; margin-bottom: 0.5rem; color: var(--text-color-accent); }
+        p, li { color: var(--text-color-main); margin-bottom: 1.25rem; font-size: 0.95rem; text-align: justify; }
         ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
-        /* Limit use of strong tag */
-        p strong, li strong { color: var(--text-color-accent); font-weight: 600; } /* Default strong style */
-        .key-concept strong { color: var(--text-color-header); font-weight: 600; } /* Specific style for key concepts */
+        strong { color: var(--text-color-accent); font-weight: 600; } /* Use accent color for strong tags */
         code { background-color: var(--highlight-bg); color: var(--text-color-accent); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em; }
         blockquote { border-left: 4px solid var(--accent-color); padding: 0.75rem 1rem; margin: 1.5rem 0; font-style: italic; color: var(--text-color-subtle); background-color: var(--highlight-bg); font-size: 0.95rem; }
         .section-bg-white { background-color: #ffffff; }
-        .equation { background-color: var(--highlight-bg); padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color-light); color: var(--text-color-main); display: block; text-align: center; margin: 1.25rem auto; font-size: 1.1rem; overflow-x: auto; }
-        .key-concept { border: 1px solid var(--border-color-medium); background-color: var(--vis-bg-color); padding: 1rem; border-radius: 0.375rem; margin: 1.5rem 0; }
+        .equation { display: block; text-align: center; margin: 1.25rem auto; font-size: 1.1rem; }
+        .key-concept { border: 1px solid var(--border-color-medium); background-color: var(--vis-bg-color); /* Use vis-bg for key concept */ padding: 1rem; border-radius: 0.375rem; margin: 1.5rem 0; }
+        .key-concept strong { color: var(--text-color-header); } /* Darker strong text in key concepts */
         figure { margin: 1.5rem auto; text-align: center; }
-        figure svg, figure img { max-width: 100%; height: auto; border: 1px solid var(--border-color-medium); border-radius: 0.375rem; margin: 0 auto 0.5rem auto; display: block; background-color: var(--vis-bg-color); }
+        figure img, figure svg { max-width: 100%; height: auto; border: 1px solid var(--border-color-medium); border-radius: 0.375rem; margin: 0 auto 0.5rem auto; display: block; background-color: var(--vis-bg-color); }
         figcaption, .caption { font-size: 0.8rem; color: var(--text-color-subtle); margin-top: 0.25rem; text-align: center; }
 
-        /* --- D3 Plot Styling --- */
-        .d3-plot .axis path, .d3-plot .axis line { stroke: var(--border-color-medium); }
-        .d3-plot .axis text { fill: var(--text-color-main); }
-        .d3-plot .grid line { stroke: var(--border-color-light); }
-        .d3-plot .line { fill: none; stroke-width: 2px; }
-        .d3-plot path { fill: none; }
-        .d3-plot .lfl-line { stroke: var(--accent-color); }
-        .d3-plot .ufl-line { stroke: var(--error-color); }
-        .d3-plot .prop-yield-line { stroke: var(--text-color-accent); }
-        .d3-plot .prop-elastic-line { stroke: var(--accent-color); stroke-dasharray: 4 2; }
-        .d3-plot .concrete-line { stroke: var(--text-color-subtle); }
-        .plot-label { fill: var(--text-color-accent); }
-        .d3-plot .selected-temp-line { stroke: var(--error-color); stroke-dasharray: 3 3; }
-        .d3-plot .selected-temp-point { fill: var(--error-color); }
-        .d3-plot .selected-smd-line { stroke: var(--accent-yellow); stroke-dasharray: 4 4; }
-
         /* --- Footer Styling --- */
-        footer { border-top: 1px solid var(--border-color-medium); margin-top: 3rem; padding-top: 1.5rem; }
+        footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color-medium); }
         footer p { font-size: 0.8rem; line-height: 1.5; text-align: center; color: var(--text-color-main);}
         footer a { color: var(--text-color-subtle); text-decoration: underline; }
         footer a:hover { color: var(--text-color-header); }
-
-        /* --- Header/Nav Specific --- */
-         header { background: linear-gradient(to right, var(--header-grad-from), var(--header-grad-to)); }
-         nav { background-color: var(--border-color-light); border-bottom: 1px solid var(--border-color-medium); top: 88px; }
-         nav a { color: var(--text-color-accent); }
-         nav a:hover { color: var(--text-color-header); }
-         nav span { color: var(--text-color-header); }
-
     </style>
 </head>
 
@@ -129,505 +108,741 @@
 
     <header class="bg-gradient-to-r from-[var(--header-grad-from)] to-[var(--header-grad-to)] text-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-5">
-            <h1 class="text-3xl font-bold">PhD Course: Managing High-Energy Release Hazards</h1>
-            <p class="text-sky-100 text-xs mt-2">An Advanced Exploration of Fire Dynamics, Explosives Technology, Structural Response, and Risk Assessment for Industrial & Extractive Environments</p>
+            <h1 class="text-3xl font-bold">Explosives in Mining & Fire Protection</h1>
+            <p class="text-orange-100 text-xs mt-2">Fundamentals, Safety Standards, and Risk Management for Confined Spaces (Interactive)</p>
         </div>
     </header>
 
-    <nav class="sticky top-[88px] bg-sky-50 border-b border-sky-200 z-40 mb-4">
-        <div class="container mx-auto px-6 py-2 text-sm flex flex-wrap justify-center">
-            <span class="font-semibold text-sky-800 mr-3 mb-1 sm:mb-0">Sections:</span>
-            <a href="#hazard_fundamentals" class="text-sky-700 hover:text-sky-900 mr-3 mb-1 sm:mb-0">1. Fundamentals</a> |
-            <a href="#fire_dynamics" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">2. Fire & Aerosols</a> |
-            <a href="#detonation_physics" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">3. Detonation</a> |
-            <a href="#initiation_sensitivity" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">4. Initiation</a> |
-            <a href="#structural_response" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">5. Structures</a> |
-            <a href="#risk_mitigation" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">6. Risk & Mitigation</a> |
-            <a href="#modeling" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">7. Modelling</a> |
-            <a href="#interactive" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">8. Interactive</a> |
-            <a href="#outlook" class="text-sky-700 hover:text-sky-900 ml-3 mb-1 sm:mb-0">9. Outlook</a>
+    <nav class="sticky top-[76px] bg-orange-50 border-b border-orange-200 z-40 mb-4">
+        <div class="container mx-auto px-6 py-2 text-sm overflow-x-auto whitespace-nowrap">
+            <span class="font-semibold text-orange-800 mr-4">Sections:</span>
+            <a href="#explosive-fundamentals" class="text-orange-700 hover:text-orange-900 mr-3 inline-block">1. Fundamentals</a> |
+            <a href="#explosive-performance" class="text-orange-700 hover:text-orange-900 mx-3 inline-block">2. Performance</a> |
+            <a href="#mining-safety" class="text-orange-700 hover:text-orange-900 mx-3 inline-block">3. Mining Safety</a> |
+            <a href="#confined-space-hazards" class="text-orange-700 hover:text-orange-900 mx-3 inline-block">4. Confined Spaces</a> |
+            <a href="#fire-protection" class="text-orange-700 hover:text-orange-900 mx-3 inline-block">5. Fire Protection</a> |
+            <a href="#risk-assessment" class="text-orange-700 hover:text-orange-900 ml-3 inline-block">6. Risk Assessment</a>
         </div>
     </nav>
 
     <main class="container mx-auto px-6 py-2">
 
-        <section id="hazard_fundamentals" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">1. Fundamentals of High-Energy Release Hazards</h2>
-            <p>This doctoral course adopts a fundamental physics and engineering approach to understanding, predicting, and mitigating hazards associated with rapid energy release in industrial and extractive environments. We bridge the traditionally separate fields of fire science and explosives engineering by focusing on the underlying principles governing combustion, deflagration, detonation, blast wave propagation, and their interaction with structures and materials.</p>
+        <section id="explosive-fundamentals" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">1. Fundamentals of Explosives</h2>
+            <p>This section covers the basic principles of explosives relevant to mining operations. We explore the chemistry and physics behind explosive reactions, classify different types of explosives used in mining, and detail the essential components of a blasting sequence.</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">1.1 Explosive Chemistry and Physics</h3>
+            <p>Explosives are substances that undergo rapid chemical decomposition, producing large volumes of hot gas. This rapid expansion generates high pressure, performing work on the surrounding material (e.g., rock). Key concepts include:</p>
             <ul>
-                <li>Thermodynamics & Kinetics: Review of chemical thermodynamics (enthalpy of formation/reaction, equilibrium calculations - CEA codes) and chemical kinetics (Arrhenius law, reaction mechanisms, characteristic timescales) applied to combustion and detonation processes.</li>
-                <li>Fluid Dynamics & Transport Phenomena: Principles of compressible flow, shock physics (Rankine-Hugoniot relations), turbulent mixing, multi-phase flow (aerosols, dusts), heat and mass transfer under extreme conditions.</li>
-                <li>Continuum Mechanics & Material Science: Stress/strain relationships, constitutive models for materials (metals, concrete, rock, polymers) under high strain rates and elevated temperatures, fracture mechanics, failure criteria.</li>
-                <li>Core Distinction: Establishing the fundamental differences between deflagration (subsonic reaction wave driven by thermal diffusion) and detonation (supersonic wave driven by shock compression), and the conditions leading to transition (DDT).</li>
+                <li><strong>Detonation vs. Deflagration:</strong> Detonation is a supersonic decomposition process driven by a shock wave propagating through the explosive (thousands of m/s). Deflagration is a subsonic combustion process driven by thermal conductivity (meters per second). Mining primarily utilizes detonation for its shattering effect.</li>
+                <li><strong>Oxygen Balance (OB):</strong> A measure of the oxygen content in an explosive relative to the amount needed for complete oxidation of fuels (carbon to CO2, hydrogen to H2O). An OB of zero (<code>OB=0</code>) is ideal, minimizing toxic fumes like carbon monoxide (CO) and nitrogen oxides (NOx). Negative OB produces excess CO; positive OB produces excess NOx.</li>
+                <li><strong>Velocity of Detonation (VOD):</strong> The speed at which the detonation wave travels through the explosive column (typically 2,000-8,000 m/s). Higher VOD generally correlates with higher detonation pressure and better fragmentation in hard rock. It's a key performance characteristic measured in the field.</li>
+                <li><strong>Detonation Pressure (P<sub>D</sub>):</strong> The pressure generated at the detonation front (can reach GPa levels). It's related to the explosive's density and VOD squared (P<sub>D</sub> ∝ ρ * VOD<sup>2</sup>) and is crucial for initial rock fracturing and crack propagation.</li>
+                <li><strong>Energy Release:</strong> The total energy (heat and work potential) released during detonation. Often expressed as heat of explosion (e.g., kJ/kg). This energy drives both fragmentation (shock energy) and rock displacement (gas energy/heave).</li>
             </ul>
-            <div class="key-concept mt-6">
-                <strong>Course Philosophy:</strong> To equip PhD researchers with the fundamental knowledge and analytical tools to tackle complex safety challenges involving fire, explosion, and blast hazards across diverse industrial settings, moving beyond prescriptive rules towards first-principles understanding and performance-based solutions.
+            <p>A common mining explosive is ANFO (Ammonium Nitrate/Fuel Oil). The idealized reaction for ANFO (approximating fuel oil as CH<sub>2</sub>) aiming for zero oxygen balance is:</p>
+            <div class="equation">
+                <p>\( 3 NH_4NO_3 + CH_2 \rightarrow 3 N_2 + 7 H_2O + CO_2 \)</p>
             </div>
-        </section>
+            <p>This reaction highlights the production of large volumes of gas (N<sub>2</sub>, H<sub>2</sub>O, CO<sub>2</sub>), which is essential for rock displacement (heave).</p>
 
-        <section id="fire_dynamics" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">2. Advanced Fire Dynamics & Aerosol Hazards</h2>
-            <p>Examining fire development in enclosures and the specific, often misunderstood, hazards of flammable aerosols (mists/sprays), often encountered in industrial and mining environments through leaks or process upsets. Content draws significantly from the review by Yuan et al. (2021).</p>
-             <ul>
-                <li>The Aerosol Hazard Paradigm: Emphasis on the inadequacy of flashpoint as the sole criterion for liquid flammability when aerosolization occurs. Discussion of the multi-dimensional flammability region for aerosols depending on concentration, temperature, and crucially, droplet size distribution (SMD).</li>
-                <li>Aerosol Generation & Characterization: Mechanisms relevant to industrial/mining scenarios: pressure release, flashing releases, mechanical dispersion. Characterization techniques (Laser Diffraction, PDA, PIV) and parameters (SMD). Predictive correlations.</li>
-                <li>Aerosol Flammability Limits: Complex relationship between droplet size and LFL/UFL. Observed LFL reduction for larger droplets and potential mechanisms (sedimentation, local stoichiometry). Discussion of contradictory findings in literature. Higher UFL for aerosols vs. vapors.</li>
-                <li>Aerosol Explosion Dynamics & Severity: Measurement and significance of \(P_{max}\) and Deflagration Index (\(K_a\)). Influence of experimental scale on measured parameters. Role of volatility and droplet size.
-                    <div class="equation">
-                     K_a = V^{1/3} \left( \frac{dP}{dt} \right)_{max}
-                    </div>
-                </li>
-                 <li>Deflagration-to-Detonation Transition (DDT) in Aerosols: Potential for DDT. Review of experimental evidence and factors influencing DDT propensity (concentration, confinement, ignition). Links to gas/dust DDT mechanisms.</li>
-                 <li>Enclosure Fire Dynamics (Advanced): Zone vs. CFD models (FDS). Ventilation vs. fuel control. HRRPUA. Flashover criteria. Plume theory limitations. Advanced heat transfer (convection, radiation modelling). Equation: \( \dot{q}''_{net} = h_c (T_{gas} - T_{surf}) + \epsilon_{surf} \sigma ( \epsilon_{gas} T_{gas}^4 - \alpha_{surf} T_{surf}^4 ) \).</li>
-            </ul>
-            <div class="key-concept mt-6">
-                <strong>PhD Challenge (Aerosols/Fire):</strong> Develop standardized aerosol testing methods. Resolve LFL contradictions. Elucidate aerosol DDT mechanisms. Validate CFD for complex enclosure fires with aerosols.
+            <div class="interactive-container">
+                <h4 class="text-lg font-semibold mb-3">Oxygen Balance (OB) Estimator (Simplified ANFO)</h4>
+                <p class="instructional-text">Estimate the Oxygen Balance for ANFO based on the weight percentage of Fuel Oil (FO). Assumes standard AN prills and FO density ~0.8 g/cc.</p>
+                <label for="fo-percentage">Fuel Oil Percentage (% by weight):</label>
+                <input type="range" id="fo-percentage" name="fo-percentage" min="2" max="10" value="6" step="0.1" class="mb-2">
+                <div class="text-center mb-4" id="fo-percentage-value">6.0%</div>
+
+                <div class="output-box" id="ob-output">
+                    Oxygen Balance: Calculating... | Fume Indication: Calculating...
+                </div>
+                 <p class="approximation-note mt-3">Note: This is a highly simplified calculation for basic ANFO (NH₄NO₃ + CH₂) and does not account for complex fuel types, additives, or reaction inefficiencies. Actual OB and fume production require detailed analysis.</p>
             </div>
-        </section>
-
-        <section id="detonation_physics" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">3. Detonation Physics & Non-Ideal Behaviour</h2>
-            <p>Delving into the physics of detonation waves, particularly the non-ideal behaviour characteristic of commercial explosives used in mining and demolition.</p>
-             <ul>
-                <li>Non-Ideal Detonation Theory: Limitations of CJ theory. Detonation Shock Dynamics (DSD) \(D_n(\kappa)\). Reaction zone structure \(l_{rz}\). Curvature effects. Failure diameter \(d_f\). Role of confinement.</li>
-                <li>Equation of State (EOS) & Thermochemistry: Review of EOS models (Ideal Gas, JWL, BKW). Thermochemical codes (CHEETAH, EXPLO5). Parameterization challenges. Impact on predicted \(P_{det}, D_{det}\).</li>
-                <li>Performance Metrics & Measurement: Advanced VOD techniques. Pressure measurement challenges (underwater tests, gauges). Energy output determination (cylinder expansion, calorimetry).</li>
-                <li>Rock Interaction & Fragmentation: Stress wave propagation. Dynamic fracture. Shock vs. heave energy. Blast design influence. Numerical fragmentation models (Hydrocode+Fracture/DEM).</li>
-            </ul>
-             <div class="key-concept mt-6">
-                <strong>PhD Challenge (Detonation):</strong> Develop predictive EOS/reactive burn models for non-ideal explosives under mining conditions. Improve quantitative links between explosive properties, blast design, geology, and fragmentation outcomes.
-            </div>
-        </section>
-
-        <section id="initiation_sensitivity" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-             <h2 class="text-2xl font-bold">4. Initiation Systems & Explosive Sensitivity</h2>
-             <p>Examining the science and technology of reliably initiating explosives while ensuring safety through understanding sensitivity to various stimuli.</p>
-              <ul>
-                 <li>The Initiation Train: Energy transfer sequence. Detonator output characterization (shock profile, timing - electronics). Booster selection criteria (sensitivity, output matching, impedance). SDT physics at interfaces.</li>
-                 <li>Shock Initiation & SDT: Hot spot mechanisms (void collapse, shear). Critical energy/pressure criteria (\(P^n \tau\)). Pop-plots. Reactive burn models (Lee-Tarver). Run distance \(X_{SDT}\).</li>
-                 <li>Critical Diameter (\(d_c\)) & Failure Diameter (\(d_f\)): Distinction; Dependence on formulation, confinement, initiation; Experimental methods.</li>
-                 <li>Sensitivity Assessment & Safety Science: Interpretation of standard tests (UN Gap, BAM Impact/Friction). Limitations. Advanced concepts (critical shock pressure, thermal stability - DSC/ARC/Cook-off). Role of formulation.</li>
-             </ul>
-             <blockquote class="my-4">
-                 Understanding the complex interplay between initiation system parameters, explosive sensitivity, and confinement is crucial for designing effective blasting patterns while minimizing risks like misfires or sympathetic detonation.
-             </blockquote>
-        </section>
-
-        <section id="structural_response" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">5. Structural Response to Fire & Blast Loads</h2>
-            <p>Analyzing the behaviour of structures subjected to extreme thermal (fire) and dynamic (blast) loading conditions encountered in industrial and mining environments.</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">1.2 Types of Mining Explosives</h3>
+            <p>Modern mining relies primarily on bulk explosives for cost-effectiveness, though packaged explosives are used in specific situations. Key types include:</p>
             <ul>
-                <li>Material Behaviour Under Extreme Conditions: Temperature-dependent mechanical properties (\(E_\theta, f_{y,\theta}, f_{c,\theta}\)). High strain-rate material behaviour (e.g., Johnson-Cook models). Creep under fire vs. dynamic strength under blast.</li>
-                <li>Structural Fire Engineering Analysis: Methods (simple vs. advanced FEM - SAFIR, OpenSees, ABAQUS); Thermal analysis; Mechanical analysis (thermal expansion, restraint, buckling, membrane action, connections); Progressive collapse assessment.</li>
-                <li>Blast Loading on Structures: Blast wave characterization (Friedlander waveform); Load application (pressure-time histories, FSI); Structural response modes (direct pressure, drag, diffraction); Failure criteria (breaching, spalling, collapse).</li>
-                <li>Combined Hazards: Fire following explosion (or vice-versa). Modelling sequential/combined loads. Post-event structural assessment.</li>
-                <li>Protective Structures: Design principles for fire-rated compartments and blast-resistant structures (bunkers, control rooms, refuge chambers).</li>
+                <li><strong>ANFO (Ammonium Nitrate/Fuel Oil):</strong> A mixture of porous ammonium nitrate prills (approx. 94%) and fuel oil (approx. 6%). It's a low-cost, relatively safe blasting agent but is sensitive to water and has a lower VOD and density compared to emulsions. Requires a primer/booster for initiation.</li>
+                <li><strong>Emulsions:</strong> Water-in-oil emulsions consisting of microscopic droplets of an oxidizer solution (like ammonium nitrate dissolved in water) dispersed in a fuel oil phase, stabilized by an emulsifier. They can be sensitized (e.g., with glass microballoons or chemical gassing) to become detonable. Emulsions offer high VOD, excellent water resistance, and high density. Available in bulk and packaged forms.</li>
+                <li><strong>Water Gels (Slurries):</strong> Gelatinous mixtures of oxidizers (AN, SN), water, fuels (e.g., aluminum), and sensitizers, thickened with gelling agents. They offer good water resistance and high energy but have largely been superseded by emulsions in many applications due to better stability and handling characteristics.</li>
+                <li><strong>Dynamites:</strong> Traditionally based on nitroglycerin, now less common in large-scale mining due to handling sensitivity, storage difficulties (sweating), and fume characteristics. Still used for specialized tasks like secondary breaking or controlled blasting where high shock energy is needed.</li>
             </ul>
-            <div class="key-concept mt-6">
-                <strong>PhD Challenge (Structures):** Develop high-fidelity models for structural response under combined/sequential fire and blast loading. Improve understanding of connection behaviour under extreme loads. Create efficient methods for assessing post-event structural integrity.
+            <div class="table-container mt-4">
+                 <table class="responsive-table">
+                    <thead><tr><th>Explosive Type</th><th>Key Components</th><th>Typical Density (g/cm³)</th><th>Typical VOD (m/s)</th><th>Water Resistance</th><th>Fume Class*</th><th>Primary Use</th></tr></thead>
+                    <tbody>
+                        <tr><td>ANFO</td><td>Ammonium Nitrate, Fuel Oil</td><td>~0.8-0.9</td><td>2500-4500</td><td>Poor</td><td>Good (if OB correct)</td><td>Dry blasting, bulk operations (surface/underground)</td></tr>
+                        <tr><td>Emulsions</td><td>AN solution, oil, emulsifier, sensitizer</td><td>~1.1-1.35</td><td>4500-6000+</td><td>Excellent</td><td>Good</td><td>Wet conditions, packaged/bulk, general purpose</td></tr>
+                        <tr><td>Water Gels</td><td>AN, sensitizers (e.g., Al), water, gelling agent</td><td>~1.1-1.4</td><td>4000-5500</td><td>Good-Excellent</td><td>Variable (Al adds energy but affects fumes)</td><td>Wet conditions, specific high-energy needs</td></tr>
+                         <tr><td>Dynamite</td><td>Nitroglycerin (trad.), AN, fillers</td><td>~1.0-1.5</td><td>2000-7000</td><td>Variable (Good-Excellent)</td><td>Poor-Fair</td><td>Specialized applications (secondary breaking, controlled blasting)</td></tr>
+                        </tbody>
+                </table>
+                 <p class="caption">*Fume Class relates to the volume of toxic gases (CO, NOx) produced. Dependent on formulation and oxygen balance. Regulations often specify limits for underground use.</p>
             </div>
-        </section>
 
-        <section id="risk_mitigation" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">6. Risk Assessment & Mitigation Strategies</h2>
-            <p>Applying systematic methodologies for identifying, analysing, and mitigating fire and explosion risks in mining and industrial settings, incorporating advanced techniques discussed in Soltani et al. (2024).</p>
-             <ul>
-                <li>Hazard Identification: Techniques (HAZID, HAZOP) applied to fire (aerosols, conveyors, electrical, spontaneous combustion) and explosives (handling, storage, misfires, flyrock, fumes, security) scenarios in mining. Use of incident databases.</li>
-                <li>Advanced Risk Assessment Methods: Limitations of classical RPN (Fine-Kinney). Introduction to Fuzzy Logic for handling uncertainty (TFNs, linguistic variables - Soltani Table 7). Application of MCDM:
+            <h3 class="text-xl font-semibold mt-6 mb-2">1.3 Initiation Systems</h3>
+            <p>Reliable initiation is critical for safety and performance. The initiation sequence, or "train," typically involves:</p>
+            <ul>
+                <li><strong>Initiator (Detonator/Cap):</strong> A small, sensitive device that starts the explosive chain. Types include:
                     <ul>
-                       <li>FBWM: For robust criteria weighting (e.g., C, P, E) (Soltani Eq 8, Table 11).</li>
-                       <li>GRA: For ranking risks (Soltani Eq 16, 17, Table 14). Discussion of specific high-ranked blasting risks from Soltani et al. (R12, R15, R23).</li>
+                        <li><strong>Electric Detonators:</strong> Initiated by electric current. Susceptible to stray currents/static electricity.</li>
+                        <li><strong>Non-Electric Detonators (e.g., NONEL®):</strong> Use a low-energy shock tube to transmit the initiation signal. Safer regarding electrical hazards. Offer various in-hole and surface delay timings.</li>
+                        <li><strong>Electronic Detonators:</strong> Offer precise, programmable delay timing (millisecond accuracy). Enhance fragmentation, control vibration, improve safety through inherent safety features and testing capabilities. Increasingly common despite higher cost.</li>
                     </ul>
-                     <div class="equation">
-                        \Gamma_i = \sum w_j \gamma(X_{0j}, x_{ij}) \quad \text{(GRA Grade Calculation)}
-                     </div>
                 </li>
-                 <li>Consequence Modelling: Use of CFD (FDS) for fire/smoke spread; Hydrocodes (AUTODYN) or empirical models for blast wave propagation; Aerosol dispersion models.</li>
-                 <li>Mitigation & Control Strategies:
-                     <ul>
-                        <li>Fire: Ventilation control, advanced detection (FO-DTS), suppression (water mist, foam, inerting), passive protection.</li>
-                        <li>Explosives: Storage regulations, handling procedures (anti-static), initiation system safety, blast design, fume clearance, security.</li>
-                    </ul>
-                 </li>
-                 <li>Regulatory Context: ATEX, MSHA, NFPA codes, UN transport regulations. Role of QRA and PBD.</li>
-             </ul>
+                <li><strong>Primer/Booster:</strong> An intermediate charge of a more sensitive explosive (e.g., cast pentolite, packaged emulsion) that reliably detonates the less sensitive main charge. The detonator is inserted into the primer.</li>
+                <li><strong>Main Charge:</strong> The bulk or packaged explosive (e.g., ANFO, emulsion) that performs the primary work of breaking rock.</li>
+            </ul>
+            <p><strong>Timing and Sequencing:</strong> Using detonators with different delay times allows for controlled sequencing of borehole detonation. This optimizes rock fragmentation by creating free faces for subsequent holes, directs rock movement, minimizes ground vibration, and improves wall stability.</p>
+            <figure class="mt-4">
+                <div class="visualization-box">
+                     <svg width="400" height="150" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="150" fill="var(--vis-bg-color)"/>
+                        <line x1="20" y1="75" x2="100" y2="75" stroke="var(--text-color-accent)" stroke-width="2"/>
+                        <rect x="100" y="60" width="60" height="30" fill="var(--text-color-subtle)" stroke="var(--text-color-header)" stroke-width="1"/>
+                        <text x="130" y="80" font-family="Inter, sans-serif" font-size="10" fill="var(--text-color-header)" text-anchor="middle">Detonator</text>
+                        <line x1="160" y1="75" x2="220" y2="75" stroke="var(--text-color-accent)" stroke-width="2" stroke-dasharray="4 2"/>
+                        <ellipse cx="250" cy="75" rx="30" ry="20" fill="var(--text-color-main)" stroke="var(--text-color-header)" stroke-width="1"/>
+                        <text x="250" y="80" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Primer/</text>
+                        <text x="250" y="90" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Booster</text>
+                        <line x1="280" y1="75" x2="340" y2="75" stroke="var(--text-color-accent)" stroke-width="4"/>
+                        <rect x="340" y="45" width="50" height="60" fill="var(--text-color-header)" stroke="var(--text-color-header)" stroke-width="1"/>
+                        <text x="365" y="70" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Main</text>
+                        <text x="365" y="80" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Charge</text>
+                        <text x="60" y="65" font-family="Inter, sans-serif" font-size="10" fill="var(--text-color-accent)" text-anchor="middle">Signal</text>
+                        <text x="190" y="65" font-family="Inter, sans-serif" font-size="10" fill="var(--text-color-accent)" text-anchor="middle">Initiation</text>
+                        <text x="310" y="65" font-family="Inter, sans-serif" font-size="10" fill="var(--text-color-accent)" text-anchor="middle">Detonation</text>
+                    </svg>
+                </div>
+                <figcaption class="caption">Figure 1: Conceptual diagram of an explosive initiation train.</figcaption>
+            </figure>
+        </section>
+
+        <section id="explosive-performance" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">2. Explosive Performance: Equations and Data</h2>
+            <p>This section delves into the quantitative aspects of explosive performance, including key metrics used for comparison and blast design, fundamental equations, and factors influencing the outcome of a blast.</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">2.1 Key Performance Metrics</h3>
+            <p>Several metrics are used to characterize and compare explosive performance:</p>
+            <ul>
+                <li><strong>Velocity of Detonation (VOD):</strong> As discussed previously, a primary performance indicator measured directly. Higher VOD generally implies higher detonation pressure.</li>
+                <li><strong>Detonation Pressure (P<sub>D</sub>):</strong> Calculated pressure at the detonation front, related to the explosive's ability to shatter rock near the borehole. Often estimated using P<sub>D</sub> ≈ (ρ * VOD<sup>2</sup>) / k, where ρ is density and k is a constant (value depends on units, often around 4 for GPa, g/cc, km/s).</li>
+                <li><strong>Borehole Pressure (P<sub>B</sub>):</strong> The effective pressure exerted on the borehole walls by the expanding gases after the detonation front passes. It's lower than detonation pressure (often estimated as 40-50% of P<sub>D</sub>) and is responsible for extending fractures and heaving the rock mass.</li>
+                <li><strong>Gas Volume (V<sub>gas</sub>):</strong> The volume of gas produced per unit weight of explosive (e.g., L/kg). Higher gas volume contributes to greater heave and displacement of broken rock.</li>
+                <li><strong>Relative Weight Strength (RWS):</strong> Compares the energy output per unit weight of an explosive to a standard (often ANFO=100 or TNT=100). Useful for comparing energy content on a weight basis.</li>
+                <li><strong>Relative Bulk Strength (RBS):</strong> Compares the energy output per unit volume of an explosive to a standard (usually ANFO=100). This metric accounts for density differences and is often more relevant for blast design, as explosives fill a volume in the borehole. RBS = RWS * (Density<sub>Explosive</sub> / Density<sub>Standard</sub>).</li>
+            </ul>
+            <p>The balance between shock energy (related to detonation pressure) and gas energy (related to borehole pressure and gas volume) determines the explosive's effectiveness for fragmentation (breaking rock) versus heave (moving rock).</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">2.2 Blast Design Equations</h3>
+            <p>Blast design involves determining parameters like burden, spacing, hole diameter, charge length, stemming length, and sub-drilling to achieve desired fragmentation, displacement, and minimize adverse effects (vibration, flyrock). While complex modeling software is now common, fundamental empirical relationships, often requiring site calibration, form the basis:</p>
+            <ul>
+                <li><strong>Burden (B):</strong> The shortest distance from a borehole charge to a free face. A critical parameter influencing fragmentation and rock movement. Often calculated using formulas derived from theories by Langefors & Kihlström, Konya, or others, typically relating Burden to hole diameter (D), rock properties, and explosive strength. A common starting point might be B ≈ 25-35 * D.</li>
+                <li><strong>Spacing (S):</strong> The distance between boreholes in the same row. Usually related to Burden (e.g., S ≈ 1.15 - 1.5 * B) to ensure proper interaction between charges.</li>
+                <li><strong>Stemming (T):</strong> The length of inert material placed above the explosive charge to confine gases. Crucial for effective energy utilization. Often related to Burden (e.g., T ≈ 0.7 - 1.0 * B). Insufficient stemming leads to venting, noise, flyrock, and poor performance.</li>
+                <li><strong>Sub-drilling (J):</strong> Drilling below the planned floor grade to ensure breakage to the desired level. Typically related to Burden (e.g., J ≈ 0.3 * B).</li>
+                <li><strong>Powder Factor (PF):</strong> The amount of explosive used per unit volume or mass of rock broken (e.g., kg/m³, lb/ton). It's an outcome of the design parameters and serves as a key performance indicator for efficiency. PF = (Charge Weight per Hole) / (Volume of Rock per Hole).</li>
+                <li><strong>Volume of Rock per Hole (V):</strong> For bench blasting, V ≈ Burden * Spacing * Bench Height.</li>
+                <li><strong>Charge Weight (W):</strong> Calculated based on the borehole geometry (diameter, charge length) and the explosive density. W = (π * (D/2)<sup>2</sup> * L<sub>charge</sub>) * ρ<sub>explosive</sub>.</li>
+            </ul>
+            <p><i>(Note: Specific equations from Langefors & Kihlström or Konya are complex, involve rock constants and explosive factors, and require external reference for accurate presentation. They provide a framework for relating these parameters based on rock type, explosive properties, and desired fragmentation.)</i></p>
+            <div class="equation">
+                 <p>Example Relationship Concept (Conceptual Only): \( B = k_B \times D \times \sqrt{\frac{\rho_{exp}}{\rho_{rock}}} \)</p>
+                 <p class="caption">(Where k<sub>B</sub> is a factor incorporating rock strength and explosive energy)</p>
+            </div>
+
+            <div class="interactive-container">
+                <h4 class="text-lg font-semibold mb-3">Powder Factor (PF) Calculator (Bench Blasting)</h4>
+                <p class="instructional-text">Estimate the Powder Factor based on typical bench blast parameters.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="burden">Burden (B) (m):</label>
+                        <input type="number" id="burden" name="burden" min="1" value="4" step="0.1">
+                    </div>
+                    <div>
+                        <label for="spacing">Spacing (S) (m):</label>
+                        <input type="number" id="spacing" name="spacing" min="1" value="5" step="0.1">
+                    </div>
+                    <div>
+                        <label for="bench-height">Bench Height (H) (m):</label>
+                        <input type="number" id="bench-height" name="bench-height" min="3" value="10" step="0.5">
+                    </div>
+                    <div>
+                        <label for="charge-weight">Charge Weight per Hole (W) (kg):</label>
+                        <input type="number" id="charge-weight" name="charge-weight" min="10" value="150" step="5">
+                    </div>
+                </div>
+                 <div class="output-box" id="pf-output">
+                    Volume per Hole: Calculating... | Powder Factor: Calculating... (kg/m³)
+                </div>
+                 <p class="approximation-note mt-3">Note: Assumes regular pattern and full breakage within B x S x H volume. Does not account for sub-drill, stemming, or rock density variations. Primarily for conceptual understanding.</p>
+            </div>
+            <h3 class="text-xl font-semibold mt-6 mb-2">2.3 Factors Influencing Performance</h3>
+            <p>Theoretical calculations provide a starting point, but actual blast results are heavily influenced by site-specific conditions:</p>
+            <ul>
+                <li><strong>Geology:</strong> Rock type (igneous, sedimentary, metamorphic), strength (UCS, tensile strength), density, hardness, porosity, and especially structural features (joints, faults, bedding planes - their spacing, orientation, and condition) dominate blast outcomes. Rock mass classification systems (e.g., RMR, Q-system) help quantify geological character. Acoustic impedance differences between rock layers affect energy transmission.</li>
+                <li><strong>Confinement:</strong> The degree of restriction on the rock mass being blasted. Blasting towards a free face (bench blasting) is more efficient than with limited free faces (e.g., shaft sinking, tunneling). Confinement affects the required energy and the type of breakage (tensile vs. shear).</li>
+                <li><strong>Charge Diameter:</strong> Affects the VOD of non-ideal explosives like ANFO (VOD increases with diameter up to a point). Also influences the distribution of energy and the resulting fragmentation size. Larger diameters generally lead to coarser fragmentation. The concept of "critical diameter" (minimum diameter for detonation propagation) is important.</li>
+                <li><strong>Initiation Timing:</strong> Precise timing between holes (using electronic or non-electric delays) is crucial for controlling fragmentation (wave interaction), heave direction, vibration levels, and final wall stability. Inaccurate timing can severely degrade results.</li>
+                <li><strong>Environmental Conditions (Water):</strong> Water in boreholes can desensitize ANFO, requiring the use of water-resistant explosives (emulsions, gels). Water can also affect energy coupling (how well energy transfers to the rock) and stemming performance (water stemming can sometimes improve confinement). Temperature extremes can also affect explosive properties and handling.</li>
+            </ul>
              <div class="key-concept mt-6">
-                <strong>PhD Challenge (Risk/Mitigation):** Integrate advanced consequence models within probabilistic risk assessment frameworks (QRA). Develop dynamic risk assessment tools. Optimize mitigation strategies using simulation and cost-benefit analysis. Validate fuzzy/MCDM approaches against real-world data.
+                <strong>Critical Consideration:</strong> Explosive performance is highly dependent on the complex interaction between the explosive properties (energy, pressure, VOD) and the characteristics of the rock mass (strength, structure, confinement). Theoretical calculations must always be validated and adjusted based on field observations, data collection (fragmentation analysis, VOD measurement, vibration monitoring), and experience.
             </div>
         </section>
 
-        <section id="modeling" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">7. Advanced Modelling & Simulation</h2>
-             <p>Computational modelling is indispensable for tackling the complexity of fire, explosion, and blast phenomena at a PhD level.</p>
-             <ul>
-                <li>CFD for Fire & Ventilation: FDS, OpenFOAM applications; Challenges (turbulence, combustion, radiation, soot, V&V, HPC).</li>
-                <li>Hydrocodes for Blasting & Explosions: AUTODYN, LS-DYNA applications; Challenges (EOS/reactive burn models, rock/concrete models, V&V, FSI).</li>
-                <li>Coupled & Multi-Scale Modelling: CFD-FEM, micro-macro material links, blast-geomechanics, evacuation-fire coupling, Uncertainty Quantification (UQ) methods.</li>
-             </ul>
-              <blockquote class="my-4">
-                A key focus for PhD research is often the development, implementation, and rigorous validation of novel numerical methods or sub-models within these advanced simulation frameworks, including robust UQ.
+        <section id="mining-safety" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">3. Mining Applications & Safety Measures</h2>
+            <p>Here, we focus on the practical application of explosives in different mining scenarios (surface and underground) and the critical safety protocols associated with handling, storage, transport, and use, referencing key regulatory frameworks.</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">3.1 Blasting in Surface vs. Underground Mines</h3>
+            <p>Blasting techniques and safety concerns differ significantly between surface and underground environments:</p>
+            <ul>
+                <li><strong>Surface Mining (Open Pit/Quarry):</strong>
+                    <ul>
+                        <li><strong>Techniques:</strong> Primarily bench blasting (large diameter holes, large charges), cast blasting (using explosive energy to move overburden), contour blasting (smooth wall techniques for final limits).</li>
+                        <li><strong>Challenges:</strong> Flyrock control (potential for rock ejected outside blast zone), ground vibration, airblast (noise/pressure wave), dust generation, slope stability. Larger scale operations.</li>
+                        <li><strong>Safety Focus:</strong> Large exclusion zones, flyrock prediction/monitoring, vibration limits for nearby structures, dust control, stable bench design.</li>
+                    </ul>
+                </li>
+                <li><strong>Underground Mining:</strong>
+                    <ul>
+                        <li><strong>Techniques:</strong> Development blasting (drifts, tunnels - smaller diameter holes, specific patterns like V-cut or burn cut), stoping (ore extraction - various methods like longhole, shrinkage, cut-and-fill), secondary blasting (breaking large boulders).</li>
+                        <li><strong>Challenges:</strong> Confined spaces amplify hazards - toxic fumes (CO, NOx), flammable gas (methane), dust, ground vibration effects on tunnel stability, potential for misfires, damage to mine infrastructure (ventilation, services), limited evacuation routes.</li>
+                        <li><strong>Safety Focus:</strong> Strict re-entry protocols based on ventilation clearance times, gas monitoring, dust suppression, ground support integrity checks, misfire procedures, emergency preparedness (refuge chambers, escapeways).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">3.2 Handling, Storage, and Transport</h3>
+            <p>Strict regulations govern the entire lifecycle of explosives to prevent accidents and ensure security. Key areas include:</p>
+            <ul>
+                <li><strong>Handling:</strong> Only trained and authorized personnel. Procedures to minimize friction, impact, and static electricity. Separation of detonators from other explosives until point of use. Proper use of PPE.</li>
+                <li><strong>Storage (Magazines):</strong> Requirements typically cover:
+                    <ul>
+                        <li><strong>Design:</strong> Bullet-resistant, fire-resistant, weather-resistant, well-ventilated construction.</li>
+                        <li><strong>Location:</strong> Mandated separation distances (Quantity-Distance tables) from inhabited buildings, roads, railways, other magazines, and critical infrastructure, based on the quantity and type of explosives stored. Specific distances are defined in regulations (e.g., MSHA 30 CFR 56/57.6130s, ATF 27 CFR 555 Subpart K, EU Directive 2014/28/EU Annex II, Spanish RGNBSM ITC 10.3.01).</li>
+                        <li><strong>Security:</strong> Robust locking mechanisms, access control, surveillance, inventory management to prevent theft or unauthorized access (ATF regulations are particularly stringent in the US).</li>
+                        <li><strong>Housekeeping:</strong> Cleanliness, no combustible materials nearby, proper stacking, first-in/first-out stock rotation. Separate storage for detonators and other explosives.</li>
+                    </ul>
+                </li>
+                <li><strong>Transport:</strong>
+                    <ul>
+                        <li><strong>Vehicles:</strong> Specially designed or modified vehicles with safety features (e.g., non-sparking materials, fire extinguishers, signage).</li>
+                        <li><strong>Procedures:</strong> Secure loading, separation of detonators, defined routes, communication protocols, no unnecessary stops, driver training. Regulations like UN Recommendations on the Transport of Dangerous Goods, MSHA (30 CFR 56/57.6160s), and national rules apply.</li>
+                    </ul>
+                </li>
+            </ul>
+            <blockquote>
+                 Referencing specific standards is crucial. Key frameworks include:
+                 <ul>
+                    <li><strong>USA:</strong> MSHA (Mine Safety and Health Administration - 30 CFR Parts 48, 56, 57, 75, 77), OSHA (Occupational Safety and Health Administration - 29 CFR 1910.109, 1926 Subpart U), ATF (Bureau of Alcohol, Tobacco, Firearms and Explosives - 27 CFR Part 555).</li>
+                    <li><strong>Europe/Spain:</strong> EU Directive 2014/28/EU (harmonization for civil explosives), Spanish Mining Safety Regulation (Reglamento General de Normas Básicas de Seguridad Minera - RGNBSM, particularly ITC 10.3.01 on explosives), relevant UNE standards (e.g., UNE 22-series for mining).</li>
+                    <li><strong>Other:</strong> Canadian Explosives Act, Australian Standard AS 2187 (Explosives - Storage, transport and use), ISO standards where applicable.</li>
+                 </ul>
+                 These standards detail requirements for licensing, training, storage distances, transport, handling, use, and disposal. Security against theft and misuse is a major focus globally. <i>(Note: Specific details could not be verified due to tool limitations).</i>
+            </blockquote>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">3.3 Pre- and Post-Blast Safety Procedures</h3>
+            <p>Standard Operating Procedures (SOPs) are essential for safe blasting operations:</p>
+            <ul>
+                <li><strong>Pre-Blast:</strong>
+                    <ul>
+                        <li><strong>Design & Planning:</strong> Ensure blast design considers safety aspects (vibration, flyrock, stability).</li>
+                        <li><strong>Area Security:</strong> Establish and clear the blast exclusion zone of all personnel, vehicles, and equipment. Post guards at all access points.</li>
+                        <li><strong>Warning Signals:</strong> Use audible (sirens, horns) and sometimes visual signals with standardized meanings (e.g., warning signal, imminent blast signal, all-clear signal).</li>
+                        <li><strong>Final Checks:</strong> Verify connections (if applicable), ensure guards are in place, confirm area is clear.</li>
+                    </ul>
+                </li>
+                <li><strong>During Blasting:</strong> Authorized personnel initiate the blast from a safe location. Monitor the blast if possible (e.g., video recording for analysis).</li>
+                <li><strong>Post-Blast:</strong>
+                    <ul>
+                        <li><strong>Re-entry Wait Time:</strong> Observe a mandatory waiting period to allow blast fumes (CO, NOx, etc.) to be cleared by the ventilation system (especially critical underground). Minimum times are often regulated (e.g., MSHA).</li>
+                        <li><strong>Misfire Inspection:</strong> Carefully inspect the blast site for any signs of misfires (undetonated explosives or detonators). This is extremely hazardous and requires specialized procedures for handling.</li>
+                        <li><strong>Fume/Gas Checks:</strong> Verify atmospheric conditions (O2, CO, NOx levels) are safe before allowing general access, particularly underground.</li>
+                        <li><strong>Blast Assessment:</strong> Examine fragmentation, muckpile profile, and stability of remaining faces/walls. Document results and any issues.</li>
+                        <li><strong>All-Clear Signal:</strong> Issue the all-clear signal only after confirming the area is safe from fumes, misfires, and ground instability.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section id="confined-space-hazards" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">4. Confined Space Hazards in Mining</h2>
+            <p>Underground mines are inherently confined spaces presenting numerous hazards, particularly atmospheric risks which are significantly exacerbated by blasting activities. Effective ventilation is paramount.</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">4.1 Atmospheric Hazards</h3>
+            <p>The mine atmosphere can contain various harmful contaminants or lack sufficient oxygen:</p>
+            <ul>
+                <li><strong>Toxic Gases:</strong>
+                    <ul>
+                        <li><strong>From Blasting:</strong> Carbon Monoxide (CO - chemical asphyxiant), Nitrogen Oxides (NOx - respiratory irritants, primarily NO and NO2). Production depends on explosive type and oxygen balance.</li>
+                        <li><strong>From Geology/Operations:</strong> Hydrogen Sulfide (H2S - chemical asphyxiant, 'rotten egg' smell at low concentrations, paralyzes sense of smell at higher levels), Sulfur Dioxide (SO2 - respiratory irritant, often from sulfide ore bodies), Methane (CH4 - see below), Radon (radioactive gas from certain rock types). Diesel exhaust also contributes CO, NOx, and particulate matter.</li>
+                    </ul>
+                </li>
+                <li><strong>Flammable Gases:</strong>
+                    <ul>
+                        <li><strong>Methane (CH4):</strong> Common in coal mines, but can occur in other mines. Explosive in concentrations typically between 5% (Lower Explosive Limit - LEL) and 15% (Upper Explosive Limit - UEL) in air. Requires an ignition source.</li>
+                        <li><strong>Hydrogen (H2):</strong> Can be generated during battery charging or from water reactions with certain minerals.</li>
+                    </ul>
+                </li>
+                <li><strong>Oxygen Deficiency:</strong> Normal air is ~20.9% O2. Levels below 19.5% are considered deficient. Caused by displacement by other gases (CO2, N2, CH4), consumption by combustion/oxidation (e.g., decaying timber, sulphide oxidation), or blasting. Leads to asphyxiation.</li>
+                <li><strong>Respirable Dust:</strong>
+                    <ul>
+                        <li><strong>Coal Dust:</strong> Can cause Coal Workers' Pneumoconiosis (CWP or 'black lung'). Also explosive when suspended in air in sufficient concentration with an ignition source.</li>
+                        <li><strong>Silica Dust:</strong> Crystalline silica (quartz) from drilling/blasting siliceous rock causes Silicosis, an incurable lung disease.</li>
+                        <li><strong>Diesel Particulate Matter (DPM):</strong> Classified as a carcinogen.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Exposure limits (e.g., TLV, PEL, MSHA standards, EU IOELVs) define maximum permissible concentrations for workers. <i>(Note: Specific limit values could not be verified due to tool limitations).</i></p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">4.2 Ventilation Requirements</h3>
+            <p>Mine ventilation is a critical engineering control designed to:</p>
+            <ul>
+                <li><strong>Dilute and Remove Contaminants:</strong> Supply sufficient fresh air to dilute toxic/flammable gases and dust to below exposure limits and remove them from working areas. This includes clearing blast fumes within specified re-entry times.</li>
+                <li><strong>Provide Oxygen:</strong> Ensure adequate oxygen levels for breathing.</li>
+                <li><strong>Control Temperature and Humidity:</strong> Maintain reasonable working conditions, especially in deep mines where geothermal heat is significant.</li>
+            </ul>
+            <p><strong>Principles:</strong> Airflow (Q, volume per unit time) is created by pressure difference (ΔP) generated by fans, overcoming the resistance (R) of the mine airways (Q ∝ √ΔP/R). Atkinson's Law (ΔP = R * Q²) governs airflow in turbulent conditions typical of mines.</p>
+            <p><strong>Systems:</strong>
+                <ul>
+                    <li><strong>Primary Ventilation:</strong> Main fans (usually on surface) establish airflow through major mine arteries (shafts, main drifts).</li>
+                    <li><strong>Auxiliary Ventilation:</strong> Smaller fans and ducting used to direct air to specific working faces (e.g., development ends) where the main airflow doesn't reach effectively. Crucial for clearing fumes after blasting in dead-end headings.</li>
+                </ul>
+            Regulations (e.g., MSHA 30 CFR Part 57/75 Subpart D, Spanish RGNBSM ITC 07.1.01) mandate minimum air quantities and velocities based on mine type, equipment used (especially diesel), number of personnel, and specific hazards like methane. Ventilation surveys are required to ensure system effectiveness.</p>
+             <figure class="mt-4">
+                <div class="visualization-box">
+                     <svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="200" fill="var(--vis-bg-color)"/>
+                        <rect x="0" y="0" width="400" height="30" fill="#a16207"/>
+                        <text x="200" y="20" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Surface</text>
+                        <ellipse cx="50" cy="30" rx="20" ry="10" fill="var(--accent-color)"/>
+                        <text x="50" y="35" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle">Fan</text>
+                        <rect x="40" y="30" width="20" height="100" fill="lightblue" stroke="var(--text-color-header)"/>
+                        <text x="30" y="80" font-family="Inter, sans-serif" font-size="10" fill="var(--text-color-header)" text-anchor="middle" transform="rotate(-90 30 80)">Intake</text>
+                        <rect x="60" y="110" width="280" height="20" fill="gray" stroke="var(--text-color-header)"/>
+                        <rect x="340" y="80" width="20" height="80" fill="darkgray" stroke="var(--text-color-header)"/>
+                        <text x="350" y="120" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle" transform="rotate(-90 350 120)">Working</text>
+                        <text x="350" y="150" font-family="Inter, sans-serif" font-size="10" fill="white" text-anchor="middle" transform="rotate(-90 350 150)">Face</text>
+                        <ellipse cx="280" cy="120" rx="10" ry="5" fill="orange"/>
+                        <rect x="290" y="115" width="60" height="10" fill="none" stroke="orange" stroke-dasharray="3 3"/>
+                        <text x="280" y="105" font-family="Inter, sans-serif" font-size="8" fill="orange" text-anchor="middle">Aux Fan</text>
+                        <rect x="60" y="160" width="280" height="20" fill="lightcoral" stroke="var(--text-color-header)"/>
+                        <rect x="340" y="30" width="20" height="150" fill="lightcoral" stroke="var(--text-color-header)"/>
+                         <text x="370" y="105" font-family="Inter, sans-serif" font-size="10" fill="var(--text-color-header)" text-anchor="middle" transform="rotate(90 370 105)">Return</text>
+                        <path d="M 50 45 V 105 H 270 V 115" stroke="blue" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-blue)"/>
+                        <path d="M 295 120 H 335 V 130" stroke="orange" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-orange)"/>
+                        <path d="M 350 165 H 70 V 175" stroke="red" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-red)"/>
+                        <path d="M 350 175 V 35" stroke="red" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-red)"/>
+                        <defs>
+                            <marker id="arrowhead-blue" markerWidth="5" markerHeight="3.5" refX="0" refY="1.75" orient="auto"><polygon points="0 0, 5 1.75, 0 3.5" fill="blue"/></marker>
+                            <marker id="arrowhead-orange" markerWidth="5" markerHeight="3.5" refX="0" refY="1.75" orient="auto"><polygon points="0 0, 5 1.75, 0 3.5" fill="orange"/></marker>
+                            <marker id="arrowhead-red" markerWidth="5" markerHeight="3.5" refX="0" refY="1.75" orient="auto"><polygon points="0 0, 5 1.75, 0 3.5" fill="red"/></marker>
+                        </defs>
+                    </svg>
+                </div>
+                <figcaption class="caption">Figure 2: Simplified conceptual diagram of a mine ventilation circuit showing primary (blue intake, red return) and auxiliary (orange) airflow.</figcaption>
+            </figure>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">4.3 Monitoring and Control</h3>
+            <p>Continuous monitoring and effective controls are essential for managing atmospheric hazards:</p>
+            <ul>
+                <li><strong>Monitoring:</strong>
+                    <ul>
+                        <li><strong>Handheld Detectors:</strong> Portable multi-gas monitors used by supervisors, ventilation technicians, and workers for spot checks (O2, CO, CH4, H2S often included).</li>
+                        <li><strong>Fixed Sensors:</strong> Continuously monitor atmosphere at strategic locations (e.g., return airways, near potential gas sources, belt drives) and often linked to alarms and control systems (e.g., tripping power in case of high methane). Common sensors include electrochemical (for O2, CO, H2S, NOx), catalytic bead or infrared (for CH4), and particle counters (for dust).</li>
+                        <li><strong>Sampling:</strong> Periodic collection of air samples for laboratory analysis (e.g., detailed gas chromatography, dust composition/concentration). Required by regulations for certain contaminants like respirable silica and coal dust.</li>
+                    </ul>
+                </li>
+                <li><strong>Control Measures:</strong>
+                    <ul>
+                        <li><strong>Ventilation Adjustments:</strong> Changing fan speeds, opening/closing regulators, installing/moving auxiliary fans and ducting to redirect airflow based on monitoring results and operational needs.</li>
+                        <li><strong>Dust Suppression:</strong> Water sprays (at source of generation like cutting heads, transfer points, drills), wetting agents, dust collectors, proper cutting bit maintenance. Rock dusting in coal mines (applying inert limestone dust) to prevent coal dust explosions.</li>
+                        <li><strong>Gas Drainage:</strong> In gassy mines (especially coal), pre-draining methane from the coal seam or surrounding strata using boreholes before mining occurs.</li>
+                        <li><strong>Sealing:</strong> Isolating abandoned or hazardous areas with permanent seals to prevent contaminants from entering active workings.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section id="fire-protection" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">5. Fire Protection Standards & Measures</h2>
+            <p>Fire is a devastating hazard in mining, particularly underground due to confined spaces, limited escape routes, and the potential for ventilation systems to spread smoke and toxic gases rapidly. This section covers fire hazards, prevention, detection, suppression, and emergency response based on established standards.</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">5.1 Fire Hazards in Mines</h3>
+            <p>Fires require fuel, oxygen (from ventilation air), and an ignition source. Common mining-specific hazards include:</p>
+            <ul>
+                <li><strong>Ignition Sources:</strong>
+                    <ul>
+                        <li><strong>Electrical Equipment:</strong> Faults, short circuits, overloaded cables, damaged trailing cables.</li>
+                        <li><strong>Mechanical Friction:</strong> Overheated bearings (conveyors, fans), seized rollers, belt slippage, drill steel friction on rock (especially with pyrites).</li>
+                        <li><strong>Welding and Cutting:</strong> Hot work activities are a major ignition risk if proper precautions (permits, fire watch, clearing combustibles) are not taken.</li>
+                        <li><strong>Spontaneous Combustion:</strong> Self-heating of materials like sulphide ores (pyrite, pyrrhotite), low-rank coals, oily rags, timber in poorly ventilated areas.</li>
+                        <li><strong>Explosives:</strong> While designed to detonate, improper handling or specific conditions could potentially initiate fires. Blasting can also damage equipment, creating ignition sources.</li>
+                        <li><strong>Mobile Equipment:</strong> Diesel engine hot surfaces (exhaust, turbochargers), hydraulic fluid leaks spraying onto hot components, electrical faults. Battery electric vehicles (BEVs) introduce risks associated with lithium-ion battery thermal runaway.</li>
+                        <li><strong>Static Electricity:</strong> Can build up during pneumatic loading of ANFO or around conveyor belts.</li>
+                    </ul>
+                </li>
+                <li><strong>Fuel Sources:</strong>
+                    <ul>
+                        <li><strong>Timber:</strong> Used for ground support (props, cribs), ventilation structures.</li>
+                        <li><strong>Conveyor Belts:</strong> Often extensive systems. Fire-resistant anti-static (FRAS) belts are required by regulation in many jurisdictions (e.g., MSHA) but can still burn under intense fire conditions.</li>
+                        <li><strong>Diesel Fuel & Lubricants:</strong> Stored fuel, fuel in vehicle tanks, hydraulic fluids (fire-resistant fluids are available and often mandated).</li>
+                        <li><strong>Coal:</strong> Coal seams themselves, accumulated dust.</li>
+                        <li><strong>Sulphide Ores:</strong> Can contribute to spontaneous combustion and release SO2 when burning.</li>
+                        <li><strong>Plastics & Rubber:</strong> Cables, hoses, tires, ventilation ducting (fire-resistant options exist).</li>
+                        <li><strong>Explosives & Packaging:</strong> While designed not to burn easily, they can contribute fuel if involved in a larger fire.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">5.2 Prevention and Detection</h3>
+            <p>Preventing fires is the first line of defense:</p>
+            <ul>
+                <li><strong>Prevention Measures:</strong>
+                    <ul>
+                        <li><strong>Good Housekeeping:</strong> Regular cleanup of coal dust, oil spills, rubbish, and scrap materials.</li>
+                        <li><strong>Equipment Maintenance:</strong> Preventative maintenance programs for electrical and mechanical equipment to prevent overheating and faults. Proper lubrication.</li>
+                        <li><strong>Ventilation Control:</strong> Managing airflow to prevent conditions conducive to spontaneous combustion in susceptible areas. Monitoring return air for signs of heating (CO levels).</li>
+                        <li><strong>Use of Fire-Resistant Materials:</strong> Mandated use of FRAS conveyor belts, fire-resistant hydraulic fluids, non-combustible construction materials where practical, fire-rated cables and hoses.</li>
+                        <li><strong>Hot Work Procedures:</strong> Strict permit-to-work systems for welding, cutting, and grinding, including atmospheric testing, clearing combustibles, fire watch, and having suppression equipment ready.</li>
+                        <li><strong>Rock Dusting:</strong> Application of limestone dust in coal mines to inert coal dust, reducing explosion risk and potentially slowing fire spread.</li>
+                        <li><strong>Training:</strong> Worker education on fire hazards and prevention practices.</li>
+                    </ul>
+                </li>
+                <li><strong>Fire Detection Systems:</strong> Early detection is critical for effective response. Systems include:
+                    <ul>
+                        <li><strong>Carbon Monoxide (CO) Monitoring:</strong> CO is an early product of combustion, especially smoldering fires. Continuous monitoring systems along belt lines and in return airways are common, often linked to alarms.</li>
+                        <li><strong>Smoke Detectors:</strong> Ionization (detect small particles) or photoelectric (detect larger particles, better for smoldering fires) types. Placement considers airflow patterns.</li>
+                        <li><strong>Heat Sensors/Thermal Detectors:</strong> Fixed temperature or rate-of-rise detectors used near potential overheating sources (e.g., belt drives, electrical installations). Linear Heat Detection (LHD) cables can monitor temperature along their entire length (e.g., along conveyors).</li>
+                        <li><strong>Visual Inspection:</strong> Regular inspections by personnel remain a vital part of detection.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">5.3 Suppression Systems and Equipment</h3>
+            <p>A range of suppression methods are employed, tailored to the specific risks:</p>
+            <ul>
+                <li><strong>Water Systems:</strong> Primary firefighting medium. Mines typically have extensive water pipelines (fire mains) with hydrants and hose connections. Sprinkler systems (deluge, pre-action) may protect critical installations (e.g., workshops, fuel bays, conveyor drives).</li>
+                <li><strong>Portable Fire Extinguishers:</strong> Strategically located throughout the mine and on mobile equipment. Types must match potential fire classes:
+                    <ul>
+                        <li><strong>Class A:</strong> Ordinary combustibles (wood, paper, plastic) - Water, Dry Chemical (ABC).</li>
+                        <li><strong>Class B:</strong> Flammable liquids (fuel, oil) - Dry Chemical (ABC, BC), Foam, CO2.</li>
+                        <li><strong>Class C:</strong> Electrical fires - Dry Chemical (ABC, BC), CO2 (non-conductive agents required).</li>
+                        <li><strong>Class D:</strong> Combustible metals (e.g., magnesium, aluminum fines) - Specialized dry powders (e.g., Met-L-X).</li>
+                        <li><strong>Class K:</strong> Cooking oils/fats (less common in production areas) - Wet chemical.</li>
+                    </ul>
+                </li>
+                <li><strong>Foam Systems:</strong> Used primarily for Class B fires. Can be fixed systems (e.g., protecting fuel storage) or applied via portable equipment. Low, medium, or high expansion foams are available, smothering the fire and cooling the fuel.</li>
+                <li><strong>Inert Gas Flooding:</strong> For enclosed areas (e.g., sealed fire zones, some electrical rooms). Systems release CO2 or Nitrogen (N2) to displace oxygen and extinguish the fire. Requires careful safety procedures due to asphyxiation risk.</li>
+                <li><strong>Vehicle Suppression Systems:</strong> Automatic systems installed on large mobile equipment (trucks, loaders, drills) typically using dry chemical powder or dual-agent (dry chemical + liquid agent like LVS) systems, triggered by heat sensors or manually. Increasingly important with larger, more complex equipment and BEVs.</li>
+                <li><strong>Rock Dusting:</strong> In coal mines, also acts as a suppression agent by absorbing heat and interrupting flame propagation in coal dust explosions.</li>
+            </ul>
+
+             <div class="interactive-container">
+                <h4 class="text-lg font-semibold mb-3">Fire Extinguisher Type Selector (Basic)</h4>
+                <p class="instructional-text">Select the primary type of material burning to see generally suitable extinguisher classes.</p>
+                <label for="fuel-type">Select Fuel Type:</label>
+                <select id="fuel-type" name="fuel-type">
+                    <option value="">-- Select Material --</option>
+                    <option value="A">Wood, Paper, Plastic, Textiles (Ordinary Combustibles)</option>
+                    <option value="B">Diesel Fuel, Oil, Grease, Solvents (Flammable Liquids)</option>
+                    <option value="C">Energized Electrical Equipment</option>
+                    <option value="D">Combustible Metals (e.g., Magnesium, Aluminum dust - RARE)</option>
+                </select>
+
+                <div class="output-box" id="extinguisher-output">
+                    Suitable Extinguisher Classes: Select fuel type...
+                </div>
+                 <p class="approximation-note mt-3">Note: This is a simplified guide. Always choose extinguishers rated for the specific hazard present. ABC dry chemical is common for multiple risks, but may not be optimal for all situations (e.g., sensitive electronics). Class D requires specific agents. Always follow site procedures and training.</p>
+            </div>
+            <h3 class="text-xl font-semibold mt-6 mb-2">5.4 Emergency Response and Regulations</h3>
+            <p>Effective emergency response is crucial when prevention fails. Key elements include:</p>
+            <ul>
+                <li><strong>Emergency Response Plan (ERP):</strong> A detailed, site-specific plan required by regulations (e.g., MSHA 30 CFR Part 48, Part 75 Subpart L; Spanish RGNBSM ITC 05.1.01). It outlines procedures for:
+                    <ul>
+                        <li><strong>Notification & Alarms:</strong> How fires are reported, how alarms are activated (stench gas, communication systems).</li>
+                        <li><strong>Evacuation:</strong> Designated escape routes (primary and secondary), procedures for moving personnel to fresh air bases or refuge chambers. Self-Contained Self-Rescuer (SCSR) devices providing breathable air are mandatory for underground personnel in many countries.</li>
+                        <li><strong>Refuge Chambers:</strong> Pressurized, sealed chambers with breathable air supplies, water, and communications, providing a safe haven if escape is cut off. Design and supply duration standards are regulated.</li>
+                        <li><strong>Firefighting Strategy:</strong> Procedures for initial attack (if safe), containment, ventilation control during fires (can be complex, potentially reversing air to keep escape routes clear or reducing air to starve fire), sealing fire zones.</li>
+                        <li><strong>Command Structure:</strong> Incident command system defining roles and responsibilities during an emergency.</li>
+                    </ul>
+                </li>
+                <li><strong>Mine Rescue Teams:</strong> Highly trained teams (internal or regional) equipped with specialized gear (e.g., long-duration Self-Contained Breathing Apparatus - SCBA, gas detectors, thermal imaging cameras) to perform reconnaissance, firefighting, and rescue operations in hazardous atmospheres. Training and readiness standards are regulated (e.g., MSHA Part 49).</li>
+                <li><strong>Communication Systems:</strong> Reliable underground communication (phones, leaky feeder radio) is vital during emergencies.</li>
+                <li><strong>Training and Drills:</strong> Regular training for all personnel on fire prevention, evacuation procedures, SCSR use, and emergency signals. Regular drills test the effectiveness of the ERP and rescue teams.</li>
+            </ul>
+             <div class="key-concept mt-6">
+                <strong>Regulatory Compliance & New Era Challenges:</strong> Adherence to national and local fire protection regulations (e.g., MSHA, EU Directives, Spanish RGNBSM, NFPA standards where adopted) is mandatory. The "new era" introduces challenges requiring updated standards and practices, such as:
+                <ul>
+                    <li><strong>Battery Electric Vehicles (BEVs):</strong> Managing fire risks associated with large lithium-ion batteries (thermal runaway, difficult extinguishment, toxic fumes). Specific detection, suppression (water cooling, specialized agents), and emergency response protocols are evolving.</li>
+                    <li><strong>Automation:</strong> Ensuring fire detection and suppression systems function reliably in automated zones with limited human presence. Remote monitoring and response capabilities become critical.</li>
+                    <li><strong>Deep Mining:</strong> Increased heat loads affect ventilation design and fire behavior. Longer escape routes necessitate robust refuge chamber strategies and potentially advanced SCSR technology. Interaction between seismicity and fire infrastructure is a concern.</li>
+                </ul>
+                Standards bodies (ISO, NFPA, national regulators) are actively working on guidance for these emerging risks. <i>(Note: Specific standards addressing these new challenges could not be verified due to tool limitations).</i>
+            </div>
+        </section>
+
+        <section id="risk-assessment" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
+            <h2 class="text-2xl font-bold">6. Risk Assessment & Correlations</h2>
+            <p>This final section ties the concepts together, focusing on methodologies for assessing risks related to explosives and fire, exploring the correlations between blasting activities and fire/explosion hazards, and emphasizing the need for integrated safety management.</p>
+            <h3 class="text-xl font-semibold mt-6 mb-2">6.1 Risk Assessment Methodologies</h3>
+            <p>Systematic risk assessment is fundamental to modern mine safety management. It involves identifying hazards, analyzing their potential consequences and likelihood, evaluating the risk level, and implementing controls. Common techniques include:</p>
+            <ul>
+                <li><strong>Hazard Identification (HAZID):</strong> A structured brainstorming process to identify potential hazards associated with a system, process, or activity (e.g., blasting, fuel handling).</li>
+                <li><strong>Job Safety Analysis (JSA) / Task Risk Assessment (TRA):</strong> Breaks down a specific job or task into steps, identifies hazards associated with each step, and develops control measures. Commonly used for routine tasks like charging blast holes.</li>
+                <li><strong>Hazard and Operability Study (HAZOP):</strong> A systematic, guideword-based technique (e.g., "No Flow," "More Pressure") primarily used to analyze complex process systems (like ventilation or pumping systems) for potential deviations that could lead to hazards.</li>
+                <li><strong>Fault Tree Analysis (FTA):</strong> A top-down deductive analysis that starts with an undesired event (e.g., "Underground Fire") and identifies the combinations of equipment failures, human errors, and external events that could lead to it. Useful for quantifying risk if failure probabilities are known.</li>
+                <li><strong>Failure Modes and Effects Analysis (FMEA):</strong> A bottom-up inductive analysis that considers potential failure modes of individual components (e.g., a fan bearing, an electrical cable) and analyzes their potential effects on the system.</li>
+                <li><strong>Risk Matrix:</strong> A common tool used to evaluate risk by plotting likelihood (frequency) against consequence (severity) of a hazardous event. Helps prioritize risks and determine required control levels.</li>
+            </ul>
+            <p>The process typically follows: <strong>Identify Hazards -> Analyze Risk (Likelihood x Consequence) -> Evaluate Risk (Is it acceptable?) -> Implement Controls -> Monitor & Review.</strong> This iterative process aims for continuous improvement.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">6.2 Correlation between Blasting and Fire/Gas Hazards</h3>
+            <p>Blasting operations, while essential, can directly or indirectly increase the risk of fires or gas ignitions/explosions:</p>
+            <ul>
+                <li><strong>Direct Ignition Source:</strong> Hot gases or incandescent particles from detonation can potentially ignite flammable gas (methane) or suspended combustible dust (coal dust) if present in explosive concentrations near the blast. Use of permitted explosives (designed for lower flame temperature/duration) is required in gassy coal mines.</li>
+                <li><strong>Static Electricity:</strong> Pneumatic loading of ANFO can generate static electricity, potentially causing premature detonation or igniting flammable atmospheres if not properly managed (e.g., grounding equipment, using anti-static loading hose).</li>
+                <li><strong>Damage to Infrastructure:</strong> Ground vibration or flyrock from blasting can damage electrical cables (causing short circuits), ventilation controls (doors, stoppings, fans), pipelines (releasing flammable liquids), or monitoring equipment, creating ignition sources or compromising safety systems.</li>
+                <li><strong>Induced Spontaneous Combustion:</strong> Blasting can fracture rock masses, exposing fresh surfaces of reactive materials (e.g., sulphide minerals, certain coals) to air, potentially accelerating oxidation processes and leading to spontaneous combustion over time.</li>
+                <li><strong>Gas Release:</strong> Blasting can liberate pockets of trapped methane or other gases from the rock strata.</li>
+                <li><strong>Toxic Fume Generation:</strong> As discussed, blasting produces CO and NOx, adding to the atmospheric burden that ventilation must handle. Poorly managed fumes can incapacitate workers or mask the smell of other hazards.</li>
+            </ul>
+            <p>Therefore, blast planning must explicitly consider these interactions, ensuring adequate ventilation, gas monitoring, dust control, and protection of nearby infrastructure.</p>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">6.3 Integrated Safety Management Systems</h3>
+            <p>Effective mine safety relies on an integrated approach, rather than treating hazards in isolation. A comprehensive Safety Management System (SMS) provides the framework for managing risks systematically across all operations. Key principles include:</p>
+            <ul>
+                <li><strong>Management Commitment & Policy:</strong> Clear safety policies and visible leadership commitment.</li>
+                <li><strong>Planning:</strong> Hazard identification, risk assessment, legal requirements identification, setting objectives and targets.</li>
+                <li><strong>Implementation & Operation:</strong> Defining roles/responsibilities, ensuring competence (training), communication, documentation, operational controls (procedures for blasting, ventilation, fire prevention, etc.), emergency preparedness.</li>
+                <li><strong>Checking & Corrective Action:</strong> Monitoring performance (inspections, audits, incident investigation), evaluating compliance, implementing corrective/preventive actions.</li>
+                <li><strong>Management Review:</strong> Periodic review of the SMS by management to ensure its continuing suitability, adequacy, and effectiveness, driving continuous improvement (Plan-Do-Check-Act cycle).</li>
+            </ul>
+            <p>An integrated SMS ensures that procedures for blasting, ventilation management, fire protection, emergency response, equipment maintenance, and training are coordinated and mutually supportive. For example, the risk assessment for a new mining area would consider how blasting might affect ventilation requirements, fire risks, and emergency escape routes simultaneously.</p>
+            <blockquote>
+                 Frameworks like ISO 45001 (Occupational Health and Safety Management Systems) provide internationally recognized structures for developing and implementing effective SMS. The core idea is a proactive, systematic, and continuously improving approach to managing all safety risks, including those related to explosives and fire.
             </blockquote>
         </section>
 
-        <section id="interactive" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">8. Interactive Exploration Tools</h2>
-            <p>Explore key concepts discussed in the course through interactive visualizations. These tools use simplified models for educational illustration ONLY and should not be used for design or safety decisions.</p>
-
-            {/* Interactive 1: Material Property Degradation */}
-            <div class="interactive-container mt-4">
-                <h3 class="text-xl font-semibold mb-2 text-center">Material Property Degradation (Fire)</h3>
-                <p class="instructional-text">Select a material and property to see how its relative strength or stiffness changes with temperature according to simplified Eurocode models.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                    <div>
-                        <label for="materialSelect">Material:</label>
-                        <select id="materialSelect" name="materialSelect" class="cursor-pointer">
-                            <option value="steel" selected>Structural Steel</option>
-                            <option value="concrete">Normal Weight Concrete (Siliceous)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="propertySelect">Property:</label>
-                        <select id="propertySelect" name="propertySelect" class="cursor-pointer">
-                            <option value="yield" selected>Yield Strength / Comp. Strength</option>
-                            <option value="elastic">Elastic Modulus</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="temperatureSlider">Temperature (°C):</label>
-                        <input type="range" id="temperatureSlider" name="temperatureSlider" min="20" max="1200" value="400" step="10">
-                        <div class="output-box">T = <span id="temperatureValue">400</span> °C | k ≈ <span id="reductionFactorValue">0.00</span></div>
-                    </div>
-                </div>
-                <div class="visualization-box">
-                    <div id="material-property-plot" class="w-full h-72 d3-plot"></div>
-                    <p class="text-xs mt-2 caption">Plot of Reduction Factor (k) vs. Temperature (°C). Vertical line indicates selected temperature.</p>
-                </div>
-                 <p class="warning-note mt-4">Disclaimer: Uses simplified Eurocode models. Actual behaviour varies. Consult standards for design.</p>
-            </div>
-
-            {/* Divider */}
-            <div class="my-10 border-t border-dashed border-[var(--border-color-medium)]"></div>
-
-            {/* Interactive 2: Explosives Initiation Concept */}
-            <div class="interactive-container mt-4">
-                <h3 class="text-xl font-semibold mb-2 text-center">Explosives Initiation Concept</h3>
-                <p class="instructional-text">Explore the conceptual relationship between booster output, main charge sensitivity, confinement, and the resulting critical diameter required for reliable initiation.</p>
-                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 items-end">
-                     <div> <label for="boosterOutputSlider">Booster Output (Conceptual):</label> <input type="range" id="boosterOutputSlider" name="boosterOutputSlider" min="1" max="10" value="5" step="1"> <div class="output-box"><span id="boosterOutputValue">5</span> (Rel. Units)</div> </div>
-                     <div> <label for="chargeSensitivitySlider">Main Charge Sensitivity:</label> <input type="range" id="chargeSensitivitySlider" name="chargeSensitivitySlider" min="1" max="5" value="3" step="1"> <div class="output-box"><span id="chargeSensitivityValue">Medium</span></div> </div>
-                     <div> <label for="confinementSlider">Confinement Level:</label> <input type="range" id="confinementSlider" name="confinementSlider" min="1" max="4" value="2" step="1"> <div class="output-box"><span id="confinementValue">Low</span></div> </div>
-                     <div class="flex flex-col items-center justify-center"> <label class="text-center">Conceptual Critical Diameter:</label> <div id="criticalDiameterOutput" class="output-box critical-diameter-output w-full">-- mm</div> </div>
-                 </div>
-                 <div id="initiation-explanation" class="interactive-output mt-6 text-sm text-left space-y-1" style="border-left-color: var(--accent-color); background-color: var(--vis-bg-color);"> <p>Adjust sliders...</p> </div>
-                 <p class="warning-note mt-4"><strong>Warning:</strong> Highly simplified conceptual model. Explosives are extremely dangerous.</p>
-            </div>
-
-            {/* Divider */}
-            <div class="my-10 border-t border-dashed border-[var(--border-color-medium)]"></div>
-
-            {/* Interactive 3: Aerosol Flammability Concept */}
-            <div class="interactive-container mt-4">
-                <h3 class="text-xl font-semibold mb-2 text-center">Aerosol Flammability Limits Concept</h3>
-                <p class="instructional-text">Visualize the conceptual effect of aerosol Sauter Mean Diameter (SMD) on the Lower and Upper Flammability Limits (LFL/UFL), based on trends discussed in Yuan et al. (2021).</p>
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <div> <label for="smdSlider">Droplet SMD (µm):</label> <input type="range" id="smdSlider" name="smdSlider" min="5" max="500" value="50" step="5"> <div class="output-box">SMD = <span id="smdValue">50</span> µm</div> </div>
-                    <div> <label>Conceptual Flammability Range:</label> <div id="flammabilityRangeOutput" class="output-box">LFL: -- g/m³ | UFL: -- g/m³</div> </div>
-                </div>
-                <div class="visualization-box"> <div id="aerosol-flammability-plot" class="w-full h-64 d3-plot"></div> <p class="text-xs mt-2 caption">Conceptual plot: Limits (g/m³, log) vs. SMD (µm). Dashed lines = gas limits.</p> </div>
-                <p class="warning-note mt-4">Disclaimer: Illustrative model based on general trends and conflicting literature. Actual limits require experiments.</p>
-            </div>
-
-             {/* Divider */}
-            <div class="my-10 border-t border-dashed border-[var(--border-color-medium)]"></div>
-
-             {/* Interactive 4: Fuzzy Risk Prioritization Concept */}
-            <div class="interactive-container mt-4">
-                <h3 class="text-xl font-semibold mb-2 text-center">Fuzzy Risk Prioritization Concept (Fine-Kinney)</h3>
-                <p class="instructional-text">Explore how linguistic assessments of Consequence, Probability, and Exposure, combined with criteria weights (from Soltani et al.), influence a conceptual Risk Priority Number (RPN) using fuzzy logic principles.</p>
-                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 items-end">
-                     <div> <label for="consequenceSelect">Consequence (C):</label> <select id="consequenceSelect" name="consequenceSelect" class="cursor-pointer"> <option value="VL">Very Low (VL)</option> <option value="L">Low (L)</option> <option value="LM">Low-Moderate (LM)</option> <option value="M" selected>Moderate (M)</option> <option value="AH">Almost High (AH)</option> <option value="H">High (H)</option> <option value="VH">Very High (VH)</option> </select> <div class="output-box text-xs">Weight (w_C) ≈ 0.538</div> </div>
-                     <div> <label for="probabilitySelect">Probability (P):</label> <select id="probabilitySelect" name="probabilitySelect" class="cursor-pointer"> <option value="VL">Very Low (VL)</option> <option value="L" selected>Low (L)</option> <option value="LM">Low-Moderate (LM)</option> <option value="M">Moderate (M)</option> <option value="AH">Almost High (AH)</option> <option value="H">High (H)</option> <option value="VH">Very High (VH)</option> </select> <div class="output-box text-xs">Weight (w_P) ≈ 0.294</div> </div>
-                     <div> <label for="exposureSelect">Exposure (E):</label> <select id="exposureSelect" name="exposureSelect" class="cursor-pointer"> <option value="VL">Very Low (VL)</option> <option value="L">Low (L)</option> <option value="LM" selected>Low-Moderate (LM)</option> <option value="M">Moderate (M)</option> <option value="AH">Almost High (AH)</option> <option value="H">High (H)</option> <option value="VH">Very High (VH)</option> </select> <div class="output-box text-xs">Weight (w_E) ≈ 0.167</div> </div>
-                     <div class="flex flex-col items-center justify-center"> <label class="text-center">Conceptual Weighted RPN:</label> <div id="rpnOutput" class="output-box rpn-output w-full">--</div> <div id="rpnRiskLevel" class="text-sm font-semibold mt-1">--</div> </div>
-                 </div>
-                 <div id="risk-explanation" class="interactive-output mt-6 text-sm text-left space-y-1" style="border-left-color: var(--accent-color); background-color: var(--vis-bg-color);"> <p>Select linguistic ratings...</p> </div>
-                 <p class="warning-note mt-4">Note: Simplified calculation for illustration. Real fuzzy risk assessment involves more complex methods.</p>
-            </div>
-
-        </section>
-
-        <section id="outlook" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">9. Outlook: Challenges & Future Directions</h2>
-             <p>Research and development in managing high-energy release hazards remain critical for improving safety, efficiency, and sustainability in essential industries.</p>
-             <h3 class="text-xl font-semibold mt-4 mb-2">Key Research Directions:</h3>
-            <ul class="list-disc list-inside space-y-1 pl-4">
-                <li>Integrating Multi-Physics & Multi-Scale Modelling (Detonation, Fire, Structure, Geomechanics).</li>
-                <li>Data-Driven Approaches & AI/ML in Risk, Performance Prediction, and Diagnostics.</li>
-                <li>Advanced Material Characterization & Development (Energetics, Fire/Blast Resistive Materials).</li>
-                <li>Resilience-Based Design Frameworks for Extreme Events.</li>
-                <li>Validation through Advanced, Multi-Scale Experimental Techniques.</li>
-                <li>Human Factors, Automation Safety, and Emergency Management in Complex Systems.</li>
-                <li>Addressing Hazards of New Technologies (e.g., BEVs, Hydrogen) in Industrial/Mining Contexts.</li>
-                <li>Uncertainty Quantification (UQ) across all modelling domains.</li>
-            </ul>
-            <p>A PhD focusing on these interdisciplinary areas offers the chance to develop cutting-edge solutions with significant real-world impact.</p>
-        </section>
-
-        <footer class="mt-16 pt-8 border-t border-sky-200 text-sm text-sky-700">
-             <p>
-                This webpage provides a conceptual outline for a PhD-level exploration of Managing High-Energy Release Hazards.
+        <footer class="mt-16 pt-8 border-t border-orange-200 text-sm text-orange-700">
+            <p>
+                Content compiled for educational purposes based on established mining engineering principles and general safety standards. Interactive elements provide simplified estimations for illustration only. Due to tool limitations, specific, up-to-the-minute data and standard references could not be verified or included.
                 <br>
-                Content is illustrative, inspired by current research (e.g., Yuan et al., 2021; Soltani et al., 2024) and educational approaches. Consult primary literature and standards.
+                <strong>Always refer to current local regulations, specific standards (e.g., MSHA, OSHA, ATF, EU Directives, UNE, AS/NZS, CSA), site-specific procedures, and manufacturer's data sheets.</strong>
+                <br>
+                Consult with qualified professionals for specific mining and safety applications.
             </p>
-             <p class="mt-4 text-center text-xs text-sky-600">PhD Course Concept: Managing High-Energy Release Hazards (Light Blue Theme, Final v2)</p>
+            <p class="mt-4 text-center text-xs text-orange-600">Mining Explosives & Fire Protection Course Material [Internal Knowledge Base Version - Interactive]</p>
         </footer>
 
     </main>
 
     <script>
-        /**
-         * Sets up a range slider or select element with value display and callback.
-         * Handles linear/log scales for sliders, maps select values.
-         * Includes error handling for missing elements.
-         */
-        function setupControl(controlId, valueId, options = {}) {
-            const control = document.getElementById(controlId);
-            // Check if control exists
-            if (!control) { console.warn(`Control setup failed: Control element #${controlId} not found.`); return; }
-            // Value display is optional only for selects where map is used elsewhere
-            const valueDisplay = document.getElementById(valueId);
-            if (!valueDisplay && !options.isSelect) { console.warn(`Control setup failed: Value display element #${valueId} not found for slider #${controlId}.`); return; }
-
-            const { fixedDigits = 0, logScale = false, callback = null, valueFormatFn = null, isSelect = false, selectMap = null } = options;
-            control.isSelect = isSelect; control.logScale = logScale; control.fixedDigits = fixedDigits; control.valueFormatFn = valueFormatFn; control.callback = callback; control.selectMap = selectMap;
-
-            if (!isSelect) { // Range slider setup
-                const minAttr = parseFloat(control.min); const maxAttr = parseFloat(control.max);
-                let safeMin = isNaN(minAttr) ? (logScale ? 1e-6 : 0) : (logScale ? Math.max(1e-9, minAttr) : minAttr);
-                let safeMax = isNaN(maxAttr) ? safeMin * (logScale ? 1000 : 100) : (logScale ? Math.max(safeMin * 1.1, maxAttr) : Math.max(safeMin + 1e-9, maxAttr));
-                if (safeMax <= safeMin) { safeMax = safeMin * (logScale ? 10 : 2); if (safeMax <= safeMin) safeMax = safeMin + 1; }
-                control.logMinVal = safeMin; control.logMaxVal = safeMax;
-                const initialValueAttr = control.getAttribute('value'); let initialActualValue = initialValueAttr ? parseFloat(initialValueAttr) : (logScale ? control.logMinVal : safeMin);
-                initialActualValue = Math.max(safeMin, Math.min(safeMax, initialActualValue)); if (!isFinite(initialActualValue)) { initialActualValue = logScale ? control.logMinVal : safeMin; }
-                if (logScale) { const minLog = Math.log10(control.logMinVal); const maxLog = Math.log10(control.logMaxVal); const range = maxLog - minLog; let initialSliderPos = 0; if (range > 0 && initialActualValue > 0 && isFinite(range)) { const valueLog = Math.log10(initialActualValue); initialSliderPos = Math.round(((valueLog - minLog) / range) * 100); } control.min = "0"; control.max = "100"; control.step = "1"; control.value = initialSliderPos; } else { control.min = safeMin.toString(); control.max = safeMax.toString(); const range = safeMax - safeMin; let step = (range > 0) ? (range / 100) : 1e-6; if (range > 0) { const magnitude = Math.pow(10, Math.floor(Math.log10(step))); step = Math.max(1e-6, magnitude / 10); } control.step = step.toExponential(1); control.value = initialActualValue; }
-            } // End range slider setup
-
-            function updateControl() {
-                 const currentControl = document.getElementById(controlId);
-                 const currentValueDisplay = document.getElementById(valueId); // Re-fetch value display too
-                 if (!currentControl) return;
-
-                 let actualValue; let displayValueText;
-                 if (currentControl.isSelect) { actualValue = currentControl.value; displayValueText = currentControl.selectMap ? (currentControl.selectMap[actualValue] || actualValue) : actualValue; }
-                 else { // Range slider logic
-                     const rawValue = parseFloat(currentControl.value);
-                     if (isNaN(rawValue)) { actualValue = currentControl.logScale ? currentControl.logMinVal : parseFloat(currentControl.min); }
-                     else if (currentControl.logScale) { const minLog = Math.log10(currentControl.logMinVal); const maxLog = Math.log10(currentControl.logMaxVal); const range = maxLog - minLog; const sliderMinInternal = 0; const sliderMaxInternal = 100; const sliderRangeInternal = sliderMaxInternal - sliderMinInternal; if (sliderRangeInternal <= 0 || !isFinite(range) || range <= 0) { actualValue = currentControl.logMinVal; } else { const normalizedSliderValue = Math.max(0, Math.min(1, (rawValue - sliderMinInternal) / sliderRangeInternal)); const valueLog = minLog + normalizedSliderValue * range; actualValue = Math.pow(10, valueLog); } }
-                     else { actualValue = rawValue; }
-                     if (!isFinite(actualValue)) { actualValue = currentControl.logScale ? currentControl.logMinVal : parseFloat(currentControl.min); }
-                     // Format numeric value
-                     if (typeof currentControl.valueFormatFn === 'function') { displayValueText = currentControl.valueFormatFn(actualValue); }
-                     else if (typeof actualValue !== 'number' || !isFinite(actualValue)) { displayValueText = "NaN"; }
-                     else if (currentControl.logScale && Math.abs(actualValue) > 1e-9 && Math.abs(actualValue) < 0.01) { displayValueText = actualValue.toExponential(currentControl.fixedDigits); }
-                     else { displayValueText = actualValue.toFixed(currentControl.fixedDigits); }
-                 }
-                 currentControl.actualValue = actualValue; // Store processed value
-                 // Update display only if it exists
-                 if (currentValueDisplay) { currentValueDisplay.textContent = displayValueText; }
-                 // Trigger callback
-                 if (typeof currentControl.callback === 'function') { try { currentControl.callback(); } catch (e) { console.error(`Error in callback for ${controlId}:`, e); } }
-             }
-            // Use 'input' for sliders, 'change' for selects
-            const eventType = isSelect ? 'change' : 'input';
-            control.addEventListener(eventType, updateControl);
-            // Initial update after setup
-            updateControl();
-        }
-
-
-        /** Sets up the SVG and main group ('g') element for a D3 plot. */
-        function setupPlotArea(targetId, margin, isDirectSvg = false) {
-             let svg, g; let containerWidth, containerHeight;
-             if (isDirectSvg) { svg = d3.select(`#${targetId}`); if (svg.empty()) { throw new Error(`Target SVG #${targetId} not found.`); } containerWidth = parseFloat(svg.attr("width")) || 400; containerHeight = parseFloat(svg.attr("height")) || 200; svg.selectAll("g").remove(); g = svg.append("g").attr("id", `${targetId}-plot-group`).attr("class", "d3-plot"); }
-             else { const plotDiv = document.getElementById(targetId); if (!plotDiv) { throw new Error(`Plot container #${targetId} not found.`); } containerWidth = plotDiv.clientWidth; containerHeight = plotDiv.clientHeight; if (!containerWidth || !containerHeight || containerWidth <= 0 || containerHeight <= 0) { const parent = plotDiv.parentElement; if(parent && parent.clientWidth > 0 && parent.clientHeight > 0){ containerWidth = parent.clientWidth; containerHeight = parent.clientHeight; if(plotDiv.clientHeight <= 0) plotDiv.style.height = `${containerHeight}px`; } else { throw new Error(`Plot container #${targetId} has invalid dimensions: ${containerWidth}x${containerHeight}.`); } } svg = d3.select(plotDiv).select("svg"); if (svg.empty()) { svg = d3.select(plotDiv).append("svg"); } svg.attr("width", "100%").attr("height", "100%").attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`).attr("preserveAspectRatio", "xMidYMid meet"); svg.selectAll("*").remove(); g = svg.append("g").attr("class", "d3-plot"); }
-             g.attr("transform", `translate(${margin.left},${margin.top})`); const plotWidth = containerWidth - margin.left - margin.right; const plotHeight = containerHeight - margin.top - margin.bottom; if (plotWidth <= 0 || plotHeight <= 0) { throw new Error(`Plot area for #${targetId} invalid after margins: ${plotWidth}x${plotHeight}.`); } const dims = { containerWidth, containerHeight, plotWidth, plotHeight }; return { g, dims };
-         }
-
-        /** Draws X and Y axes on a D3 plot group. */
-        function drawAxes(g, xScale, yScaleLeft, yScaleRight, dims, margin, labels) {
+        // --- Initialization on DOM Load ---
+        document.addEventListener('DOMContentLoaded', function () {
             try {
-                g.append("g").attr("class", "x axis").attr("transform", `translate(0,${dims.plotHeight})`).call(d3.axisBottom(xScale).ticks(labels.xTicks || 5).tickFormat(labels.xFormat || d3.format(".0f")));
-                g.append("text").attr("class", "plot-label").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight + margin.bottom - (labels.xOffset || 5)).attr("text-anchor", "middle").text(labels.x || "X Axis");
-                const yAxisLeft = g.append("g").attr("class", "y axis left-axis").call(d3.axisLeft(yScaleLeft).ticks(labels.yLeftTicks || 5).tickFormat(labels.yLeftFormat || d3.format(".1f")));
-                if (labels.yLeftColor) { yAxisLeft.selectAll("path, line").style("stroke", labels.yLeftColor); yAxisLeft.selectAll("text").style("fill", labels.yLeftColor); }
-                g.append("text").attr("class", "plot-label").attr("transform", "rotate(-90)").attr("y", -margin.left + (labels.yLeftOffset || 15)).attr("x", -dims.plotHeight / 2).attr("text-anchor", "middle").style("fill", labels.yLeftColor || 'var(--text-color-accent)').text(labels.yLeft || "Left Y Axis");
-                if (yScaleRight && labels.yRight) { const yAxisRight = g.append("g").attr("class", "y axis right-axis").attr("transform", `translate(${dims.plotWidth},0)`).call(d3.axisRight(yScaleRight).ticks(labels.yRightTicks || 5).tickFormat(labels.yRightFormat || d3.format(".1f"))); if (labels.yRightColor) { yAxisRight.selectAll("path, line").style("stroke", labels.yRightColor); yAxisRight.selectAll("text").style("fill", labels.yRightColor); } g.append("text").attr("class", "plot-label").attr("transform", "rotate(90)").attr("y", -dims.plotWidth - margin.right + (labels.yRightOffset || 15)).attr("x", dims.plotHeight / 2).attr("text-anchor", "middle").style("fill", labels.yRightColor || 'var(--text-color-accent)').text(labels.yRight || "Right Y Axis"); }
-            } catch (e) { console.error("Error drawing axes:", e); /* Prevent graph breaking */ }
-        }
+                // Setup interactive elements
+                setupOxygenBalanceCalculator();
+                setupPowderFactorCalculator();
+                setupFireExtinguisherSelector();
 
-        /** Draws a line on the plot. */
-         function drawLine(g, plotData, lineGenerator, cssClass) {
-             try {
-                 g.selectAll(`path.line.${cssClass.split(' ')[0]}`).remove();
-                 g.append("path").datum(plotData).attr("class", `line ${cssClass} d3-plot`).attr("d", lineGenerator).attr("fill", "none").attr("stroke-width", 2);
-             } catch (e) { console.error("Error drawing line:", cssClass, e); }
-         }
+                // Enable smooth scrolling for navigation links
+                setupSmoothScrolling();
 
-        /** Displays an error message within a plot area. */
-        function displayPlotError(targetId, message = "Error rendering plot.", isDirectSvg = false) {
-             try { const margin = { top: 10, right: 10, bottom: 10, left: 10 }; const { g, dims } = setupPlotArea(targetId, margin, isDirectSvg); g.append("text").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight / 2).text(message).style("font-size", "10px").attr("fill", "red").attr("text-anchor", "middle"); } catch (e) { console.error(`Failed to display error in target ${targetId}: ${e.message}`); const targetElement = document.getElementById(targetId); if (targetElement) { targetElement.innerHTML = `<p style="color: red; font-size: 10px; text-align: center;">${message}</p>`; } }
-         }
-
-        // --- Eurocode Material Property Functions ---
-        function steelYieldReduction(T) { if (T < 400) return 1.0; if (T < 500) return 1.0 - (T - 400) * 0.22 / 100; if (T < 600) return 0.78 - (T - 500) * 0.31 / 100; if (T < 700) return 0.47 - (T - 600) * 0.24 / 100; if (T < 800) return 0.23 - (T - 700) * 0.12 / 100; if (T < 900) return 0.11 - (T - 800) * 0.05 / 100; if (T < 1000) return 0.06 - (T - 900) * 0.02 / 100; if (T < 1100) return 0.04 - (T - 1000) * 0.02 / 100; if (T < 1200) return 0.02 - (T - 1100) * 0.02 / 100; return 0.0; }
-        function steelElasticModulusReduction(T) { if (T < 100) return 1.0; if (T < 200) return 1.0 - (T - 100) * 0.1 / 100; if (T < 300) return 0.9 - (T - 200) * 0.1 / 100; if (T < 400) return 0.8 - (T - 300) * 0.1 / 100; if (T < 500) return 0.7 - (T - 400) * 0.1 / 100; if (T < 600) return 0.6 - (T - 500) * 0.29 / 100; if (T < 700) return 0.31 - (T - 600) * 0.18 / 100; if (T < 800) return 0.13 - (T - 700) * 0.04 / 100; if (T < 900) return 0.09 - (T - 800) * 0.0225 / 100; if (T < 1000) return 0.0675 - (T - 900) * 0.0225 / 100; if (T < 1100) return 0.045 - (T - 1000) * 0.0225 / 100; if (T < 1200) return 0.0225 - (T - 1100) * 0.0225 / 100; return 0.0; }
-        function concreteStrengthReduction(T) { if (T <= 100) return 1.0; if (T <= 200) return 1.0 - (T-100)*0.05/100; if (T <= 300) return 0.95 - (T-200)*0.10/100; if (T <= 400) return 0.85 - (T-300)*0.10/100; if (T <= 500) return 0.75 - (T-400)*0.15/100; if (T <= 600) return 0.60 - (T-500)*0.15/100; if (T <= 700) return 0.45 - (T-600)*0.15/100; if (T <= 800) return 0.30 - (T-700)*0.15/100; if (T <= 900) return 0.15 - (T-800)*0.07/100; if (T <= 1000) return 0.08 - (T-900)*0.04/100; if (T <= 1100) return 0.04 - (T-1000)*0.03/100; if (T <= 1200) return 0.01 - (T-1100)*0.01/100; return 0.0; }
-        function concreteElasticModulusReduction(T) { if (T <= 100) return 1.0; if (T <= 200) return 1.0-(T-100)*0.15/100; if (T <= 300) return 0.85-(T-200)*0.15/100; if (T <= 400) return 0.70-(T-300)*0.15/100; if (T <= 500) return 0.55-(T-400)*0.20/100; if (T <= 600) return 0.35-(T-500)*0.15/100; if (T <= 700) return 0.20-(T-600)*0.10/100; if (T <= 800) return 0.10-(T-700)*0.05/100; if (T <= 900) return 0.05-(T-800)*0.03/100; if (T <= 1000) return 0.02-(T-900)*0.02/100; return 0.0; }
-
-        // --- Interactive Material Plot Logic ---
-        function updateMaterialPlot() {
-             const plotDivId = "material-property-plot"; const context = "Material Property Plot";
-             try {
-                 const materialSelect = document.getElementById('materialSelect'); const propertySelect = document.getElementById('propertySelect'); const tempSlider = document.getElementById('temperatureSlider');
-                 if (!materialSelect || !propertySelect || !tempSlider || typeof tempSlider.actualValue === 'undefined') { throw new Error("Controls not found/initialized for material plot."); }
-                 const material = materialSelect.value; const property = propertySelect.value; const selectedTemp = tempSlider.actualValue;
-                 const margin = {top: 20, right: 30, bottom: 40, left: 40}; const { g, dims } = setupPlotArea(plotDivId, margin);
-                 const tempRange = d3.range(20, 1201, 10); let reductionFn;
-                 if (material === 'steel') { reductionFn = (property === 'yield') ? steelYieldReduction : steelElasticModulusReduction; }
-                 else if (material === 'concrete') { reductionFn = (property === 'yield') ? concreteStrengthReduction : concreteElasticModulusReduction; }
-                 else { throw new Error(`Unsupported material: ${material}`); }
-                 const plotData = tempRange.map(T => { const k = reductionFn(T); return { temp: T, k: (isFinite(k) && k >= 0) ? k : null }; }).filter(d => d.k !== null);
-                 if (plotData.length < 2) { throw new Error("No valid data points for material plot."); }
-                 const xScale = d3.scaleLinear().domain([0, 1200]).range([0, dims.plotWidth]); const yScale = d3.scaleLinear().domain([0, 1.1]).range([dims.plotHeight, 0]);
-                 drawAxes(g, xScale, yScale, null, dims, margin, { x: "Temperature (°C)", xOffset: 10, yLeft: "Reduction Factor (k)", yLeftOffset: 15, yLeftFormat: d3.format(".1f") });
-                 const lineGen = d3.line().x(d => xScale(d.temp)).y(d => yScale(d.k)).defined(d => d.k !== null && isFinite(xScale(d.temp)) && isFinite(yScale(d.k)));
-                 let lineClass = 'prop-yield-line'; // Default class
-                 if (material === 'steel') lineClass = (property === 'yield') ? 'prop-yield-line' : 'prop-elastic-line';
-                 else if (material === 'concrete') lineClass = (property === 'yield') ? 'concrete-line' : 'concrete-line prop-elastic-line'; // Use concrete base color, add elastic class for potential dash
-                 drawLine(g, plotData, lineGen, lineClass);
-                 // Make concrete elastic line dashed if needed (CSS handles dash based on class)
-                 if (material === 'concrete' && property === 'elastic') { g.select(".prop-elastic-line").attr("stroke-dasharray", "4 2"); }
-
-                 // Draw vertical line/point
-                 const selectedK = reductionFn(selectedTemp);
-                 const kValueSpan = document.getElementById('reductionFactorValue'); // Get span for k value
-                 if (isFinite(selectedK) && selectedK >= 0) {
-                     if(kValueSpan) kValueSpan.textContent = selectedK.toFixed(2); // Update k value display
-                     const xPos = xScale(selectedTemp); const yPos = yScale(selectedK);
-                     g.selectAll(".selected-temp-line, .selected-temp-point").remove();
-                     g.append("line").attr("class", "selected-temp-line").attr("x1", xPos).attr("y1", dims.plotHeight).attr("x2", xPos).attr("y2", yPos);
-                     g.append("circle").attr("class", "selected-temp-point").attr("cx", xPos).attr("cy", yPos).attr("r", 4);
-                 } else { if(kValueSpan) kValueSpan.textContent = "N/A"; } // Handle invalid k
-             } catch (error) { console.error(`Error updating ${context}:`, error); displayPlotError(plotDivId, `Plot Error: ${error.message}`); const kValueSpan = document.getElementById('reductionFactorValue'); if(kValueSpan) kValueSpan.textContent = "Err"; }
-        }
-
-
-        // --- Interactive Explosives Initiation Logic ---
-        function updateExplosivesInitiation() {
-             const context = "Explosives Initiation Interactive"; try { const boosterSlider = document.getElementById('boosterOutputSlider'); const sensitivitySlider = document.getElementById('chargeSensitivitySlider'); const confinementSlider = document.getElementById('confinementSlider'); const criticalDiameterOutput = document.getElementById('criticalDiameterOutput'); const explanationDiv = document.getElementById('initiation-explanation'); if (!boosterSlider || !sensitivitySlider || !confinementSlider || !criticalDiameterOutput || !explanationDiv || typeof boosterSlider.actualValue === 'undefined' || typeof sensitivitySlider.actualValue === 'undefined' || typeof confinementSlider.actualValue === 'undefined') { throw new Error("Explosives elements not found/initialized."); } const boosterOutput = boosterSlider.actualValue; const sensitivity = sensitivitySlider.actualValue; const confinement = confinementSlider.actualValue; const sensitivityLabels = {"1": "Very Low", "2": "Low", "3": "Medium", "4": "High", "5": "Very High"}; const confinementLabels = {"1": "None", "2": "Low", "3": "Medium", "4": "High"}; document.getElementById('chargeSensitivityValue').textContent = sensitivityLabels[sensitivity] || "Medium"; document.getElementById('confinementValue').textContent = confinementLabels[confinement] || "Low"; const base_dc = 50; const sensFactor = Math.exp(-(sensitivity - 3) * 0.8); const boostFactor = 1 / (1 + (boosterOutput - 5) * 0.15); const confFactor = 1 / (1 + (confinement - 2) * 0.25); let conceptual_dc = base_dc * sensFactor * boostFactor * confFactor; conceptual_dc = Math.max(5, Math.min(500, conceptual_dc)); if (!isFinite(conceptual_dc)) { criticalDiameterOutput.textContent = "Error"; explanationDiv.innerHTML = `<p class="text-[var(--error-color)]">Calculation error.</p>`; return; } criticalDiameterOutput.textContent = `${conceptual_dc.toFixed(0)} mm`; let explanation = []; explanation.push(`<strong>Conceptual Result:</strong> A ${conceptual_dc.toFixed(0)} mm critical diameter.`); if (boosterOutput > 7) explanation.push("<li>Strong booster output significantly helps initiation.</li>"); if (boosterOutput < 3) explanation.push("<li>Weak booster output makes initiation difficult.</li>"); if (sensitivity > 4) explanation.push("<li>Very sensitive charge initiates easily.</li>"); if (sensitivity < 2) explanation.push("<li>Very insensitive charge requires strong booster/confinement.</li>"); if (confinement > 3) explanation.push("<li>High confinement greatly aids initiation.</li>"); if (confinement < 2) explanation.push("<li>Lack of confinement makes initiation harder.</li>"); explanation.push("<br><em>Reminder: Illustrative model only.</em>"); explanationDiv.innerHTML = explanation.join(''); } catch (error) { console.error(`Error updating ${context}:`, error); const cdOutput = document.getElementById('criticalDiameterOutput'); const expDiv = document.getElementById('initiation-explanation'); if (cdOutput) cdOutput.textContent = "Error"; if (expDiv) expDiv.innerHTML = `<p class="text-[var(--error-color)]">Error updating display.</p>`; }
-        }
-
-        // --- Interactive Aerosol Flammability Logic ---
-        function updateAerosolFlammabilityPlot() {
-             const plotDivId = "aerosol-flammability-plot"; const context = "Aerosol Flammability Plot"; try { const smdSlider = document.getElementById('smdSlider'); const rangeOutput = document.getElementById('flammabilityRangeOutput'); if (!smdSlider || !rangeOutput || typeof smdSlider.actualValue === 'undefined') { throw new Error("Aerosol controls not found/initialized."); } const smd = smdSlider.actualValue; const margin = {top: 20, right: 30, bottom: 40, left: 50}; const { g, dims } = setupPlotArea(plotDivId, margin); const gasLFL = 50; const gasUFL = 300; const calculateLFL = (d) => { if (d < 10) return gasLFL; const dipCenter = 50; const dipWidth = 40; const dipDepth = 0.4 * gasLFL; const dip = dipDepth * Math.exp(-Math.pow(d - dipCenter, 2) / (2 * dipWidth**2)); const rise = 0.1 * gasLFL * Math.max(0, (d - 100) / 400); return Math.max(5, gasLFL - dip + rise); }; const calculateUFL = (d) => { if (d < 10) return gasUFL; const peakCenter = 70; const peakWidth = 60; const peakHeight = 2.0 * gasUFL; const peak = peakHeight * Math.exp(-Math.pow(d - peakCenter, 2) / (2 * peakWidth**2)); const decrease = 0.5 * gasUFL * Math.max(0, (d - 150) / 350); return Math.max(gasUFL * 1.1, gasUFL + peak - decrease); }; const smdRange = d3.range(5, 501, 5); const plotData = smdRange.map(d => ({ smd: d, lfl: calculateLFL(d), ufl: calculateUFL(d) })).filter(p => isFinite(p.smd) && isFinite(p.lfl) && isFinite(p.ufl)); if (plotData.length < 2) { throw new Error("No valid data points for aerosol plot."); } const xScale = d3.scaleLinear().domain([0, 500]).range([0, dims.plotWidth]); const maxUFL = d3.max(plotData, d => d.ufl) || gasUFL * 3; const yScale = d3.scaleLog().domain([Math.max(1, gasLFL * 0.2), maxUFL * 1.2]).range([dims.plotHeight, 0]).nice(); drawAxes(g, xScale, yScale, null, dims, margin, { x: "Droplet SMD (µm)", xOffset: 10, yLeft: "Concentration (g/m³, log scale)", yLeftOffset: 20, yLeftFormat: d3.format(".0f") }); g.append("g").attr("class", "grid").call(d3.axisLeft(yScale).ticks(5, ".0f").tickSize(-dims.plotWidth).tickFormat("")); const lineGen = (yAccessor) => d3.line().x(d => xScale(d.smd)).y(d => yScale(d[yAccessor])).defined(d => d[yAccessor] !== null && isFinite(xScale(d.smd)) && isFinite(yScale(d[yAccessor]))); drawLine(g, plotData, lineGen('lfl'), 'lfl-line'); drawLine(g, plotData, lineGen('ufl'), 'ufl-line'); g.append("line").attr("x1", 0).attr("x2", dims.plotWidth).attr("y1", yScale(gasLFL)).attr("y2", yScale(gasLFL)).style("stroke", "var(--accent-color)").attr("stroke-dasharray", "2 2").style("opacity", 0.7); g.append("line").attr("x1", 0).attr("x2", dims.plotWidth).attr("y1", yScale(gasUFL)).attr("y2", yScale(gasUFL)).style("stroke", "var(--error-color)").attr("stroke-dasharray", "2 2").style("opacity", 0.7); g.append("text").attr("x", dims.plotWidth - 5).attr("y", yScale(gasLFL) - 3).text("Gas LFL").style("font-size", "8px").style("fill", "var(--accent-color)").attr("text-anchor", "end"); g.append("text").attr("x", dims.plotWidth - 5).attr("y", yScale(gasUFL) + 8).text("Gas UFL").style("font-size", "8px").style("fill", "var(--error-color)").attr("text-anchor", "end"); const selectedLFL = calculateLFL(smd); const selectedUFL = calculateUFL(smd); if (isFinite(selectedLFL) && isFinite(selectedUFL)) { rangeOutput.textContent = `LFL: ${selectedLFL.toFixed(0)} g/m³ | UFL: ${selectedUFL.toFixed(0)} g/m³`; const xPos = xScale(smd); g.selectAll(".selected-smd-line").remove(); g.append("line").attr("class", "selected-smd-line").attr("x1", xPos).attr("y1", dims.plotHeight).attr("x2", xPos).attr("y2", 0).style("stroke", "var(--accent-yellow)").attr("stroke-dasharray", "4 4"); } else { rangeOutput.textContent = "LFL: N/A | UFL: N/A"; } } catch (error) { console.error(`Error updating ${context}:`, error); displayPlotError(plotDivId, `Plot Error: ${error.message}`); const rangeOut = document.getElementById('flammabilityRangeOutput'); if(rangeOut) rangeOut.textContent = "Error"; }
-        }
-
-        // --- Interactive Fuzzy Risk Prioritization Logic ---
-        function updateFuzzyRisk() {
-            const context = "Fuzzy Risk Interactive"; try { const cSelect = document.getElementById('consequenceSelect'); const pSelect = document.getElementById('probabilitySelect'); const eSelect = document.getElementById('exposureSelect'); const rpnOutput = document.getElementById('rpnOutput'); const riskLevelOutput = document.getElementById('rpnRiskLevel'); const explanationDiv = document.getElementById('risk-explanation'); if (!cSelect || !pSelect || !eSelect || !rpnOutput || !riskLevelOutput || !explanationDiv) { throw new Error("Fuzzy risk elements not found."); } const fuzzyMap = { 'VL': { l: 0, m: 0, u: 1 }, 'L': { l: 0, m: 1, u: 3 }, 'LM': { l: 1, m: 3, u: 5 }, 'M': { l: 3, m: 5, u: 7 }, 'AH': { l: 5, m: 7, u: 9 }, 'H': { l: 7, m: 9, u: 10 }, 'VH': { l: 9, m: 10, u: 10 } }; const cVal = cSelect.value; const pVal = pSelect.value; const eVal = eSelect.value; const cFuzzy = fuzzyMap[cVal]; const pFuzzy = fuzzyMap[pVal]; const eFuzzy = fuzzyMap[eVal]; if (!cFuzzy || !pFuzzy || !eFuzzy) { throw new Error("Invalid linguistic selection."); } const defuzzify = (f) => (f.l + 4 * f.m + f.u) / 6; const cCrisp = defuzzify(cFuzzy); const pCrisp = defuzzify(pFuzzy); const eCrisp = defuzzify(eFuzzy); const wC = 0.538; const wP = 0.294; const wE = 0.167; const maxPossibleCrisp = defuzzify(fuzzyMap['VH']); const cNorm = Math.max(0, cCrisp / maxPossibleCrisp); const pNorm = Math.max(0, pCrisp / maxPossibleCrisp); const eNorm = Math.max(0, eCrisp / maxPossibleCrisp); const conceptualRPN = (wC * cNorm + wP * pNorm + wE * eNorm) * 1000; if (!isFinite(conceptualRPN)) { throw new Error("RPN calculation failed."); } let riskLevel = "Low Risk"; let riskColor = "text-green-500"; if (conceptualRPN > 600) { riskLevel = "Very High Risk"; riskColor = "text-[var(--error-color)]"; } else if (conceptualRPN > 400) { riskLevel = "High Risk"; riskColor = "text-orange-500"; } else if (conceptualRPN > 200) { riskLevel = "Substantial Risk"; riskColor = "text-yellow-500"; } else if (conceptualRPN > 100) { riskLevel = "Possible Risk"; riskColor = "text-[var(--text-color-subtle)]"; } rpnOutput.textContent = conceptualRPN.toFixed(0); riskLevelOutput.textContent = riskLevel; riskLevelOutput.className = `text-sm font-semibold mt-1 ${riskColor}`; explanationDiv.innerHTML = `<p>Defuzzified Scores (~0-10): C: ${cCrisp.toFixed(1)}, P: ${pCrisp.toFixed(1)}, E: ${eCrisp.toFixed(1)}</p><p>Conceptual Weighted RPN (0-1000): ${conceptualRPN.toFixed(0)}</p><p>Resulting Risk Level: <span class="${riskColor} font-bold">${riskLevel}</span></p><br><em>Based on fuzzy mapping/weights from Soltani et al. (2024). RPN calc. simplified.</em>`; } catch (error) { console.error(`Error updating ${context}:`, error); const rpnOut = document.getElementById('rpnOutput'); const riskLvlOut = document.getElementById('rpnRiskLevel'); const expDiv = document.getElementById('risk-explanation'); if(rpnOut) rpnOut.textContent = "Error"; if(riskLvlOut) riskLvlOut.textContent = ""; if(expDiv) expDiv.innerHTML = `<p class="text-[var(--error-color)]">Error updating display.</p>`; }
-        }
-
-
-        // --- Global Setup Functions ---
-        /** Initializes all interactive elements on the page */
-        function setupAllInteractives() {
-            try {
-                 // Material Property Plot Controls
-                 setupControl('materialSelect', 'materialSelect', { callback: updateMaterialPlot, isSelect: true });
-                 setupControl('propertySelect', 'propertySelect', { callback: updateMaterialPlot, isSelect: true });
-                 setupControl('temperatureSlider', 'temperatureValue', { fixedDigits: 0, callback: updateMaterialPlot, valueFormatFn: (val) => `T = ${val.toFixed(0)} °C | k ≈ ` });
-
-                // Explosives Initiation Controls
-                setupControl('boosterOutputSlider', 'boosterOutputValue', { fixedDigits: 0, callback: updateExplosivesInitiation });
-                // Use selectMap for display text for sensitivity/confinement sliders
-                setupControl('chargeSensitivitySlider', 'chargeSensitivityValue', { fixedDigits: 0, callback: updateExplosivesInitiation, selectMap: {"1": "Very Low", "2": "Low", "3": "Medium", "4": "High", "5": "Very High"} });
-                setupControl('confinementSlider', 'confinementValue', { fixedDigits: 0, callback: updateExplosivesInitiation, selectMap: {"1": "None", "2": "Low", "3": "Medium", "4": "High"} });
-
-                 // Aerosol Flammability Controls
-                 setupControl('smdSlider', 'smdValue', { fixedDigits: 0, callback: updateAerosolFlammabilityPlot });
-
-                 // Fuzzy Risk Controls (Select elements)
-                 setupControl('consequenceSelect', 'consequenceSelect', { callback: updateFuzzyRisk, isSelect: true });
-                 setupControl('probabilitySelect', 'probabilitySelect', { callback: updateFuzzyRisk, isSelect: true });
-                 setupControl('exposureSelect', 'exposureSelect', { callback: updateFuzzyRisk, isSelect: true });
-
+                // Typeset MathJax equations
+                if (typeof MathJax !== 'undefined' && typeof MathJax.typesetPromise === 'function') {
+                    // Delay slightly to ensure DOM is fully ready, especially interactive elements
+                    setTimeout(() => {
+                         try {
+                             MathJax.typesetPromise();
+                         } catch (mathError) {
+                             console.error('MathJax typesetting failed:', mathError);
+                         }
+                    }, 150); // Slightly longer delay
+                } else {
+                    console.warn("MathJax or typesetPromise not available.");
+                }
             } catch (error) {
-                console.error("Error setting up one or more interactive elements:", error);
+                console.error("CRITICAL ERROR during initial setup:", error);
             }
-        }
-
-        /** Renders all plots/outputs that should be visible on initial page load */
-        function renderAllPlotsInitial() {
-             const initialRenderFunctions = [
-                 updateMaterialPlot,
-                 updateExplosivesInitiation,
-                 updateAerosolFlammabilityPlot,
-                 updateFuzzyRisk
-             ];
-             initialRenderFunctions.forEach(renderFunc => {
-                 if (typeof renderFunc === 'function') {
-                     try { renderFunc(); }
-                     catch (e) { console.error(`Error during initial call to ${renderFunc.name}:`, e); }
-                 } else { console.warn("Initial render function not found:", renderFunc); }
-             });
-         }
+        });
 
         /** Sets up smooth scrolling for internal navigation links */
         function setupSmoothScrolling(){
-             try {
-                 document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-                     anchor.addEventListener('click', function (e) {
-                         e.preventDefault(); const targetId = this.getAttribute('href'); const targetElement = document.querySelector(targetId);
-                         if(targetElement) {
-                             const headerNavHeight = (document.querySelector('header')?.offsetHeight || 88) + (document.querySelector('nav')?.offsetHeight || 34);
-                             const headerOffset = headerNavHeight + 15; // Add buffer
-                             const offsetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerOffset;
-                             window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-                         } else { console.warn("Smooth scroll target not found:", targetId); }
-                     });
-                 });
-             } catch (e) { console.error("Error setting up smooth scrolling:", e); }
-         }
+            try {
+                document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        let targetElement = null;
+                        try {
+                            targetElement = document.querySelector(targetId);
+                        } catch(selectorError) {
+                             console.error("Invalid selector for smooth scroll:", targetId, selectorError);
+                             return;
+                        }
+                        if(targetElement) {
+                            const headerOffset = 76 + 10; // Approx height of sticky header + nav + buffer
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: "smooth"
+                            });
+                        } else {
+                            console.warn("Smooth scroll target not found:", targetId);
+                        }
+                    });
+                });
+            } catch (e) {
+                console.error("Error setting up smooth scrolling:", e);
+            }
+        }
 
-        // --- Initialization on DOM Load ---
-        document.addEventListener('DOMContentLoaded', function () {
-             try {
-                 setupAllInteractives();
-                 // Delay initial rendering slightly
-                 setTimeout(() => { renderAllPlotsInitial(); }, 50);
-                 setupSmoothScrolling();
-                 // Typeset MathJax after initial rendering and layout adjustments
-                 if (typeof MathJax !== 'undefined' && typeof MathJax.typesetPromise === 'function') {
-                     setTimeout(() => { MathJax.typesetPromise().catch((err) => console.error('MathJax typesetting failed:', err)); }, 200); // Increased delay
-                 } else { console.warn("MathJax or typesetPromise not available."); }
-             } catch (error) {
-                 console.error("CRITICAL ERROR during initial setup:", error);
-                 // Display a user-friendly message if setup fails critically
-                 const mainContainer = document.querySelector('main.container');
-                 if (mainContainer) {
-                     mainContainer.innerHTML = `<p class="text-center text-red-600 font-bold mt-10">A critical error occurred loading interactive content. Please try refreshing the page.</p>`;
-                 } else {
-                    alert("A critical error occurred during page initialization. Some interactive elements may not work.");
-                 }
+        /** Sets up the Oxygen Balance Calculator */
+        function setupOxygenBalanceCalculator() {
+            const foPercentageSlider = document.getElementById('fo-percentage');
+            const foPercentageValueDisplay = document.getElementById('fo-percentage-value');
+            const obOutput = document.getElementById('ob-output');
+
+            if (!foPercentageSlider || !foPercentageValueDisplay || !obOutput) {
+                console.error("Oxygen Balance calculator elements not found.");
+                return;
+            }
+
+            // Function to calculate and display OB
+            const calculateOB = () => {
+                try {
+                    const foPerc = parseFloat(foPercentageSlider.value);
+                    foPercentageValueDisplay.textContent = `${foPerc.toFixed(1)}%`;
+
+                    // Simplified OB calculation for ANFO (NH4NO3 + CH2)
+                    // Molecular weights: N=14, H=1, O=16, C=12
+                    // AN (NH4NO3): 2*14 + 4*1 + 3*16 = 28 + 4 + 48 = 80
+                    // FO (CH2): 12 + 2*1 = 14
+                    // Ideal reaction: 3 NH4NO3 + CH2 -> ... (MW: 3*80 + 14 = 240 + 14 = 254)
+                    // Ideal FO % = 14 / 254 * 100 = 5.51%
+
+                    // More general OB formula: OB% = -1600 * (2*C + H/2 - O) / MW_explosive
+                    // Simplified approach based on deviation from ideal FO% (approx 5.5-5.7%)
+                    // This is a very rough estimation for illustrative purposes.
+                    const idealFoPerc = 5.7; // Approximate ideal FO % for OB=0
+                    const deviation = foPerc - idealFoPerc;
+
+                    // Rough OB estimation based on deviation (highly empirical)
+                    // Assume roughly +/- 3% OB for each +/- 1% FO deviation
+                    const estimatedOB = -deviation * 3.5;
+
+                    let fumeIndication = "Near Optimal";
+                    if (estimatedOB < -1.5) { // Significantly negative OB -> Excess CO
+                        fumeIndication = "Likely Excess CO (Fuel Rich)";
+                    } else if (estimatedOB > 1.5) { // Significantly positive OB -> Excess NOx
+                        fumeIndication = "Likely Excess NOx (Fuel Lean)";
+                    }
+
+                    obOutput.innerHTML = `Estimated Oxygen Balance: <strong>${estimatedOB.toFixed(1)}%</strong> | Fume Indication: <strong>${fumeIndication}</strong>`;
+                } catch (e) {
+                    console.error("Error calculating OB:", e);
+                    obOutput.textContent = "Error calculating OB.";
+                }
+            };
+
+            // Add event listener
+            foPercentageSlider.addEventListener('input', calculateOB);
+
+            // Initial calculation
+            calculateOB();
+        }
+
+        /** Sets up the Powder Factor Calculator */
+        function setupPowderFactorCalculator() {
+            const burdenInput = document.getElementById('burden');
+            const spacingInput = document.getElementById('spacing');
+            const benchHeightInput = document.getElementById('bench-height');
+            const chargeWeightInput = document.getElementById('charge-weight');
+            const pfOutput = document.getElementById('pf-output');
+
+            if (!burdenInput || !spacingInput || !benchHeightInput || !chargeWeightInput || !pfOutput) {
+                 console.error("Powder Factor calculator elements not found.");
+                 return;
+            }
+
+            const calculatePF = () => {
+                try {
+                    const B = parseFloat(burdenInput.value);
+                    const S = parseFloat(spacingInput.value);
+                    const H = parseFloat(benchHeightInput.value);
+                    const W = parseFloat(chargeWeightInput.value);
+
+                    if (isNaN(B) || isNaN(S) || isNaN(H) || isNaN(W) || B <= 0 || S <= 0 || H <= 0 || W <= 0) {
+                        pfOutput.innerHTML = `Volume per Hole: Invalid Input | Powder Factor: Invalid Input`;
+                        return;
+                    }
+
+                    const volumePerHole = B * S * H;
+                    const powderFactor = W / volumePerHole;
+
+                    pfOutput.innerHTML = `Volume per Hole: <strong>${volumePerHole.toFixed(1)} m³</strong> | Powder Factor: <strong>${powderFactor.toFixed(2)} kg/m³</strong>`;
+                } catch (e) {
+                    console.error("Error calculating Powder Factor:", e);
+                    pfOutput.textContent = "Error calculating PF.";
+                }
+            };
+
+            // Add event listeners
+            [burdenInput, spacingInput, benchHeightInput, chargeWeightInput].forEach(input => {
+                input.addEventListener('input', calculatePF);
+            });
+
+            // Initial calculation
+            calculatePF();
+        }
+
+        /** Sets up the Fire Extinguisher Selector */
+        function setupFireExtinguisherSelector() {
+            const fuelTypeSelect = document.getElementById('fuel-type');
+            const extinguisherOutput = document.getElementById('extinguisher-output');
+
+             if (!fuelTypeSelect || !extinguisherOutput) {
+                 console.error("Fire Extinguisher selector elements not found.");
+                 return;
              }
-         });
+
+            const updateExtinguisherInfo = () => {
+                try {
+                    const selectedFuel = fuelTypeSelect.value;
+                    let suitableClasses = "Select fuel type...";
+
+                    switch (selectedFuel) {
+                        case 'A':
+                            suitableClasses = "<strong>Class A</strong> (Water, ABC Dry Chemical, Foam)";
+                            break;
+                        case 'B':
+                            suitableClasses = "<strong>Class B</strong> (ABC Dry Chemical, BC Dry Chemical, CO2, Foam)";
+                            break;
+                        case 'C':
+                            suitableClasses = "<strong>Class C</strong> (ABC Dry Chemical, BC Dry Chemical, CO2) - *Must be non-conductive*";
+                            break;
+                        case 'D':
+                            suitableClasses = "<strong>Class D</strong> (Specialized Dry Powders ONLY - e.g., Met-L-X, G-Plus)";
+                            break;
+                        default:
+                            suitableClasses = "Select fuel type...";
+                    }
+                    extinguisherOutput.innerHTML = `Suitable Extinguisher Classes: ${suitableClasses}`;
+                } catch (e) {
+                     console.error("Error updating extinguisher info:", e);
+                     extinguisherOutput.textContent = "Error updating info.";
+                }
+            };
+
+            // Add event listener
+            fuelTypeSelect.addEventListener('change', updateExtinguisherInfo);
+
+             // Initial state
+            updateExtinguisherInfo();
+        }
 
     </script>
 
 </body>
 </html>
-
-
-
+```
 
 
