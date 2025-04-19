@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Fire Safety Engineering: A PhD Perspective</title>
+    <title>PhD Course: Advanced Mining Explosives & Industrial Fire Protection</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,104 +13,103 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        /* CSS Custom Properties - Light Blue Theme (from template) */
+        /* CSS Custom Properties - Orange/Fire Theme */
         :root {
-            --bg-color: #f0f9ff; /* Light blue background */
-            --text-color-main: #0369a1; /* Sky blue text */
-            --text-color-header: #0c4a6e; /* Darker blue for headers */
-            --text-color-accent: #075985; /* Accent blue */
-            --text-color-subtle: #0ea5e9; /* Lighter accent blue */
-            --border-color-light: #e0f2fe; /* Very light blue border */
-            --border-color-medium: #bae6fd; /* Medium blue border */
-            --border-color-dark: #7dd3fc; /* Darker blue border */
-            --accent-color: #38bdf8; /* Bright blue accent */
-            --highlight-bg: #e0f2fe; /* Background for highlights */
-            --vis-bg-color: #f8fafc; /* Background for visualizations (slightly off-white) */
-            --vis-border-color: #cbd5e1; /* Border for visualizations (light gray) */
-            --header-grad-from: #0ea5e9; /* Header gradient start */
-            --header-grad-to: #0369a1; /* Header gradient end */
-            --error-color: #ef4444; /* Red for errors/warnings */
+            --bg-color-dark: #1f2937; /* Dark Gray-Blue background */
+            --bg-color-medium: #374151; /* Medium Gray */
+            --bg-color-light: #4b5563; /* Lighter Gray */
+            --text-color-light: #f9fafb; /* Very Light Gray / Off-white text */
+            --text-color-medium: #d1d5db; /* Medium Gray text */
+            --text-color-dark: var(--bg-color-dark); /* Dark text for light backgrounds */
+            --accent-orange: #f97316; /* Vibrant Orange */
+            --accent-red: #ef4444; /* Red */
+            --accent-yellow: #eab308; /* Yellow */
+            --border-color-light: #4b5563; /* Lighter Gray border */
+            --border-color-medium: #6b7280; /* Medium Gray border */
+            --highlight-bg: #374151; /* Medium Gray for highlights on dark bg */
+            --vis-bg-color: #111827; /* Very Dark Gray for visualization backgrounds */
+            --vis-border-color: #4b5563; /* Lighter Gray border for visualizations */
+            --header-grad-from: var(--accent-orange);
+            --header-grad-to: var(--accent-red);
+            --error-color: var(--accent-red);
         }
-        /* Smooth scrolling behavior with offset for sticky header+nav */
+        /* Smooth scrolling behavior */
         html { scroll-padding-top: 110px; /* Adjust based on actual header+nav height */ }
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
-            color: var(--text-color-main);
-            background-color: var(--bg-color);
-            font-size: 1rem; /* Base font size */
-            line-height: 1.7; /* Default line height */
+            color: var(--text-color-medium); /* Default text color */
+            background-color: var(--bg-color-dark);
+            font-size: 1rem;
+            line-height: 1.7;
         }
-        main.container { padding-top: 1rem; padding-bottom: 1rem; } /* Reduced padding */
+        main.container { padding-top: 1rem; padding-bottom: 1rem; }
 
         /* Fade-in animation */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .dynamic-content { animation: fadeIn 0.6s ease-out forwards; }
 
-        /* --- Interactive Element Styling --- */
-        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-color-accent); font-size: 0.9rem; }
-        input[type="range"], select { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color-medium); border-radius: 0.375rem; background-color: white; font-size: 0.9rem; transition: border-color 0.2s ease; }
-        input[type="range"]:focus, select:focus { outline: 2px solid transparent; outline-offset: 2px; border-color: var(--accent-color); box-shadow: 0 0 0 2px var(--highlight-bg); }
+        /* --- Interactive Element Styling (Dark Theme Adaptation) --- */
+        label { color: var(--accent-orange); } /* Orange labels */
+        input[type="range"], select { border: 1px solid var(--border-color-medium); background-color: var(--bg-color-light); color: var(--text-color-light); }
+        input[type="range"]:focus, select:focus { border-color: var(--accent-orange); box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.3); /* Orange focus ring */ }
         /* Custom range slider appearance */
-        input[type="range"] { cursor: pointer; accent-color: var(--accent-color); padding: 0; height: 0.5rem; appearance: none; background: var(--border-color-light); border-radius: 9999px; border: 1px solid var(--border-color-medium); }
-        input[type="range"]::-webkit-slider-thumb { appearance: none; width: 1rem; height: 1rem; background: var(--accent-color); border-radius: 50%; cursor: pointer; border: 1px solid var(--text-color-accent); }
-        input[type="range"]::-moz-range-thumb { width: 1rem; height: 1rem; background: var(--accent-color); border-radius: 50%; cursor: pointer; border: 1px solid var(--text-color-accent); }
-        button { background-color: var(--accent-color); color: var(--text-color-header); padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 500; transition: background-color 0.2s ease, transform 0.1s ease; border: none; cursor: pointer; }
-        button:hover { background-color: var(--border-color-dark); }
-        button:active { transform: scale(0.98); }
-        .output-box { background-color: var(--highlight-bg); border: 1px solid var(--border-color-medium); padding: 0.5rem 0.75rem; border-radius: 0.375rem; margin-top: 0.5rem; text-align: center; font-weight: 500; font-size: 0.85rem; color: var(--text-color-accent); min-height: 2.5rem; display: flex; align-items: center; justify-content: center; }
-        .interactive-container { background-color: #ffffff; border: 1px solid var(--border-color-light); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
-        .visualization-box { min-height: 250px; background-color: var(--vis-bg-color); border: 1px dashed var(--vis-border-color); border-radius: 0.375rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; margin-top: 1rem; text-align: center; position: relative; overflow: hidden; transition: background-color 0.3s ease; font-size: 0.9rem; }
-        .visualization-box svg { display: block; margin: auto; max-width: 100%; height: auto; }
-        .instructional-text { font-size: 0.875rem; color: var(--text-color-subtle); margin-top: 0.5rem; margin-bottom: 1rem; text-align: center; }
-        .warning-note { font-size: 0.75rem; color: var(--error-color); text-align: center; margin-top: 0.5rem; font-style: italic; }
+        input[type="range"] { accent-color: var(--accent-orange); background: var(--bg-color-light); border: 1px solid var(--border-color-medium); }
+        input[type="range"]::-webkit-slider-thumb { background: var(--accent-orange); border: 1px solid var(--text-color-light); }
+        input[type="range"]::-moz-range-thumb { background: var(--accent-orange); border: 1px solid var(--text-color-light); }
+        button { background-color: var(--accent-orange); color: var(--text-color-light); }
+        button:hover { background-color: #fb923c; } /* Lighter orange hover */
+        .output-box { background-color: var(--bg-color-medium); border: 1px solid var(--border-color-light); color: var(--text-color-light); }
+        .critical-diameter-output { color: var(--accent-yellow); font-size: 1.1rem; font-weight: 600; }
+        .interactive-container { background-color: var(--bg-color-medium); border: 1px solid var(--border-color-light); padding: 1.5rem; border-radius: 0.5rem; margin-top: 1rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
+        .visualization-box { background-color: var(--vis-bg-color); border: 1px dashed var(--vis-border-color); }
+        .instructional-text { color: var(--accent-yellow); }
+        .warning-note { color: var(--accent-red); font-weight: 500; }
 
-        /* --- Table Styling --- */
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; }
-        th, td { border: 1px solid var(--border-color-medium); padding: 0.6rem; text-align: left; vertical-align: top; }
-        th { background-color: var(--highlight-bg); font-weight: 600; color: var(--text-color-accent); position: sticky; top: 110px; /* Needs to match scroll-padding-top */ z-index: 5; }
-        tbody tr:nth-child(odd) { background-color: var(--vis-bg-color); }
+        /* --- Table Styling (Dark Theme Adaptation) --- */
+        table { }
+        th, td { border: 1px solid var(--border-color-medium); color: var(--text-color-medium); }
+        th { background-color: var(--bg-color-light); color: var(--accent-orange); top: 110px; /* Match scroll-padding */ }
+        tbody tr:nth-child(odd) { background-color: var(--bg-color-medium); }
         tbody tr:hover { background-color: var(--highlight-bg); }
 
-        /* --- Typography & Content Styling --- */
-        h1, h2, h3, h4 { color: var(--text-color-header); font-weight: 700; line-height: 1.3; }
-        h1 { font-size: 2.25rem; /* Tailwind text-4xl */ }
-        h2 { font-size: 1.75rem; /* Tailwind text-2xl */ border-bottom: 2px solid var(--border-color-dark); padding-bottom: 0.5rem; margin-bottom: 1.5rem; margin-top: 2rem; }
-        h3 { font-size: 1.3rem; /* ~text-xl */ margin-top: 1.5rem; margin-bottom: 0.75rem; }
-        h4 { font-size: 1.1rem; /* ~text-lg */ margin-top: 1.25rem; margin-bottom: 0.5rem; color: var(--text-color-accent); }
-        p, li { color: var(--text-color-main); margin-bottom: 1.25rem; font-size: 0.95rem; text-align: left; /* Left-aligned text */ }
-        ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
-        strong { color: var(--text-color-accent); font-weight: 600; }
-        code { background-color: var(--highlight-bg); color: var(--text-color-accent); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em; }
-        blockquote { border-left: 4px solid var(--accent-color); padding: 0.75rem 1rem; margin: 1.5rem 0; font-style: italic; color: var(--text-color-subtle); background-color: var(--highlight-bg); font-size: 0.95rem; }
-        .section-bg-white { background-color: #ffffff; } /* Class for white background sections */
-        .equation { display: block; text-align: center; margin: 1.25rem auto; font-size: 1.1rem; overflow-x: auto; /* Allow scrolling for long equations */ padding: 0.5rem 0; }
-        .key-concept { border: 1px solid var(--border-color-medium); background-color: var(--vis-bg-color); padding: 1rem; border-radius: 0.375rem; margin: 1.5rem 0; }
-        .key-concept strong { color: var(--text-color-header); }
-        figure { margin: 1.5rem auto; text-align: center; }
-        figure svg, figure img { max-width: 100%; height: auto; border: 1px solid var(--border-color-medium); border-radius: 0.375rem; margin: 0 auto 0.5rem auto; display: block; background-color: var(--vis-bg-color); }
-        figcaption, .caption { font-size: 0.8rem; color: var(--text-color-subtle); margin-top: 0.25rem; text-align: center; }
+        /* --- Typography & Content Styling (Dark Theme Adaptation) --- */
+        h1, h2, h3, h4 { color: var(--text-color-light); } /* Light headers */
+        h2 { border-bottom: 2px solid var(--accent-orange); } /* Orange border */
+        h4 { color: var(--accent-orange); }
+        p, li { color: var(--text-color-medium); text-align: left; } /* Lighter text */
+        strong { color: var(--accent-yellow); } /* Yellow for emphasis */
+        code { background-color: var(--highlight-bg); color: var(--accent-yellow); }
+        blockquote { border-left: 4px solid var(--accent-orange); color: var(--text-color-light); background-color: var(--highlight-bg); }
+        .section-bg-darker { background-color: var(--vis-bg-color); } /* Class for very dark sections */
+        .equation { background-color: var(--bg-color-medium); padding: 0.5rem; border-radius: 4px; border: 1px solid var(--border-color-light); color: var(--text-color-light); }
+        .key-concept { border: 1px solid var(--border-color-medium); background-color: var(--bg-color-light); }
+        .key-concept strong { color: var(--accent-orange); }
+        figure svg, figure img { border: 1px solid var(--border-color-medium); background-color: var(--vis-bg-color); }
+        figcaption, .caption { color: var(--text-color-medium); }
 
-        /* --- D3 Plot Styling (Copied from template) --- */
-        .d3-plot .axis path, .d3-plot .axis line { fill: none; stroke: var(--border-color-medium); shape-rendering: crispEdges; stroke-width: 1px; }
-        .d3-plot .axis text { font-size: 0.75rem; fill: var(--text-color-main); font-family: sans-serif;}
-        .d3-plot .grid line { stroke: var(--border-color-light); stroke-opacity: 0.7; shape-rendering: crispEdges; }
-        .d3-plot .grid path { stroke-width: 0; }
-        .d3-plot .line { fill: none; stroke-width: 2px; }
-        .d3-plot path { fill: none; }
-        /* Specific line colors - Adapt for Fire context */
-        .d3-plot .steel-line { stroke: var(--text-color-accent); /* Accent blue */ }
-        .d3-plot .concrete-line { stroke: var(--accent-color); /* Bright blue */ }
-        .d3-plot .timber-line { stroke: #a16207; /* Brownish for timber */ } /* Example */
-        .d3-plot .prop-yield-line { stroke: var(--text-color-accent); }
-        .d3-plot .prop-elastic-line { stroke: var(--accent-color); stroke-dasharray: 4 2; }
-        .plot-label { font-size: 0.75rem; fill: var(--text-color-accent); text-anchor: middle; font-family: sans-serif;}
+        /* --- D3 Plot Styling (Dark Theme Adaptation) --- */
+        .d3-plot .axis path, .d3-plot .axis line { stroke: var(--border-color-medium); }
+        .d3-plot .axis text { fill: var(--text-color-medium); }
+        .d3-plot .grid line { stroke: var(--border-color-light); }
+        /* Specific line colors */
+        .d3-plot .lfl-line { stroke: var(--accent-orange); }
+        .d3-plot .ufl-line { stroke: var(--accent-red); }
+        .plot-label { fill: var(--accent-yellow); }
 
         /* --- Footer Styling --- */
-        footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color-medium); }
-        footer p { font-size: 0.8rem; line-height: 1.5; text-align: center; color: var(--text-color-main);}
-        footer a { color: var(--text-color-subtle); text-decoration: underline; }
-        footer a:hover { color: var(--text-color-header); }
+        footer { border-top: 1px solid var(--border-color-medium); }
+        footer p { color: var(--text-color-medium);}
+        footer a { color: var(--accent-orange); }
+        footer a:hover { color: var(--accent-yellow); }
+
+        /* --- Header/Nav Specific --- */
+         header { background: linear-gradient(to right, var(--header-grad-from), var(--header-grad-to)); }
+         nav { background-color: var(--bg-color-light); border-bottom: 1px solid var(--border-color-medium); top: 88px; /* Adjusted for header height */ }
+         nav a { color: var(--text-color-light); }
+         nav a:hover { color: var(--accent-yellow); }
+         nav span { color: var(--accent-yellow); }
+
     </style>
 </head>
 
@@ -117,173 +117,233 @@
 
     <header class="bg-gradient-to-r from-[var(--header-grad-from)] to-[var(--header-grad-to)] text-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-5">
-            <h1 class="text-3xl font-bold">Advanced Fire Safety Engineering & Structural Fire Safety</h1>
-            <p class="text-sky-100 text-xs mt-2">A PhD-Level Exploration of Core Concepts and Research Frontiers</p>
+            <h1 class="text-3xl font-bold">Advanced Mining Explosives & Industrial Fire Protection</h1>
+            <p class="text-orange-100 text-xs mt-2">A PhD-Level Exploration Integrating Detonation Physics, Initiation Science, Aerosol Hazards, and Fire Mitigation Strategies</p>
         </div>
     </header>
 
-    <nav class="sticky top-[76px] bg-sky-50 border-b border-sky-200 z-40 mb-4"> <div class="container mx-auto px-6 py-2 text-sm">
-            <span class="font-semibold text-sky-800 mr-4">Sections:</span>
-            <a href="#fundamentals" class="text-sky-700 hover:text-sky-900 mr-3">1. Fundamentals</a> |
-            <a href="#materials" class="text-sky-700 hover:text-sky-900 mx-3">2. Materials</a> |
-            <a href="#structures" class="text-sky-700 hover:text-sky-900 mx-3">3. Structures</a> |
-            <a href="#advanced" class="text-sky-700 hover:text-sky-900 mx-3">4. Advanced Topics</a> |
-            <a href="#interactive" class="text-sky-700 hover:text-sky-900 mx-3">5. Interactive</a> |
-            <a href="#outlook" class="text-sky-700 hover:text-sky-900 ml-3">6. Outlook</a>
+    <nav class="sticky top-[88px] bg-sky-50 border-b border-sky-200 z-40 mb-4"> <div class="container mx-auto px-6 py-2 text-sm flex flex-wrap justify-center">
+            <span class="font-semibold text-sky-800 mr-3 mb-1 sm:mb-0">Sections:</span>
+            <a href="#aerosol_fire" class="text-sky-700 hover:text-sky-900 mr-3 mb-1 sm:mb-0">1. Aerosol Fire/Explosion</a> |
+            <a href="#explosives_perf" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">2. Explosives Performance</a> |
+            <a href="#initiation" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">3. Initiation & Sensitivity</a> |
+            <a href="#fire_protection" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">4. Fire Protection</a> |
+            <a href="#modeling" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">5. Advanced Modelling</a> |
+            <a href="#interactive" class="text-sky-700 hover:text-sky-900 mx-3 mb-1 sm:mb-0">6. Interactive</a> |
+            <a href="#outlook" class="text-sky-700 hover:text-sky-900 ml-3 mb-1 sm:mb-0">7. Outlook</a>
         </div>
     </nav>
 
     <main class="container mx-auto px-6 py-2">
 
-        <section id="fundamentals" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">1. Fundamentals: Beyond Standard Fire Curves</h2>
-            <p>This module moves beyond introductory concepts to the core physics governing fire development and its interaction with structures, essential for advanced analysis and Performance-Based Design (PBD).</p>
+        <section id="aerosol_fire" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
+            <h2 class="text-2xl font-bold">1. Advanced Fire Dynamics & Aerosol Hazards</h2>
+            <p>Moving beyond bulk liquid flammability, this section addresses the distinct and often underestimated hazards of flammable aerosols (mists/sprays), drawing heavily on the review by Yuan et al. (2021).</p>
             <ul>
-                <li><strong>Enclosure Fire Dynamics:</strong> We critically examine zone models (e.g., CFAST) versus CFD (e.g., FDS). Focus areas include ventilation-controlled vs. fuel-controlled regimes, the concept of Heat Release Rate Per Unit Area (HRRPUA), flashover criteria (e.g., Thomas, McCaffrey), and the limitations of plume theories (e.g., McCaffrey's correlations for centerline temperature \( \Delta T_0 \)) in complex geometries.
-                    <div class="equation">
-                    \( \Delta T_0 = K \left( \frac{\dot{Q}^2}{z^5} \right)^{1/3} \) (Illustrative McCaffrey form)
-                    </div>
-                </li>
-                <li><strong>Heat Transfer to Structures:</strong> Advanced analysis requires understanding combined convective (\(h_c\)) and radiative (\(\dot{q}''_{rad}\)) heat transfer. We explore calculation methods for configuration factors, gas emissivity models (e.g., RADCAL, gray gas), and the impact of boundary layer effects on \(h_c\). The net heat flux to a structural element is key:
-                    <div class="equation">
-                    \( \dot{q}''_{net} = h_c (T_{gas} - T_{surf}) + \epsilon_{surf} \sigma ( \epsilon_{gas} T_{gas}^4 - \alpha_{surf} T_{surf}^4 ) \) (Simplified form)
-                    </div>
-                </li>
-                <li><strong>Thermo-Mechanical Basics:</strong> Introduction to temperature-dependent material properties – thermal expansion (\(\alpha_{th}\)), conductivity (\(k\)), specific heat (\(c_p\)), density (\(\rho\)), and crucially, mechanical properties like Young's modulus (\(E_{\theta}\)), yield strength (\(f_{y,\theta}\)), and creep. Understanding thermal diffusivity (\(a = k / (\rho c_p)\)) is vital for heat penetration.</li>
+                <li><strong>The Aerosol Hazard Paradigm:** Emphasis on the inadequacy of flashpoint as the sole criterion for liquid flammability when aerosolization occurs (Yuan et al., Fig 1a). Discussion of the multi-dimensional flammability region for aerosols depending on concentration, temperature, and crucially, <strong>droplet size distribution</strong> (SMD, D3,2) (Yuan et al., Fig 1b).</li>
+                <li><strong>Aerosol Generation & Characterization:** Mechanisms relevant to industrial/mining scenarios: pressure release through orifices/leaks (e.g., hydraulic fluids, fuels), mechanical agitation, two-phase flow releases. Introduction to characterization techniques (Laser Diffraction, PIV, Phase Doppler) and key parameters (SMD). Correlations for droplet size prediction (e.g., Table 5 in Yuan et al. for injectors, Krishna et al. 2003a for leaks).</li>
+                <li><strong>Aerosol Flammability Limits:** Exploration of the complex relationship between droplet size and LFL/UFL. Discussion of the observed LFL reduction for larger droplets (>10-20 µm) and potential explanations (sedimentation effects, local stoichiometry, flame-droplet interaction - Yuan et al., Fig 6). Acknowledgment of contradictory findings in recent literature and the need for standardized testing. Higher UFL observed for aerosols compared to vapors.</li>
+                <li><strong>Aerosol Explosion Dynamics:** Measurement and significance of explosion parameters: Maximum Pressure (\(P_{max}\)) and Deflagration Index (\(K_a\), \(K_a = V^{1/3} (dP/dt)_{max}\)). Influence of experimental scale (vessel volume) on measured \(P_{max}\) and \(K_a\) (Yuan et al., Fig 11). Role of volatility and droplet size on explosion severity (Yuan et al., Fig 9, 10).</li>
+                 <li><strong>Deflagration-to-Detonation Transition (DDT):** Potential for DDT in aerosol clouds (Yuan et al., Fig 12). Review of experimental evidence (e.g., nitromethane, IPN, JP-10 - Yuan et al., Fig 13, 14) and factors influencing DDT propensity (concentration, confinement, ignition strength). Links to gas-phase and dust explosion DDT mechanisms.</li>
             </ul>
             <div class="key-concept mt-6">
-                <strong>PhD Challenge:</strong> How do uncertainties in fire scenarios (HRR, ventilation) and material properties propagate through heat transfer and structural models? How can UQ methods be applied in fire safety engineering?
+                <strong>PhD Challenge (Aerosols):</strong> Developing standardized, quantitative test methods for aerosol flammability/explosion parameters (\(K_a\), MIE, LFL/UFL vs SMD) and resolving the contradictions regarding LFL behaviour. Understanding and modelling aerosol DDT remains a critical research gap.
             </div>
         </section>
 
-        <section id="materials" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">2. Material Behaviour at Elevated Temperatures</h2>
-            <p>Accurate structural fire analysis hinges on understanding how materials degrade under thermal exposure. This section delves into the complex behaviour of key structural materials.</p>
-
-            <h3 class="text-xl font-semibold mt-6 mb-2">2.1 Steel</h3>
+        <section id="explosives_perf" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
+            <h2 class="text-2xl font-bold">2. Mining Explosives: Performance & Non-Ideal Behaviour</h2>
+            <p>Focus shifts to the characterization and prediction of performance for explosives commonly used in mining, emphasizing deviations from ideal detonation theory.</p>
             <ul>
-                <li><strong>Property Degradation:</strong> Reduction in yield strength (\(f_{y,\theta}\)) and elastic modulus (\(E_{s,\theta}\)) following established models (e.g., Eurocode 3 Part 1-2). Discussion of strain hardening disappearance and increased ductility at high temperatures.</li>
-                <li><strong>Thermal Expansion & Creep:</strong> Significance of thermal expansion (\(\alpha_{s}\)) in generating restraint forces. Introduction to high-temperature creep models (e.g., Harmathy, Fields & Fields) and their importance in long-duration fires or under high stress.</li>
-                <li><strong>Phase Transformations:</strong> Brief overview of microstructural changes (e.g., ferrite to austenite) and their (often secondary) impact on mechanical properties compared to general thermal softening.</li>
-            </ul>
-
-            <h3 class="text-xl font-semibold mt-6 mb-2">2.2 Concrete</h3>
-            <ul>
-                <li><strong>Thermo-Physical Properties:</strong> Complex changes in conductivity, specific heat (due to moisture evaporation), and density. Importance of aggregate type (siliceous vs. carbonate).</li>
-                <li><strong>Thermo-Mechanical Properties:</strong> Significant degradation of compressive strength (\(f_{c,\theta}\)) and elastic modulus (\(E_{c,\theta}\)) (e.g., Eurocode 2 Part 1-2 models). Discussion of transient thermal strain (load-induced thermal strain - LITS) and its critical role.</li>
-                <li><strong>Spalling:</strong> Mechanisms of explosive spalling (pore pressure build-up, thermal stress gradients). Factors influencing spalling risk (concrete mix, moisture content, heating rate, stress state). Mitigation strategies (polypropylene fibres, reinforcement detailing).</li>
-                <li><strong>Post-Fire Behaviour:</strong> Residual strength assessment and the challenges of predicting long-term performance after cooling.</li>
-            </ul>
-
-            <h3 class="text-xl font-semibold mt-6 mb-2">2.3 Timber</h3>
-            <ul>
-                <li><strong>Charring:</strong> Kinetics of char formation, charring rate models (e.g., Eurocode 5 Part 1-2, 1D vs. 2D effects at corners), influence of density and species. Concept of zero-strength layer and effective residual cross-section.</li>
-                <li><strong>Mechanical Properties:</strong> Degradation of strength and stiffness in the heated wood layer beneath the char. Influence of temperature and moisture content.</li>
-                <li><strong>Connections:</strong> Critical behaviour of timber connections (e.g., steel dowels, plates) in fire due to charring around fasteners and steel heating.</li>
-                <li><strong>Advanced Timber Products:</strong> Behaviour of engineered wood products (Glulam, CLT, LVL) including glue-line performance and delamination risks.</li>
-            </ul>
-             <blockquote class="my-4">
-                Material models in codes (e.g., Eurocodes) provide a baseline, but PhD research often involves refining these models, investigating advanced materials (composites, intumescents), or studying behaviour under non-standard fire exposures.
-            </blockquote>
-        </section>
-
-        <section id="structures" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">3. Structural Fire Engineering Analysis</h2>
-            <p>This section focuses on methods for analysing the performance of structures and structural elements under fire conditions, bridging material behaviour and system response.</p>
-            <ul>
-                <li><strong>Analysis Levels:</strong> Progression from member/element analysis (isolated beams, columns using simplified methods or section analysis) to sub-assembly (e.g., connections, floor bays) and full structural system analysis (typically requiring advanced FEM).</li>
-                <li><strong>Fire Models:</strong> Application of standard fire curves (ISO 834, ASTM E119) versus natural/parametric fire models (e.g., Eurocode 1 Part 1-2 parametric curves, zone models, CFD) to define thermal exposure. Importance of the cooling phase.
-                    <div class="equation">
-                     \theta_g = 20 + 1325 (1 - 0.324 e^{-0.2t^*} - 0.204 e^{-1.7t^*} - 0.472 e^{-19t^*}) \quad \text{(Eurocode Parametric - Heating Phase Example)}
-                    </div>
-                     Where \(t^*\) depends on ventilation, thermal properties, etc.
-                </li>
-                <li><strong>Structural Modelling Approaches:</strong>
+                <li><strong>Non-Ideal Detonation Theory:** Limitations of CJ theory for large-diameter, potentially non-homogeneous mining charges (ANFO, Emulsions, Heavy ANFO). Introduction to Detonation Shock Dynamics (DSD) framework: dependence of normal detonation velocity (\(D_n\)) on local front curvature (\(\kappa\)). Concept of failure diameter (\(d_f\)) and its dependence on charge properties and confinement. Impact of reaction zone length on non-ideal behaviour.</li>
+                <li><strong>Equation of State (EOS) for Detonation Products:** Critical review of EOS models used in hydrocodes for performance simulation (Ideal Gas, JWL, BKW, thermochemical codes like CHEETAH, EXPLO5). Parameterization challenges, sensitivity analysis, and impact of EOS choice on predicted detonation pressure (\(P_{det}\)), VOD, and energy release characteristics (e.g., Gurney energy).</li>
+                <li><strong>Performance Metrics & Measurement:**
                     <ul>
-                        <li><strong>Simple Calculation Methods:</strong> Tabulated data, critical temperature methods, simplified zone methods (e.g., Rankine approach for columns). Strengths and limitations.</li>
-                        <li><strong>Advanced Calculation Methods (FEM):</strong> Necessity for capturing geometric and material non-linearities at elevated temperatures. Sequential vs. coupled thermal-stress analysis. Choice of elements (beam, shell, solid), material models, and solution strategies (e.g., Newton-Raphson, arc-length methods). Software examples: ABAQUS, ANSYS, SAFIR, OpenSees.</li>
+                        <li><strong>Velocity of Detonation (VOD):** Techniques: point probes (ionization, optical), continuous resistance wires, high-speed digital video analysis. Importance of steady-state VOD vs. run-up distance.</li>
+                        <li><strong>Detonation Pressure:** Measurement challenges. Underwater explosion tests (shock wave & bubble energy), plate dent tests (brisance comparison), in-situ gauges (manganin, PVDF - survivability issues).</li>
+                        <li><strong>Energy Output:** Cylinder expansion test (comparison of work potential), calorimetry (heat of detonation), seismic measurements. Relationship between theoretical energy (thermo-chemical codes) and delivered energy (work done on rock).</li>
                     </ul>
                 </li>
-                 <li><strong>Key Structural Phenomena in Fire:</strong> Thermal bowing/expansion and restraint forces, catenary/membrane action in composite slabs, local and global buckling of steel members, connection failure modes, concrete cracking and crushing, progressive collapse initiation and propagation.</li>
-                <li><strong>Robustness and Resilience:</strong> Designing structures to withstand localised failure without disproportionate collapse. Role of redundancy, tying forces, and alternative load paths.</li>
+                <li><strong>Rock Interaction & Fragmentation:** Coupling explosive performance (pressure-time profile, gas energy) with rock mass properties (strength, structure, impedance) to predict fragmentation size distribution and blast damage extent. Introduction to blast modelling concepts (e.g., Kuz-Ram model limitations, numerical approaches using hydrocodes + fracture models).</li>
             </ul>
              <div class="key-concept mt-6">
-                <strong>PhD Challenge:</strong> Developing efficient and validated numerical models that capture the complex interaction between fire dynamics, heat transfer, material degradation, and non-linear structural behaviour, especially for novel materials and structural systems.
+                <strong>PhD Challenge (Performance):</strong> Developing accurate, validated reactive flow models and EOS for non-ideal explosives, and bridging the gap between predicted explosive output and actual rock fragmentation results through integrated modelling and advanced diagnostics.
             </div>
         </section>
 
-         <section id="advanced" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">4. Advanced Topics & Research Frontiers</h2>
-            <p>Exploring current challenges and cutting-edge research areas in Fire Safety Engineering.</p>
+        <section id="initiation" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
+             <h2 class="text-2xl font-bold">3. Initiation Systems & Explosive Sensitivity</h2>
+             <p>Reliable and safe initiation is paramount in blasting. This section examines the science behind initiation trains and the factors governing explosive sensitivity.</p>
              <ul>
-                <li><strong>Performance-Based Design (PBD):</strong> Framework, defining safety objectives, design fire scenarios (probabilistic vs. deterministic), development of acceptance criteria (structural integrity, tenability), uncertainty analysis, regulatory challenges.</li>
-                 <li><strong>Fire Testing & Diagnostics:</strong> Role and limitations of standard tests (furnace tests for resistance ratings) vs. large-scale experimental tests. Advanced diagnostics: Digital Image Correlation (DIC) for strain measurement, fibre optic sensors (FOS) for distributed temperature/strain, calorimetry for HRR.</li>
-                <li><strong>Quantitative Risk Assessment (QRA):</strong> Application of probabilistic methods to fire safety. Event tree/fault tree analysis, consequence modelling, F-N curves, integration with structural reliability.</li>
-                <li><strong>Novel Construction & Materials:</strong> Fire performance of mass timber structures (CLT connections, delamination), modular construction (inter-module fire spread), façade systems (combustibility, cavity barriers), structural glass, FRP strengthening/members, phase change materials, intumescent coatings mechanisms.</li>
-                <li><strong>Human Behaviour & Evacuation Modelling:</strong> Agent-Based Modelling (ABM) of occupant movement, decision-making under stress, influence of smoke/toxicity, validation against drills and real incidents. Linking evacuation models (e.g., Pathfinder, FDS+Evac) with fire dynamics simulations.</li>
-                <li><strong>Sustainability & Resilience:</strong> Life cycle assessment incorporating fire scenarios, designing for post-fire repairability, impact of green building features on fire safety, wildland-urban interface (WUI) fires.</li>
-            </ul>
+                 <li><strong>The Initiation Train:** Sequence from detonator to booster to main charge. Principles of energy transfer and pressure amplification at each stage.
+                    <ul>
+                        <li><strong>Detonators:** Function of primary vs. secondary explosives. Characterization of output (VOD, shock pressure profile, timing accuracy - especially for electronic detonators). Reliability considerations.</li>
+                        <li><strong>Boosters (Primers):** Requirements: sufficient sensitivity to be initiated by detonator, sufficient output (pressure, duration, critical diameter) to initiate main charge reliably. Common materials (cast/pressed TNT, Pentolite, RDX/PETN compositions). Booster selection criteria based on main charge type and diameter.</li>
+                    </ul>
+                 </li>
+                 <li><strong>Shock Initiation & SDT:** Physics of Shock-to-Detonation Transition (SDT). Role of "hot spots" (void collapse, shear banding, friction) in initiating reaction. Pop-plots (\(X_{SDT}\) vs. Pressure) for characterizing shock sensitivity. Importance of shock pulse duration. Run distance to detonation.</li>
+                 <li><strong>Critical Diameter (\(d_c\)):** The minimum charge diameter that can sustain a steady detonation. Strong dependence on explosive type (sensitivity, reaction zone length), confinement (material, thickness), and initiation strength (booster output). Failure mechanisms below \(d_c\) (wave divergence, quenching).</li>
+                 <li><strong>Sensitivity Assessment:** Overview of standard tests for characterizing sensitivity to various stimuli:
+                     <ul>
+                         <li><strong>Shock Sensitivity:** UN Gap Test, wedge test.</li>
+                         <li><strong>Impact Sensitivity:** Drop weight tests (e.g., BAM, Rotter).</li>
+                         <li><strong>Friction Sensitivity:** BAM friction apparatus.</li>
+                         <li><strong>Thermal Sensitivity:** DSC/TGA, cook-off tests.</li>
+                     </ul>
+                     Interpretation of test results and their relevance to safety in handling, transport, and storage (e.g., HAZMAT classification). Limitations of small-scale tests for predicting large-scale behaviour.
+                 </li>
+             </ul>
              <blockquote class="my-4">
-                Research in fire safety is increasingly interdisciplinary, requiring expertise in fluid dynamics, heat transfer, material science, structural mechanics, human factors, statistics, and computational modelling.
+                 Understanding the interplay between booster characteristics, main charge sensitivity (\(d_c\)), and confinement is crucial for designing effective and reliable blasting patterns while minimizing risks of misfires or sympathetic detonation.
+             </blockquote>
+        </section>
+
+        <section id="fire_protection" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
+            <h2 class="text-2xl font-bold">4. Fire Protection in Mining & Industrial Contexts</h2>
+            <p>Applying fire science principles to the specific challenges encountered in mining operations and related heavy industries, including hazards identified in the Yuan et al. (2021) review.</p>
+             <ul>
+                <li><strong>Specific Fire Hazards:**
+                    <ul>
+                        <li><strong>Flammable Liquids/Aerosols:** Hydraulic fluid leaks (high pressure atomization risk), fuel storage/transfer areas, solvent usage. Applying aerosol flammability concepts (Section 1) to hazard assessment.</li>
+                        <li><strong>Conveyor Belts:** Major fire risk due to friction, electrical faults, material ignition. Fire propagation along belts, smoke production in confined spaces. Fire-resistant belt materials and detection/suppression systems.</li>
+                        <li><strong>Mobile Equipment:** Engine fires, electrical faults, hydraulic leaks on large mining vehicles (diesel or increasingly, battery electric - BEV). BEV fire risks (thermal runaway).</li>
+                        <li><strong>Electrical Systems:** High-voltage installations, substations, cables. Arc flash hazards, cable fires.</li>
+                        <li><strong>Spontaneous Combustion:** Coal stockpiles, sulfide ore bodies. Monitoring (temperature, gas - CO, CO2), prevention (compaction, inerting), control strategies.</li>
+                    </ul>
+                </li>
+                 <li><strong>Ventilation & Fire Control:** Critical role of mine ventilation systems in both normal operation and fire scenarios. Strategies for smoke control, reversal, inertization using ventilation. Challenges in complex networks. Use of CFD for ventilation planning and fire simulation.</li>
+                <li><strong>Detection & Suppression Systems:**
+                    <ul>
+                        <li><strong>Detection:** Heat detectors (linear, spot), smoke detectors (optical, ionization - challenges in dusty environments), gas detectors (CO, CH4), flame detectors (UV, IR). Early warning systems.</li>
+                        <li><strong>Suppression:** Water-based systems (sprinklers, deluge, water mist - potential effectiveness for aerosol/equipment fires), foam systems (AFFF, high expansion for large volumes), inert gas systems (N2, CO2 - for enclosed spaces, electrical rooms), dry chemical systems, specialized vehicle suppression systems. System design considerations for harsh environments.</li>
+                    </ul>
+                </li>
+                 <li><strong>Risk Assessment & Management:** Applying principles from Yuan et al. (Fig 15) and standard methodologies (HAZID, HAZOP, LOPA) to mining/industrial fire/explosion scenarios. Consequence modelling (fire spread, smoke transport, potential for gas/dust/aerosol explosions). Emergency preparedness and response planning. Regulatory frameworks (e.g., MSHA, ATEX, relevant NFPA codes).</li>
+             </ul>
+             <div class="key-concept mt-6">
+                <strong>PhD Challenge (Fire Protection):</strong> Developing reliable fire detection and suppression strategies for complex, harsh environments (e.g., underground mines, large industrial plants), validating CFD models for smoke/fire spread in intricate geometries, and addressing emerging risks like BEV fires.
+            </div>
+        </section>
+
+        <section id="modeling" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
+            <h2 class="text-2xl font-bold">5. Advanced Modelling & Simulation</h2>
+            <p>Computational modelling plays a crucial role in understanding and predicting complex phenomena in both fire protection and explosives engineering.</p>
+             <ul>
+                <li><strong>CFD for Fire & Ventilation:** Advanced applications of CFD (e.g., FDS, OpenFOAM) for:
+                    <ul>
+                        <li>Simulating fire growth and smoke propagation in large, complex geometries (mine drifts, tunnels, process plants).</li>
+                        <li>Evaluating effectiveness of ventilation strategies for smoke control and inertization.</li>
+                        <li>Predicting heat transfer to structures for input into structural fire analysis.</li>
+                        <li>Modelling performance of suppression systems (sprinklers, water mist).</li>
+                        <li>Challenges: Turbulence modelling, combustion sub-models (e.g., EDC, flamelet), radiation modelling, soot prediction, computational cost, validation against experiments.</li>
+                    </ul>
+                </li>
+                 <li><strong>Hydrocodes for Blasting & Explosions:** Use of explicit finite element / finite difference codes (e.g., AUTODYN, LS-DYNA, CTH) for:
+                     <ul>
+                        <li>Simulating detonation wave propagation using programmed burn or reactive flow models coupled with appropriate EOS.</li>
+                        <li>Predicting blast wave generation and propagation in air and ground/rock.</li>
+                        <li>Modelling structural response to blast loading (fluid-structure interaction - FSI).</li>
+                        <li>Simulating rock fragmentation using coupled hydrocode + discrete element (DEM) or damage models.</li>
+                        <li>Challenges: Accurate EOS/reactive burn models for non-ideal explosives, realistic material models for rock/concrete under high strain rates, computational expense for large 3D models, validation.</li>
+                    </ul>
+                 </li>
+                 <li><strong>Coupled & Multi-Scale Modelling:** Emerging research areas:
+                     <ul>
+                        <li>Coupling CFD fire models with FEM structural analysis codes for comprehensive fire-structure interaction.</li>
+                        <li>Linking micro-scale material models (e.g., hot spot formation, char oxidation) to macro-scale simulations.</li>
+                        <li>Integrating blast models with geomechanical codes for large-scale stability analysis.</li>
+                        <li>Coupling evacuation models with CFD fire simulations.</li>
+                    </ul>
+                 </li>
+             </ul>
+              <blockquote class="my-4">
+                Validation against well-characterized experiments at various scales is essential for building confidence in advanced simulation tools used for safety assessment and design optimization.
             </blockquote>
         </section>
 
-        <section id="interactive" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">5. Interactive Exploration: Material Property Degradation</h2>
-            <p>Understanding the reduction factors for key mechanical properties is fundamental. This tool visualizes the conceptual degradation curves based on Eurocode models.</p>
+        <section id="interactive" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
+            <h2 class="text-2xl font-bold">6. Interactive Exploration Tools</h2>
+            <p>Explore key concepts discussed in the course through interactive visualizations. These tools use simplified models for educational illustration.</p>
 
             <div class="interactive-container mt-4">
-                <h4 class="text-lg font-semibold mb-2">Explore Material Property Reduction Factors</h4>
-                <p class="instructional-text">Select a material and property to see how its relative strength or stiffness changes with temperature according to simplified Eurocode models. Note: These are simplified representations for educational purposes.</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                <h3 class="text-xl font-semibold mb-2 text-center">Explosives Initiation Concept</h3>
+                <p class="instructional-text">Explore the conceptual relationship between booster output, main charge sensitivity, confinement, and the resulting critical diameter required for reliable initiation.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                     <div>
+                         <label for="boosterOutputSlider">Booster Output (Conceptual):</label>
+                         <input type="range" id="boosterOutputSlider" name="boosterOutputSlider" min="1" max="10" value="5" step="1">
+                         <div class="output-box"><span id="boosterOutputValue">5</span> (Rel. Units)</div>
+                     </div>
+                      <div>
+                         <label for="chargeSensitivitySlider">Main Charge Sensitivity:</label>
+                         <input type="range" id="chargeSensitivitySlider" name="chargeSensitivitySlider" min="1" max="5" value="3" step="1">
+                         <div class="output-box"><span id="chargeSensitivityValue">Medium</span></div>
+                     </div>
+                     <div>
+                         <label for="confinementSlider">Confinement Level:</label>
+                         <input type="range" id="confinementSlider" name="confinementSlider" min="1" max="4" value="2" step="1">
+                         <div class="output-box"><span id="confinementValue">Low</span></div>
+                     </div>
+                     <div class="flex flex-col items-center justify-center">
+                          <label class="text-center">Conceptual Critical Diameter:</label>
+                          <div id="criticalDiameterOutput" class="output-box critical-diameter-output w-full">-- mm</div>
+                     </div>
+                 </div>
+                 <div id="initiation-explanation" class="interactive-output mt-6 text-sm text-left space-y-1" style="border-left-color: var(--accent-orange); background-color: var(--vis-bg-color);">
+                    <p>Adjust sliders to see how parameters conceptually influence the critical diameter needed for initiation.</p>
+                 </div>
+                  <p class="warning-note mt-4">Warning: Highly simplified conceptual model for educational purposes ONLY. Does not represent real explosives or provide design data. Explosives are extremely dangerous.</p>
+            </div>
+
+            <div class="my-10 border-t border-dashed border-[var(--border-color-medium)]"></div>
+
+            <div class="interactive-container mt-4">
+                <h3 class="text-xl font-semibold mb-2 text-center">Aerosol Flammability Limits Concept</h3>
+                <p class="instructional-text">Visualize the conceptual effect of aerosol Sauter Mean Diameter (SMD) on the Lower and Upper Flammability Limits (LFL/UFL), based on trends discussed in Yuan et al. (2021).</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                     <div>
-                        <label for="materialSelect">Material:</label>
-                        <select id="materialSelect" name="materialSelect" class="cursor-pointer">
-                            <option value="steel" selected>Structural Steel</option>
-                            <option value="concrete">Normal Weight Concrete (Siliceous)</option>
-                            </select>
+                        <label for="smdSlider">Droplet SMD (µm):</label>
+                        <input type="range" id="smdSlider" name="smdSlider" min="5" max="500" value="50" step="5">
+                        <div class="output-box">SMD = <span id="smdValue">50</span> µm</div>
                     </div>
-                    <div>
-                        <label for="propertySelect">Property:</label>
-                        <select id="propertySelect" name="propertySelect" class="cursor-pointer">
-                            <option value="yield" selected>Yield Strength (f_y,θ / f_y or f_c,θ / f_c)</option>
-                            <option value="elastic">Elastic Modulus (E_θ / E)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="temperatureSlider">Temperature (°C):</label>
-                        <input type="range" id="temperatureSlider" name="temperatureSlider" min="20" max="1200" value="400" step="10">
-                        <div class="output-box">T = <span id="temperatureValue">400</span> °C | k ≈ <span id="reductionFactorValue">0.00</span></div>
-                    </div>
+                     <div>
+                         <label>Conceptual Flammability Range:</label>
+                         <div id="flammabilityRangeOutput" class="output-box">LFL: -- g/m³ | UFL: -- g/m³</div>
+                     </div>
                 </div>
                 <div class="visualization-box">
-                    <div id="material-property-plot" class="w-full h-72 d3-plot"></div>
-                    <p class="text-xs mt-2 caption">Conceptual plot of Reduction Factor (k) vs. Temperature (°C). Vertical line indicates selected temperature.</p>
+                    <div id="aerosol-flammability-plot" class="w-full h-64 d3-plot"></div>
+                    <p class="text-xs mt-2 caption">Conceptual plot of Flammability Limits (g/m³) vs. Droplet SMD (µm). Dashed lines represent gas-phase limits. Note the potential LFL reduction and UFL increase for certain droplet sizes.</p>
                 </div>
-                 <p class="warning-note">Disclaimer: Uses simplified Eurocode models. Actual behaviour can vary significantly. Consult relevant standards for design.</p>
+                 <p class="warning-note mt-4">Disclaimer: Illustrative model based on general trends and conflicting literature data (see Yuan et al., 2021). Actual limits are substance-specific and require experimental determination.</p>
             </div>
+
         </section>
 
-        <section id="outlook" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-white dynamic-content">
-            <h2 class="text-2xl font-bold">6. Outlook: Challenges & Future Directions</h2>
-            <p>Fire Safety Engineering faces significant challenges driven by evolving construction practices, new materials, climate change, and increasing societal expectations for safety and resilience.</p>
+        <section id="outlook" class="mb-12 pt-4 p-6 rounded-lg shadow-lg section-bg-darker dynamic-content">
+            <h2 class="text-2xl font-bold">7. Outlook: Challenges & Future Directions</h2>
+             {/* Content from previous version remains here, slightly adapted */}
+             <p>Mining explosives technology and industrial fire protection face significant challenges driven by deeper extraction, automation, new energy sources (BEVs), stricter environmental regulations, and the need for enhanced safety and operational efficiency.</p>
+             <h3 class="text-xl font-semibold mt-4 mb-2">Key Research Directions:</h3>
             <ul class="list-disc list-inside space-y-1 pl-4">
-                <li><strong>Integrating Multi-Physics:** Developing robustly validated, computationally efficient models that fully couple fire dynamics, heat transfer, structural response, and potentially human behaviour remains a grand challenge.</li>
-                <li><strong>Data-Driven Approaches:** Leveraging machine learning and AI for faster analysis, surrogate modelling, interpreting experimental data, and improving risk assessment.</li>
-                <li><strong>Material Innovation & Characterization:** Understanding and predicting the fire performance of sustainable materials (e.g., bamboo, earth construction), advanced composites, and materials under extreme heating rates.</li>
-                <li><strong>Resilience-Based Design:** Moving beyond life safety to explicitly design for structural repairability, reduced downtime, and maintaining functionality after fire events.</li>
-                <li><strong>Wildland-Urban Interface (WUI):** Addressing the growing threat of WUI fires through improved building codes, community planning, and understanding firebrand attack.</li>
+                <li>Development and validation of high-fidelity, multi-physics simulation tools (reactive flow, CFD, FEM, DEM).</li>
+                <li>Improved understanding and characterization of non-ideal explosive behaviour and aerosol combustion/explosion phenomena (including DDT).</li>
+                <li>Advanced diagnostics for in-situ measurement during detonation and fire events.</li>
+                <li>Development of novel, safer energetic materials and advanced fire suppression agents/systems.</li>
+                <li>Data-driven approaches (AI/ML) for prediction, optimization, and risk assessment.</li>
+                <li>Enhanced fire safety strategies for new technologies (e.g., battery electric vehicles in mines).</li>
+                <li>Integration of safety, environmental impact, and economic considerations in design and operation.</li>
             </ul>
-            <p>A PhD in this field offers the opportunity to contribute to solving these critical problems, advancing scientific understanding and developing innovative engineering solutions to enhance safety and resilience in the built environment.</p>
+            <p>A PhD focusing on these areas offers the chance to make significant contributions to the safety, efficiency, and sustainability of vital industries.</p>
         </section>
 
         <footer class="mt-16 pt-8 border-t border-sky-200 text-sm text-sky-700">
-            <p>
-                This webpage provides a conceptual outline for a PhD-level exploration of Advanced Fire Safety Engineering.
+             <p>
+                This webpage provides a conceptual outline for a PhD-level exploration of Advanced Mining Explosives and Industrial Fire Protection.
                 <br>
-                Content is illustrative and inspired by current research frontiers and educational approaches in the field. Key references include Eurocodes, SFPE Handbooks, and leading academic journals.
+                Content is illustrative, inspired by current research (e.g., Yuan et al., Process Saf. Environ. Prot. 146 (2021) 499-514) and educational approaches. Consult primary literature and standards for detailed study.
             </p>
-             <p class="mt-4 text-center text-xs text-sky-600">PhD Course Concept: Advanced Fire Safety Engineering (Bisby/Edinburgh Perspective)</p>
+             <p class="mt-4 text-center text-xs text-sky-600">PhD Course Concept: Adv. Mining Explosives & Industrial Fire Protection (Orange Theme)</p>
         </footer>
 
     </main>
@@ -291,462 +351,211 @@
     <script>
         /**
          * Sets up a range slider with value display and optional log scale.
-         * (Re-using the robust setupSlider function from the template)
-         * @param {string} sliderId - The ID of the range input element.
-         * @param {string} valueId - The ID of the element to display the value.
-         * @param {object} options - Configuration options (fixedDigits, logScale, callback, valueFormatFn).
          */
-        function setupSlider(sliderId, valueId, options = {}) {
+        function setupSlider(sliderId, valueId, options = {}) { /* ... [Function as in previous version] ... */
             const slider = document.getElementById(sliderId);
             const valueDisplay = document.getElementById(valueId);
-            if (!slider || !valueDisplay) {
-                console.warn(`Slider setup failed: Elements not found for ${sliderId} or ${valueId}`);
-                return;
-            }
-
+            if (!slider || !valueDisplay) { console.warn(`Slider setup failed: Elements not found for ${sliderId} or ${valueId}`); return; }
             const { fixedDigits = 0, logScale = false, callback = null, valueFormatFn = null } = options;
-
-            const minAttr = parseFloat(slider.min);
-            const maxAttr = parseFloat(slider.max);
+            const minAttr = parseFloat(slider.min); const maxAttr = parseFloat(slider.max);
             let safeMin = isNaN(minAttr) ? (logScale ? 1e-6 : 0) : (logScale ? Math.max(1e-9, minAttr) : minAttr);
             let safeMax = isNaN(maxAttr) ? safeMin * (logScale ? 1000 : 100) : (logScale ? Math.max(safeMin * 1.1, maxAttr) : Math.max(safeMin + 1e-9, maxAttr));
+            if (safeMax <= safeMin) { safeMax = safeMin * (logScale ? 10 : 2); if (safeMax <= safeMin) safeMax = safeMin + 1; }
+            slider.logMinVal = safeMin; slider.logMaxVal = safeMax;
 
-            if (safeMax <= safeMin) {
-                safeMax = safeMin * (logScale ? 10 : 2);
-                if (safeMax <= safeMin) safeMax = safeMin + 1;
-            }
-
-            slider.logMinVal = safeMin;
-            slider.logMaxVal = safeMax;
-
-            function calculateActualValue() {
-                const rawValue = parseFloat(slider.value);
-                if (isNaN(rawValue)) {
-                    slider.actualValue = logScale ? slider.logMinVal : safeMin; return;
-                }
-                if (logScale) {
-                    const minLog = Math.log10(slider.logMinVal); const maxLog = Math.log10(slider.logMaxVal);
-                    const range = maxLog - minLog;
-                    const sliderMinInternal = 0; const sliderMaxInternal = 100;
-                    const sliderRangeInternal = sliderMaxInternal - sliderMinInternal;
-                    if (sliderRangeInternal <= 0 || !isFinite(range) || range <= 0) { slider.actualValue = slider.logMinVal; return; }
-                    const normalizedSliderValue = Math.max(0, Math.min(1, (rawValue - sliderMinInternal) / sliderRangeInternal));
-                    const valueLog = minLog + normalizedSliderValue * range;
-                    slider.actualValue = Math.pow(10, valueLog);
-                } else { slider.actualValue = rawValue; }
-                if (!isFinite(slider.actualValue)) { slider.actualValue = logScale ? slider.logMinVal : safeMin; }
-            }
-
-            function updateDisplayAndTriggerCallback() {
-                const currentSlider = document.getElementById(sliderId);
-                const currentValueDisplay = document.getElementById(valueId);
-                if (!currentSlider || !currentValueDisplay) return;
-                try {
-                    calculateActualValue();
-                    const valToFormat = slider.actualValue;
-                    let displayVal;
-                    if (typeof valueFormatFn === 'function') {
-                        displayVal = valueFormatFn(valToFormat); // Use custom formatting function if provided
-                    } else if (typeof valToFormat !== 'number' || !isFinite(valToFormat)) {
-                        displayVal = "NaN";
-                    } else if (logScale && Math.abs(valToFormat) > 1e-9 && Math.abs(valToFormat) < 0.01) {
-                        displayVal = valToFormat.toExponential(fixedDigits);
-                    } else {
-                        displayVal = valToFormat.toFixed(fixedDigits);
-                    }
-                    currentValueDisplay.textContent = displayVal;
-                    if (typeof callback === 'function') { callback(); }
-                } catch (e) {
-                    console.error("Error updating slider display/callback for", sliderId, e);
-                    currentValueDisplay.textContent = "Error";
-                }
-            }
-
-            const initialValueAttr = slider.getAttribute('value');
-            let initialActualValue = initialValueAttr ? parseFloat(initialValueAttr) : (logScale ? slider.logMinVal : safeMin);
-            initialActualValue = Math.max(safeMin, Math.min(safeMax, initialActualValue));
-            if (!isFinite(initialActualValue)) { initialActualValue = logScale ? slider.logMinVal : safeMin; }
-
-            if (logScale) {
-                const minLog = Math.log10(slider.logMinVal); const maxLog = Math.log10(slider.logMaxVal);
-                const range = maxLog - minLog; let initialSliderPos = 0;
-                if (range > 0 && initialActualValue > 0 && isFinite(range)) {
-                    const valueLog = Math.log10(initialActualValue);
-                    initialSliderPos = Math.round(((valueLog - minLog) / range) * 100);
-                }
-                slider.min = "0"; slider.max = "100"; slider.step = "1"; slider.value = initialSliderPos;
-            } else {
-                slider.min = safeMin.toString(); slider.max = safeMax.toString();
-                const range = safeMax - safeMin; let step = (range > 0) ? (range / 100) : 1e-6;
-                if (range > 0) { const magnitude = Math.pow(10, Math.floor(Math.log10(step))); step = Math.max(1e-6, magnitude / 10); }
-                slider.step = step.toExponential(1); slider.value = initialActualValue;
-            }
-            slider.oninput = updateDisplayAndTriggerCallback;
-            calculateActualValue(); updateDisplayAndTriggerCallback();
-        }
+            function calculateActualValue() { const rawValue = parseFloat(slider.value); if (isNaN(rawValue)) { slider.actualValue = logScale ? slider.logMinVal : safeMin; return; } if (logScale) { const minLog = Math.log10(slider.logMinVal); const maxLog = Math.log10(slider.logMaxVal); const range = maxLog - minLog; const sliderMinInternal = 0; const sliderMaxInternal = 100; const sliderRangeInternal = sliderMaxInternal - sliderMinInternal; if (sliderRangeInternal <= 0 || !isFinite(range) || range <= 0) { slider.actualValue = slider.logMinVal; return; } const normalizedSliderValue = Math.max(0, Math.min(1, (rawValue - sliderMinInternal) / sliderRangeInternal)); const valueLog = minLog + normalizedSliderValue * range; slider.actualValue = Math.pow(10, valueLog); } else { slider.actualValue = rawValue; } if (!isFinite(slider.actualValue)) { slider.actualValue = logScale ? slider.logMinVal : safeMin; } }
+            function updateDisplayAndTriggerCallback() { const currentSlider = document.getElementById(sliderId); const currentValueDisplay = document.getElementById(valueId); if (!currentSlider || !currentValueDisplay) return; try { calculateActualValue(); const valToFormat = slider.actualValue; let displayVal; if (typeof valueFormatFn === 'function') { displayVal = valueFormatFn(valToFormat); } else if (typeof valToFormat !== 'number' || !isFinite(valToFormat)) { displayVal = "NaN"; } else if (logScale && Math.abs(valToFormat) > 1e-9 && Math.abs(valToFormat) < 0.01) { displayVal = valToFormat.toExponential(fixedDigits); } else { displayVal = valToFormat.toFixed(fixedDigits); } currentValueDisplay.textContent = displayVal; if (typeof callback === 'function') { callback(); } } catch (e) { console.error("Error updating slider display/callback for", sliderId, e); currentValueDisplay.textContent = "Error"; } }
+            const initialValueAttr = slider.getAttribute('value'); let initialActualValue = initialValueAttr ? parseFloat(initialValueAttr) : (logScale ? slider.logMinVal : safeMin); initialActualValue = Math.max(safeMin, Math.min(safeMax, initialActualValue)); if (!isFinite(initialActualValue)) { initialActualValue = logScale ? slider.logMinVal : safeMin; }
+            if (logScale) { const minLog = Math.log10(slider.logMinVal); const maxLog = Math.log10(slider.logMaxVal); const range = maxLog - minLog; let initialSliderPos = 0; if (range > 0 && initialActualValue > 0 && isFinite(range)) { const valueLog = Math.log10(initialActualValue); initialSliderPos = Math.round(((valueLog - minLog) / range) * 100); } slider.min = "0"; slider.max = "100"; slider.step = "1"; slider.value = initialSliderPos; } else { slider.min = safeMin.toString(); slider.max = safeMax.toString(); const range = safeMax - safeMin; let step = (range > 0) ? (range / 100) : 1e-6; if (range > 0) { const magnitude = Math.pow(10, Math.floor(Math.log10(step))); step = Math.max(1e-6, magnitude / 10); } slider.step = step.toExponential(1); slider.value = initialActualValue; }
+            slider.oninput = updateDisplayAndTriggerCallback; calculateActualValue(); updateDisplayAndTriggerCallback();
+         }
 
         /**
          * Sets up the SVG and main group ('g') element for a D3 plot.
-         * (Re-using the robust setupPlotArea function from the template)
-         * @param {string} targetId - ID of the container div or the SVG element itself.
-         * @param {object} margin - Margin object {top, right, bottom, left}.
-         * @param {boolean} [isDirectSvg=false] - True if targetId is an SVG element.
-         * @returns {object} { g: d3 selection of the main group, dims: plot dimensions object }.
-         * @throws {Error} If target element not found or dimensions are invalid.
          */
-        function setupPlotArea(targetId, margin, isDirectSvg = false) {
-             let svg, g;
-             let containerWidth, containerHeight;
-
-             if (isDirectSvg) {
-                 svg = d3.select(`#${targetId}`);
-                 if (svg.empty()) { throw new Error(`Target SVG #${targetId} not found.`); }
-                 containerWidth = parseFloat(svg.attr("width")) || 400;
-                 containerHeight = parseFloat(svg.attr("height")) || 200;
-                 svg.selectAll("g").remove(); // Clear only groups
-                 g = svg.append("g").attr("id", `${targetId}-plot-group`).attr("class", "d3-plot");
-             } else {
-                 const plotDiv = document.getElementById(targetId);
-                 if (!plotDiv) { throw new Error(`Plot container #${targetId} not found.`); }
-                 containerWidth = plotDiv.clientWidth; containerHeight = plotDiv.clientHeight;
-                 if (!containerWidth || !containerHeight || containerWidth <= 0 || containerHeight <= 0) {
-                     // Attempt to use parent's size if div has no size itself (common in flex/grid)
-                     const parent = plotDiv.parentElement;
-                     if(parent && parent.clientWidth > 0 && parent.clientHeight > 0){
-                         containerWidth = parent.clientWidth;
-                         containerHeight = parent.clientHeight;
-                          // Set div height explicitly if it was 0
-                         if(plotDiv.clientHeight <= 0) plotDiv.style.height = `${containerHeight}px`;
-                     } else {
-                        throw new Error(`Plot container #${targetId} has invalid dimensions: ${containerWidth}x${containerHeight}.`);
-                     }
-                 }
-                 svg = d3.select(plotDiv).select("svg");
-                 if (svg.empty()) { svg = d3.select(plotDiv).append("svg"); }
-                 svg.attr("width", "100%").attr("height", "100%")
-                    .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
-                    .attr("preserveAspectRatio", "xMidYMid meet");
-                 svg.selectAll("*").remove(); // Clear everything inside SVG
-                 g = svg.append("g").attr("class", "d3-plot");
-             }
-             g.attr("transform", `translate(${margin.left},${margin.top})`);
-             const plotWidth = containerWidth - margin.left - margin.right;
-             const plotHeight = containerHeight - margin.top - margin.bottom;
-             if (plotWidth <= 0 || plotHeight <= 0) {
-                 throw new Error(`Plot area for #${targetId} invalid after margins: ${plotWidth}x${plotHeight}.`);
-             }
-             const dims = { containerWidth, containerHeight, plotWidth, plotHeight };
-             return { g, dims };
+        function setupPlotArea(targetId, margin, isDirectSvg = false) { /* ... [Function as in previous version] ... */
+             let svg, g; let containerWidth, containerHeight;
+             if (isDirectSvg) { svg = d3.select(`#${targetId}`); if (svg.empty()) { throw new Error(`Target SVG #${targetId} not found.`); } containerWidth = parseFloat(svg.attr("width")) || 400; containerHeight = parseFloat(svg.attr("height")) || 200; svg.selectAll("g").remove(); g = svg.append("g").attr("id", `${targetId}-plot-group`).attr("class", "d3-plot"); } else { const plotDiv = document.getElementById(targetId); if (!plotDiv) { throw new Error(`Plot container #${targetId} not found.`); } containerWidth = plotDiv.clientWidth; containerHeight = plotDiv.clientHeight; if (!containerWidth || !containerHeight || containerWidth <= 0 || containerHeight <= 0) { const parent = plotDiv.parentElement; if(parent && parent.clientWidth > 0 && parent.clientHeight > 0){ containerWidth = parent.clientWidth; containerHeight = parent.clientHeight; if(plotDiv.clientHeight <= 0) plotDiv.style.height = `${containerHeight}px`; } else { throw new Error(`Plot container #${targetId} has invalid dimensions: ${containerWidth}x${containerHeight}.`); } } svg = d3.select(plotDiv).select("svg"); if (svg.empty()) { svg = d3.select(plotDiv).append("svg"); } svg.attr("width", "100%").attr("height", "100%").attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`).attr("preserveAspectRatio", "xMidYMid meet"); svg.selectAll("*").remove(); g = svg.append("g").attr("class", "d3-plot"); }
+             g.attr("transform", `translate(${margin.left},${margin.top})`); const plotWidth = containerWidth - margin.left - margin.right; const plotHeight = containerHeight - margin.top - margin.bottom; if (plotWidth <= 0 || plotHeight <= 0) { throw new Error(`Plot area for #${targetId} invalid after margins: ${plotWidth}x${plotHeight}.`); } const dims = { containerWidth, containerHeight, plotWidth, plotHeight }; return { g, dims };
          }
 
         /**
          * Draws X and Y axes on a D3 plot group.
-         * (Re-using the robust drawAxes function from the template)
-         * @param {object} g - The D3 selection of the group element to draw in.
-         * @param {function} xScale - The D3 scale for the X axis.
-         * @param {function} yScaleLeft - The D3 scale for the left Y axis.
-         * @param {function|null} yScaleRight - The D3 scale for the right Y axis (or null).
-         * @param {object} dims - Plot dimensions object from setupPlotArea.
-         * @param {object} margin - Margin object.
-         * @param {object} labels - Axis labels and formatting options.
          */
-        function drawAxes(g, xScale, yScaleLeft, yScaleRight, dims, margin, labels) {
-            // X Axis (Bottom)
-            g.append("g").attr("class", "x axis")
-             .attr("transform", `translate(0,${dims.plotHeight})`)
-             .call(d3.axisBottom(xScale).ticks(labels.xTicks || 5).tickFormat(labels.xFormat || d3.format(".0f"))); // Default format integer
-            // X Axis Label
-            g.append("text").attr("class", "plot-label").attr("x", dims.plotWidth / 2)
-             .attr("y", dims.plotHeight + margin.bottom - (labels.xOffset || 5)).attr("text-anchor", "middle").text(labels.x || "X Axis");
-
-            // Y Axis (Left)
-            const yAxisLeft = g.append("g").attr("class", "y axis left-axis")
-                             .call(d3.axisLeft(yScaleLeft).ticks(labels.yLeftTicks || 5).tickFormat(labels.yLeftFormat || d3.format(".1f")));
-            if (labels.yLeftColor) {
-                yAxisLeft.selectAll("path, line").style("stroke", labels.yLeftColor); yAxisLeft.selectAll("text").style("fill", labels.yLeftColor);
-            }
-            // Y Axis Label (Left)
-            g.append("text").attr("class", "plot-label").attr("transform", "rotate(-90)")
-             .attr("y", -margin.left + (labels.yLeftOffset || 15)).attr("x", -dims.plotHeight / 2)
-             .attr("text-anchor", "middle").style("fill", labels.yLeftColor || 'var(--text-color-accent)').text(labels.yLeft || "Left Y Axis");
-
-            // Y Axis (Right) - Optional
-            if (yScaleRight && labels.yRight) {
-                const yAxisRight = g.append("g").attr("class", "y axis right-axis")
-                                  .attr("transform", `translate(${dims.plotWidth},0)`)
-                                  .call(d3.axisRight(yScaleRight).ticks(labels.yRightTicks || 5).tickFormat(labels.yRightFormat || d3.format(".1f")));
-                if (labels.yRightColor) {
-                    yAxisRight.selectAll("path, line").style("stroke", labels.yRightColor); yAxisRight.selectAll("text").style("fill", labels.yRightColor);
-                }
-                // Y Axis Label (Right)
-                g.append("text").attr("class", "plot-label").attr("transform", "rotate(90)")
-                 .attr("y", -dims.plotWidth - margin.right + (labels.yRightOffset || 15)).attr("x", dims.plotHeight / 2)
-                 .attr("text-anchor", "middle").style("fill", labels.yRightColor || 'var(--text-color-accent)').text(labels.yRight || "Right Y Axis");
-            }
-        }
+        function drawAxes(g, xScale, yScaleLeft, yScaleRight, dims, margin, labels) { /* ... [Function as in previous version] ... */
+             g.append("g").attr("class", "x axis").attr("transform", `translate(0,${dims.plotHeight})`).call(d3.axisBottom(xScale).ticks(labels.xTicks || 5).tickFormat(labels.xFormat || d3.format(".0f"))); g.append("text").attr("class", "plot-label").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight + margin.bottom - (labels.xOffset || 5)).attr("text-anchor", "middle").text(labels.x || "X Axis"); const yAxisLeft = g.append("g").attr("class", "y axis left-axis").call(d3.axisLeft(yScaleLeft).ticks(labels.yLeftTicks || 5).tickFormat(labels.yLeftFormat || d3.format(".1f"))); if (labels.yLeftColor) { yAxisLeft.selectAll("path, line").style("stroke", labels.yLeftColor); yAxisLeft.selectAll("text").style("fill", labels.yLeftColor); } g.append("text").attr("class", "plot-label").attr("transform", "rotate(-90)").attr("y", -margin.left + (labels.yLeftOffset || 15)).attr("x", -dims.plotHeight / 2).attr("text-anchor", "middle").style("fill", labels.yLeftColor || 'var(--text-color-accent)').text(labels.yLeft || "Left Y Axis"); if (yScaleRight && labels.yRight) { const yAxisRight = g.append("g").attr("class", "y axis right-axis").attr("transform", `translate(${dims.plotWidth},0)`).call(d3.axisRight(yScaleRight).ticks(labels.yRightTicks || 5).tickFormat(labels.yRightFormat || d3.format(".1f"))); if (labels.yRightColor) { yAxisRight.selectAll("path, line").style("stroke", labels.yRightColor); yAxisRight.selectAll("text").style("fill", labels.yRightColor); } g.append("text").attr("class", "plot-label").attr("transform", "rotate(90)").attr("y", -dims.plotWidth - margin.right + (labels.yRightOffset || 15)).attr("x", dims.plotHeight / 2).attr("text-anchor", "middle").style("fill", labels.yRightColor || 'var(--text-color-accent)').text(labels.yRight || "Right Y Axis"); }
+         }
 
         /**
          * Draws a line on the plot.
-         * (Re-using the robust drawLine function from the template)
-         * @param {object} g - The D3 selection of the group element.
-         * @param {Array} plotData - The data array for the line.
-         * @param {function} lineGenerator - The D3 line generator function.
-         * @param {string} cssClass - CSS class(es) to apply to the line path.
          */
-         function drawLine(g, plotData, lineGenerator, cssClass) {
-             // Remove existing line with the same class first
-             g.selectAll(`path.line.${cssClass.split(' ')[0]}`).remove(); // Use first class for selection
-             // Append new line
-             g.append("path")
-              .datum(plotData)
-              .attr("class", `line ${cssClass} d3-plot`)
-              .attr("d", lineGenerator)
-              .attr("fill", "none")
-              .attr("stroke-width", 2);
+         function drawLine(g, plotData, lineGenerator, cssClass) { /* ... [Function as in previous version] ... */
+             g.selectAll(`path.line.${cssClass.split(' ')[0]}`).remove(); g.append("path").datum(plotData).attr("class", `line ${cssClass} d3-plot`).attr("d", lineGenerator).attr("fill", "none").attr("stroke-width", 2);
          }
 
         /**
          * Displays an error message within a plot area.
-         * (Re-using the robust displayPlotError function from the template)
-         * @param {string} targetId - ID of the container div or SVG element.
-         * @param {string} [message="Error rendering plot."] - The error message.
-         * @param {boolean} [isDirectSvg=false] - True if targetId is an SVG element.
          */
-        function displayPlotError(targetId, message = "Error rendering plot.", isDirectSvg = false) {
+        function displayPlotError(targetId, message = "Error rendering plot.", isDirectSvg = false) { /* ... [Function as in previous version] ... */
+             try { const margin = { top: 10, right: 10, bottom: 10, left: 10 }; const { g, dims } = setupPlotArea(targetId, margin, isDirectSvg); g.append("text").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight / 2).text(message).style("font-size", "10px").attr("fill", "red").attr("text-anchor", "middle"); } catch (e) { console.error(`Failed to display error in target ${targetId}: ${e.message}`); const targetElement = document.getElementById(targetId); if (targetElement) { targetElement.innerHTML = `<p style="color: red; font-size: 10px; text-align: center;">${message}</p>`; } }
+         }
+
+        // --- Interactive Explosives Initiation Logic ---
+        /** Updates the explosives initiation conceptual display */
+        function updateExplosivesInitiation() { /* ... [Function as in previous version, minor text update] ... */
+             const context = "Explosives Initiation Interactive"; try { const boosterSlider = document.getElementById('boosterOutputSlider'); const sensitivitySlider = document.getElementById('chargeSensitivitySlider'); const confinementSlider = document.getElementById('confinementSlider'); const criticalDiameterOutput = document.getElementById('criticalDiameterOutput'); const explanationDiv = document.getElementById('initiation-explanation'); if (!boosterSlider || !sensitivitySlider || !confinementSlider || !criticalDiameterOutput || !explanationDiv || typeof boosterSlider.actualValue === 'undefined' || typeof sensitivitySlider.actualValue === 'undefined' || typeof confinementSlider.actualValue === 'undefined') { throw new Error("Elements not found/initialized."); } const boosterOutput = boosterSlider.actualValue; const sensitivity = sensitivitySlider.actualValue; const confinement = confinementSlider.actualValue; const sensitivityLabels = ["Very Low", "Low", "Medium", "High", "Very High"]; const confinementLabels = ["None", "Low", "Medium", "High"]; document.getElementById('chargeSensitivityValue').textContent = sensitivityLabels[sensitivity - 1] || "Medium"; document.getElementById('confinementValue').textContent = confinementLabels[confinement - 1] || "Low"; const base_dc = 50; const sensFactor = Math.exp(-(sensitivity - 3) * 0.8); const boostFactor = 1 / (1 + (boosterOutput - 5) * 0.15); const confFactor = 1 / (1 + (confinement - 2) * 0.25); let conceptual_dc = base_dc * sensFactor * boostFactor * confFactor; conceptual_dc = Math.max(5, Math.min(500, conceptual_dc)); if (!isFinite(conceptual_dc)) { criticalDiameterOutput.textContent = "Error"; explanationDiv.innerHTML = `<p class="text-[var(--error-color)]">Calculation error.</p>`; return; } criticalDiameterOutput.textContent = `${conceptual_dc.toFixed(0)} mm`; let explanation = []; explanation.push(`<strong>Conceptual Result:</strong> A ${conceptual_dc.toFixed(0)} mm critical diameter.`); if (boosterOutput > 7) explanation.push("<li>Strong booster output significantly helps initiation.</li>"); if (boosterOutput < 3) explanation.push("<li>Weak booster output makes initiation difficult.</li>"); if (sensitivity > 4) explanation.push("<li>Very sensitive charge initiates easily.</li>"); if (sensitivity < 2) explanation.push("<li>Very insensitive charge requires strong booster/confinement.</li>"); if (confinement > 3) explanation.push("<li>High confinement greatly aids initiation.</li>"); if (confinement < 2) explanation.push("<li>Lack of confinement makes initiation harder.</li>"); explanation.push("<br><em>Reminder: Illustrative model only.</em>"); explanationDiv.innerHTML = explanation.join(''); } catch (error) { console.error(`Error updating ${context}:`, error); const cdOutput = document.getElementById('criticalDiameterOutput'); const expDiv = document.getElementById('initiation-explanation'); if (cdOutput) cdOutput.textContent = "Error"; if (expDiv) expDiv.innerHTML = `<p class="text-[var(--error-color)]">Error updating display.</p>`; }
+         }
+
+        // --- Interactive Aerosol Flammability Logic (NEW) ---
+        /** Updates the aerosol flammability limits conceptual plot */
+        function updateAerosolFlammabilityPlot() {
+            const plotDivId = "aerosol-flammability-plot";
+            const context = "Aerosol Flammability Plot";
             try {
-                const margin = { top: 10, right: 10, bottom: 10, left: 10 };
-                const { g, dims } = setupPlotArea(targetId, margin, isDirectSvg);
-                g.append("text").attr("x", dims.plotWidth / 2).attr("y", dims.plotHeight / 2)
-                 .text(message).style("font-size", "10px").attr("fill", "red").attr("text-anchor", "middle");
-            } catch (e) {
-                console.error(`Failed to display error in target ${targetId}: ${e.message}`);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) { targetElement.innerHTML = `<p style="color: red; font-size: 10px; text-align: center;">${message}</p>`; }
-            }
-        }
-
-        // --- Eurocode Material Property Functions ---
-
-        /**
-         * Calculates the reduction factor for steel yield strength (EC3).
-         * @param {number} T - Temperature in Celsius.
-         * @returns {number} Reduction factor k_y,theta (between 0 and 1).
-         */
-        function steelYieldReduction(T) {
-            if (T < 400) return 1.0;
-            if (T < 500) return 1.0 - (T - 400) * (1.0 - 0.78) / 100;
-            if (T < 600) return 0.78 - (T - 500) * (0.78 - 0.47) / 100;
-            if (T < 700) return 0.47 - (T - 600) * (0.47 - 0.23) / 100;
-            if (T < 800) return 0.23 - (T - 700) * (0.23 - 0.11) / 100;
-            if (T < 900) return 0.11 - (T - 800) * (0.11 - 0.06) / 100;
-            if (T < 1000) return 0.06 - (T - 900) * (0.06 - 0.04) / 100;
-            if (T < 1100) return 0.04 - (T - 1000) * (0.04 - 0.02) / 100;
-            if (T < 1200) return 0.02 - (T - 1100) * (0.02 - 0.0) / 100;
-            return 0.0;
-        }
-
-        /**
-         * Calculates the reduction factor for steel elastic modulus (EC3).
-         * @param {number} T - Temperature in Celsius.
-         * @returns {number} Reduction factor k_E,theta (between 0 and 1).
-         */
-        function steelElasticModulusReduction(T) {
-            if (T < 100) return 1.0;
-            if (T < 200) return 1.0 - (T - 100) * (1.0 - 0.9) / 100;
-            if (T < 300) return 0.9 - (T - 200) * (0.9 - 0.8) / 100;
-            if (T < 400) return 0.8 - (T - 300) * (0.8 - 0.7) / 100;
-            if (T < 500) return 0.7 - (T - 400) * (0.7 - 0.6) / 100;
-            if (T < 600) return 0.6 - (T - 500) * (0.6 - 0.31) / 100;
-            if (T < 700) return 0.31 - (T - 600) * (0.31 - 0.13) / 100;
-            if (T < 800) return 0.13 - (T - 700) * (0.13 - 0.09) / 100;
-            if (T < 900) return 0.09 - (T - 800) * (0.09 - 0.0675) / 100;
-            if (T < 1000) return 0.0675 - (T - 900) * (0.0675 - 0.045) / 100;
-            if (T < 1100) return 0.045 - (T - 1000) * (0.045 - 0.0225) / 100;
-            if (T < 1200) return 0.0225 - (T - 1100) * (0.0225 - 0.0) / 100;
-            return 0.0;
-        }
-
-        /**
-         * Calculates the reduction factor for concrete compressive strength (EC2, Siliceous).
-         * @param {number} T - Temperature in Celsius.
-         * @returns {number} Reduction factor k_c,theta (between 0 and 1).
-         */
-        function concreteStrengthReduction(T) {
-            if (T <= 100) return 1.0;
-            if (T <= 200) return 1.0 - (T - 100) * (1.0 - 0.95) / 100;
-            if (T <= 300) return 0.95 - (T - 200) * (0.95 - 0.85) / 100;
-            if (T <= 400) return 0.85 - (T - 300) * (0.85 - 0.75) / 100;
-            if (T <= 500) return 0.75 - (T - 400) * (0.75 - 0.60) / 100;
-            if (T <= 600) return 0.60 - (T - 500) * (0.60 - 0.45) / 100;
-            if (T <= 700) return 0.45 - (T - 600) * (0.45 - 0.30) / 100;
-            if (T <= 800) return 0.30 - (T - 700) * (0.30 - 0.15) / 100;
-            if (T <= 900) return 0.15 - (T - 800) * (0.15 - 0.08) / 100;
-            if (T <= 1000) return 0.08 - (T - 900) * (0.08 - 0.04) / 100;
-            if (T <= 1100) return 0.04 - (T - 1000) * (0.04 - 0.01) / 100;
-            if (T <= 1200) return 0.01 - (T - 1100) * (0.01 - 0.0) / 100;
-            return 0.0;
-        }
-
-        /**
-         * Calculates the reduction factor for concrete elastic modulus (EC2 approximation).
-         * Note: EC2 relates E_c,theta to f_c,theta via strain at peak stress, this is a simplification.
-         * Using a similar shape to strength reduction for simplicity here.
-         * @param {number} T - Temperature in Celsius.
-         * @returns {number} Reduction factor k_E,theta (between 0 and 1).
-         */
-        function concreteElasticModulusReduction(T) {
-             // Simplified: Assume modulus reduction follows a similar but faster path than strength
-            if (T <= 100) return 1.0;
-            if (T <= 200) return 1.0 - (T - 100) * (1.0 - 0.85) / 100; // Faster drop
-            if (T <= 300) return 0.85 - (T - 200) * (0.85 - 0.70) / 100;
-            if (T <= 400) return 0.70 - (T - 300) * (0.70 - 0.55) / 100;
-            if (T <= 500) return 0.55 - (T - 400) * (0.55 - 0.35) / 100;
-            if (T <= 600) return 0.35 - (T - 500) * (0.35 - 0.20) / 100;
-            if (T <= 700) return 0.20 - (T - 600) * (0.20 - 0.10) / 100;
-            if (T <= 800) return 0.10 - (T - 700) * (0.10 - 0.05) / 100;
-            if (T <= 900) return 0.05 - (T - 800) * (0.05 - 0.02) / 100;
-            if (T <= 1000) return 0.02 - (T - 900) * (0.02 - 0.00) / 100; // Assume ~0 by 1000C
-            return 0.0;
-        }
-
-        // --- Interactive Material Plot Logic ---
-
-        /** Updates the material property degradation plot */
-        function updateMaterialPlot() {
-            const plotDivId = "material-property-plot";
-            const context = "Material Property Plot";
-            try {
-                // Get selected values
-                const materialSelect = document.getElementById('materialSelect');
-                const propertySelect = document.getElementById('propertySelect');
-                const tempSlider = document.getElementById('temperatureSlider');
-                if (!materialSelect || !propertySelect || !tempSlider || typeof tempSlider.actualValue === 'undefined') {
-                    throw new Error("Material plot controls not found or not initialized.");
-                }
-                const material = materialSelect.value;
-                const property = propertySelect.value;
-                const selectedTemp = tempSlider.actualValue;
+                // Get elements
+                const smdSlider = document.getElementById('smdSlider');
+                const rangeOutput = document.getElementById('flammabilityRangeOutput');
+                 if (!smdSlider || !rangeOutput || typeof smdSlider.actualValue === 'undefined') {
+                     throw new Error("Aerosol flammability controls not found or not initialized.");
+                 }
+                const smd = smdSlider.actualValue; // Droplet SMD in µm
 
                 // --- Plot Setup ---
-                const margin = {top: 20, right: 30, bottom: 40, left: 40};
-                const { g, dims } = setupPlotArea(plotDivId, margin); // Setup in the div
+                const margin = {top: 20, right: 30, bottom: 40, left: 50}; // Increased left margin for Y-axis label
+                const { g, dims } = setupPlotArea(plotDivId, margin);
+
+                // --- Conceptual Flammability Limit Functions ---
+                // These functions are purely illustrative based on trends discussed in Yuan et al.
+                // Assumes gas LFL ~ 50 g/m³, gas UFL ~ 300 g/m³ (example values)
+                const gasLFL = 50;
+                const gasUFL = 300;
+
+                // LFL: Starts near gas LFL for small SMD, dips down for intermediate SMD, then rises slightly for very large SMD.
+                const calculateLFL = (d) => {
+                    if (d < 10) return gasLFL;
+                    // Dip function centered around ~40-60 µm
+                    const dipCenter = 50;
+                    const dipWidth = 40;
+                    const dipDepth = 0.4 * gasLFL; // Max reduction of 40%
+                    const dip = dipDepth * Math.exp(-Math.pow(d - dipCenter, 2) / (2 * dipWidth**2));
+                    // Slight rise for large droplets
+                    const rise = 0.1 * gasLFL * Math.max(0, (d - 100) / 400);
+                    return Math.max(5, gasLFL - dip + rise); // Ensure LFL > 0
+                };
+
+                // UFL: Starts near gas UFL, increases significantly for intermediate SMD, then might decrease slowly.
+                const calculateUFL = (d) => {
+                    if (d < 10) return gasUFL;
+                    // Peak function centered around ~60-80 µm
+                    const peakCenter = 70;
+                    const peakWidth = 60;
+                    const peakHeight = 2.0 * gasUFL; // Max increase factor of 2
+                    const peak = peakHeight * Math.exp(-Math.pow(d - peakCenter, 2) / (2 * peakWidth**2));
+                     // Slow decrease for very large droplets (optional)
+                     const decrease = 0.5 * gasUFL * Math.max(0, (d - 150) / 350);
+                    return Math.max(gasUFL * 1.1, gasUFL + peak - decrease); // Ensure UFL > gas UFL
+                };
 
                 // --- Data Generation ---
-                const tempRange = d3.range(20, 1201, 10); // Temperatures from 20 to 1200 C
-                let reductionFn; // Function to calculate reduction factor
+                const smdRange = d3.range(5, 501, 5); // SMD range 5 to 500 µm
+                const plotData = smdRange.map(d => ({
+                    smd: d,
+                    lfl: calculateLFL(d),
+                    ufl: calculateUFL(d)
+                })).filter(p => isFinite(p.smd) && isFinite(p.lfl) && isFinite(p.ufl));
 
-                if (material === 'steel') {
-                    reductionFn = (property === 'yield') ? steelYieldReduction : steelElasticModulusReduction;
-                } else if (material === 'concrete') {
-                    reductionFn = (property === 'yield') ? concreteStrengthReduction : concreteElasticModulusReduction;
-                } else {
-                    throw new Error(`Unsupported material type: ${material}`);
-                }
-
-                const plotData = tempRange.map(T => {
-                    const k = reductionFn(T);
-                    return { temp: T, k: (isFinite(k) && k >= 0) ? k : null }; // Ensure k is valid
-                }).filter(d => d.k !== null); // Remove points with invalid k
-
-                 if (plotData.length < 2) {
-                     throw new Error("Not enough valid data points generated for material plot.");
-                 }
+                if (plotData.length < 2) { throw new Error("Not enough valid data points for aerosol plot."); }
 
                 // --- Scales ---
-                const xScale = d3.scaleLinear().domain([0, 1200]).range([0, dims.plotWidth]); // Temp 0-1200 C
-                const yScale = d3.scaleLinear().domain([0, 1.1]).range([dims.plotHeight, 0]); // Reduction factor 0-1.1
+                const xScale = d3.scaleLinear().domain([0, 500]).range([0, dims.plotWidth]); // SMD 0-500 µm
+                // Find max UFL for Y-axis scaling
+                const maxUFL = d3.max(plotData, d => d.ufl) || gasUFL * 3;
+                const yScale = d3.scaleLog() // Use log scale for concentration
+                                 .domain([Math.max(1, gasLFL * 0.2), maxUFL * 1.2]) // Start slightly below min LFL
+                                 .range([dims.plotHeight, 0]).nice();
 
                 // --- Draw Axes ---
                 drawAxes(g, xScale, yScale, null, dims, margin, {
-                    x: "Temperature (°C)", xOffset: 10,
-                    yLeft: "Reduction Factor (k)", yLeftOffset: 15, yLeftFormat: d3.format(".1f")
+                    x: "Droplet SMD (µm)", xOffset: 10,
+                    yLeft: "Concentration (g/m³, log scale)", yLeftOffset: 20,
+                    yLeftFormat: d3.format(".0f") // Format for log scale
                 });
 
-                // --- Draw Line ---
-                const lineGen = d3.line()
-                    .x(d => xScale(d.temp))
-                    .y(d => yScale(d.k))
-                    .defined(d => d.k !== null && isFinite(xScale(d.temp)) && isFinite(yScale(d.k)));
+                // Add grid lines for log scale
+                g.append("g").attr("class", "grid")
+                 .call(d3.axisLeft(yScale).ticks(5, ".0f").tickSize(-dims.plotWidth).tickFormat(""));
 
-                // Determine line class based on material/property for styling
-                 let lineClass = 'prop-yield-line'; // Default
-                 if (material === 'steel') lineClass = (property === 'yield') ? 'prop-yield-line' : 'prop-elastic-line';
-                 else if (material === 'concrete') lineClass = (property === 'yield') ? 'concrete-line' : 'concrete-line prop-elastic-line'; // Use concrete color, maybe dashed for elastic
+                // --- Draw Lines ---
+                const lineGen = (yAccessor) => d3.line()
+                    .x(d => xScale(d.smd))
+                    .y(d => yScale(d[yAccessor]))
+                    .defined(d => d[yAccessor] !== null && isFinite(xScale(d.smd)) && isFinite(yScale(d[yAccessor])));
 
-                drawLine(g, plotData, lineGen, lineClass);
+                drawLine(g, plotData, lineGen('lfl'), 'lfl-line'); // Orange for LFL
+                drawLine(g, plotData, lineGen('ufl'), 'ufl-line'); // Red for UFL
 
-                // --- Draw Vertical Line and Point at Selected Temperature ---
-                const selectedK = reductionFn(selectedTemp);
-                if (isFinite(selectedK) && selectedK >= 0) {
-                    // Update the reduction factor display in the slider output box
-                    const kValueSpan = document.getElementById('reductionFactorValue');
-                    if(kValueSpan) kValueSpan.textContent = selectedK.toFixed(2);
+                // Draw horizontal lines for gas limits
+                g.append("line").attr("x1", 0).attr("x2", dims.plotWidth).attr("y1", yScale(gasLFL)).attr("y2", yScale(gasLFL))
+                 .style("stroke", "var(--accent-orange)").attr("stroke-dasharray", "2 2").style("opacity", 0.7);
+                g.append("line").attr("x1", 0).attr("x2", dims.plotWidth).attr("y1", yScale(gasUFL)).attr("y2", yScale(gasUFL))
+                 .style("stroke", "var(--accent-red)").attr("stroke-dasharray", "2 2").style("opacity", 0.7);
+                 g.append("text").attr("x", dims.plotWidth - 5).attr("y", yScale(gasLFL) - 3).text("Gas LFL").style("font-size", "8px").style("fill", "var(--accent-orange)").attr("text-anchor", "end");
+                 g.append("text").attr("x", dims.plotWidth - 5).attr("y", yScale(gasUFL) + 8).text("Gas UFL").style("font-size", "8px").style("fill", "var(--accent-red)").attr("text-anchor", "end");
 
-                    const xPos = xScale(selectedTemp);
-                    const yPos = yScale(selectedK);
 
-                    // Vertical line
-                    g.append("line")
-                        .attr("class", "selected-temp-line")
+                // --- Draw Vertical Line at Selected SMD ---
+                 const selectedLFL = calculateLFL(smd);
+                 const selectedUFL = calculateUFL(smd);
+                 if (isFinite(selectedLFL) && isFinite(selectedUFL)) {
+                     // Update output box
+                     rangeOutput.textContent = `LFL: ${selectedLFL.toFixed(0)} g/m³ | UFL: ${selectedUFL.toFixed(0)} g/m³`;
+
+                     const xPos = xScale(smd);
+                     // Vertical line
+                     g.selectAll(".selected-smd-line").remove(); // Clear previous
+                     g.append("line")
+                        .attr("class", "selected-smd-line")
                         .attr("x1", xPos)
                         .attr("y1", dims.plotHeight)
                         .attr("x2", xPos)
-                        .attr("y2", yPos)
-                        .style("stroke", "var(--error-color)") // Use error color for emphasis
-                        .attr("stroke-dasharray", "3 3");
-
-                    // Point on the curve
-                    g.append("circle")
-                        .attr("class", "selected-temp-point")
-                        .attr("cx", xPos)
-                        .attr("cy", yPos)
-                        .attr("r", 4)
-                        .style("fill", "var(--error-color)"); // Use error color
-                } else {
-                     // Clear reduction factor if invalid
-                     const kValueSpan = document.getElementById('reductionFactorValue');
-                     if(kValueSpan) kValueSpan.textContent = "N/A";
-                }
+                        .attr("y2", 0) // Span full height
+                        .style("stroke", "var(--accent-yellow)") // Yellow line
+                        .attr("stroke-dasharray", "4 4");
+                 } else {
+                     rangeOutput.textContent = "LFL: N/A | UFL: N/A";
+                 }
 
             } catch (error) {
                 console.error(`Error updating ${context}:`, error);
-                displayPlotError(plotDivId, `Material Plot Error: ${error.message}`);
-                 // Clear reduction factor on error
-                 const kValueSpan = document.getElementById('reductionFactorValue');
-                 if(kValueSpan) kValueSpan.textContent = "Err";
+                displayPlotError(plotDivId, `Aerosol Plot Error: ${error.message}`);
+                 const rangeOut = document.getElementById('flammabilityRangeOutput');
+                 if(rangeOut) rangeOut.textContent = "Error calculating limits";
             }
         }
 
 
         // --- Global Setup Functions ---
-
         /** Initializes all interactive elements on the page */
         function setupAllInteractives() {
             try {
-                // Material Property Plot Controls
-                const materialSelect = document.getElementById('materialSelect');
-                const propertySelect = document.getElementById('propertySelect');
-                const tempSlider = document.getElementById('temperatureSlider');
+                // Explosives Initiation Controls
+                setupSlider('boosterOutputSlider', 'boosterOutputValue', { fixedDigits: 0, callback: updateExplosivesInitiation });
+                setupSlider('chargeSensitivitySlider', 'chargeSensitivityValue', { fixedDigits: 0, callback: updateExplosivesInitiation });
+                setupSlider('confinementSlider', 'confinementValue', { fixedDigits: 0, callback: updateExplosivesInitiation });
 
-                if (materialSelect) materialSelect.onchange = updateMaterialPlot;
-                if (propertySelect) propertySelect.onchange = updateMaterialPlot;
-
-                // Setup temperature slider with custom value formatting
-                setupSlider('temperatureSlider', 'temperatureValue', {
-                    fixedDigits: 0,
-                    callback: updateMaterialPlot,
-                    valueFormatFn: (val) => `T = ${val.toFixed(0)} °C | k ≈ ` // Update only temp part
-                });
+                 // Aerosol Flammability Controls
+                 setupSlider('smdSlider', 'smdValue', { fixedDigits: 0, callback: updateAerosolFlammabilityPlot });
 
             } catch (error) {
                 console.error("Error setting up one or more interactive elements:", error);
             }
         }
 
-        /** Renders all plots that should be visible on initial page load */
+        /** Renders all plots/outputs that should be visible on initial page load */
         function renderAllPlotsInitial() {
              const initialRenderFunctions = [
-                 updateMaterialPlot // Render the material plot initially
+                 updateExplosivesInitiation,
+                 updateAerosolFlammabilityPlot // Add the new aerosol plot render
              ];
              initialRenderFunctions.forEach(renderFunc => {
                  try { renderFunc(); }
@@ -755,36 +564,31 @@
          }
 
         /** Sets up smooth scrolling for internal navigation links */
-        function setupSmoothScrolling(){
-            try {
-                document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href');
-                        const targetElement = document.querySelector(targetId);
-                        if(targetElement) {
-                            const elementPosition = targetElement.getBoundingClientRect().top;
-                            // Estimate header (76px) + nav (~34px) height = ~110px
-                            const headerOffset = 110 + 10; // Add 10px buffer
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-                        } else { console.warn("Smooth scroll target not found:", targetId); }
-                    });
-                });
-            } catch (e) { console.error("Error setting up smooth scrolling:", e); }
-        }
+        function setupSmoothScrolling(){ /* ... [Function as in previous version, ensure offset is correct] ... */
+             try {
+                 document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                     anchor.addEventListener('click', function (e) {
+                         e.preventDefault(); const targetId = this.getAttribute('href'); const targetElement = document.querySelector(targetId);
+                         if(targetElement) {
+                             const elementPosition = targetElement.getBoundingClientRect().top;
+                             const headerNavHeight = (document.querySelector('header')?.offsetHeight || 88) + (document.querySelector('nav')?.offsetHeight || 34);
+                             const headerOffset = headerNavHeight + 15; // Add buffer
+                             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                             window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                         } else { console.warn("Smooth scroll target not found:", targetId); }
+                     });
+                 });
+             } catch (e) { console.error("Error setting up smooth scrolling:", e); }
+         }
 
         // --- Initialization on DOM Load ---
         document.addEventListener('DOMContentLoaded', function () {
              try {
-                 setupAllInteractives(); // Setup sliders and selectors first
-                 renderAllPlotsInitial(); // Then render plots using initial values
+                 setupAllInteractives();
+                 renderAllPlotsInitial();
                  setupSmoothScrolling();
-                 // Typeset MathJax
                  if (typeof MathJax !== 'undefined' && typeof MathJax.typesetPromise === 'function') {
-                     setTimeout(() => {
-                         MathJax.typesetPromise().catch((err) => console.error('MathJax typesetting failed:', err));
-                     }, 100); // Slightly longer delay might be needed if plots affect layout
+                     setTimeout(() => { MathJax.typesetPromise().catch((err) => console.error('MathJax typesetting failed:', err)); }, 100);
                  } else { console.warn("MathJax or typesetPromise not available."); }
              } catch (error) {
                  console.error("CRITICAL ERROR during initial setup:", error);
