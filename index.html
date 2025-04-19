@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Doctoral: Fronteras en Explosivos e Ingeniería de Seguridad contra Incendios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Lighter background for academic feel */
+            color: #1f2937; /* Darker text */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        /* Revised animation style: subtler */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px); /* Reduced distance */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Faster transition */
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Main title gradient - kept for impact, but consider removing if too distracting */
+        .gradient-text-title {
+            background: linear-gradient(to right, #1d4ed8, #5b21b6, #be185d); /* Adjusted gradient */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+         /* Subtle gradient for other headers */
+        .gradient-text-header {
+             background: linear-gradient(to right, #1d4ed8, #5b21b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Section divider - more subtle */
+        .section-divider {
+            height: 1px;
+            background-color: #d1d5db; /* Light gray */
+            margin: 3rem auto;
+            width: 60%;
+            opacity: 0.8;
+        }
+
+        /* Hero background - simpler */
+        .hero-bg {
+           background-color: #eef2ff; /* Light indigo background */
+           /* Optional: subtle pattern */
+           /* background-image: url('data:image/svg+xml,...'); */
+        }
+
+        /* Interactive slider styles */
+        input[type=range] {
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            width: 100%; /* Full width */
+            height: 8px; /* Specified height */
+            background: #d1d5db; /* Slider track color */
+            border-radius: 5px; /* Rounded track */
+            outline: none; /* Remove outline */
+            opacity: 0.7; /* Slightly transparent */
+            transition: opacity .2s; /* Fade transition on hover */
+        }
+        /* Hover effect for slider track */
+        input[type=range]:hover {
+            opacity: 1;
+        }
+        /* Style for the thumb (the draggable part) - Webkit (Chrome, Safari, Edge) */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            width: 20px; /* Thumb width */
+            height: 20px; /* Thumb height */
+            background: #4f46e5; /* Indigo thumb color */
+            border-radius: 50%; /* Circular thumb */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+        /* Style for the thumb - Mozilla (Firefox) */
+        input[type=range]::-moz-range-thumb {
+            width: 20px; /* Thumb width */
+            height: 20px; /* Thumb height */
+            background: #4f46e5; /* Indigo thumb color */
+            border-radius: 50%; /* Circular thumb */
+            cursor: pointer; /* Pointer cursor on hover */
+            border: none; /* Remove default border in Firefox */
+        }
+
+        /* Style for interactive output area */
+        .interactive-output {
+            background-color: #f3f4f6; /* Light gray background for output */
+            border-left: 4px solid #4f46e5; /* Indigo accent border */
+            padding: 1rem; /* Padding inside the output box */
+            margin-top: 1rem; /* Space above the output box */
+            border-radius: 4px; /* Slightly rounded corners */
+            font-size: 0.9rem; /* Slightly smaller font for output text */
+            color: #374151; /* Medium gray text color */
+            min-height: 100px; /* Minimum height to prevent collapsing */
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="hero-bg min-h-[70vh] flex flex-col items-center justify-center text-center p-8 reveal-on-scroll">
+        <h1 class="text-4xl md:text-6xl font-black mb-4 text-gray-900">
+            Fronteras en <span class="gradient-text-title">Explosivos</span> e <span class="gradient-text-title">Ingeniería de Seguridad contra Incendios</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-700 mb-6 max-w-3xl">
+            Un Curso Doctoral Avanzado Explorando la Ciencia y Aplicaciones de Vanguardia.
+        </p>
+         <p class="text-sm text-gray-500 mb-8 max-w-3xl">
+            Nota: Este es un esquema representativo de un curso doctoral avanzado, inspirado en la investigación actual y líderes del campo como el Dr. J.L. Torero. No representa un curso ofrecido actualmente.
+        </p>
+        <a href="#introduccion" class="mt-4 px-6 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-lg hover:bg-indigo-700 transition-colors duration-300">
+            Explorar Contenido
+        </a>
+    </header>
+
+    <main class="container mx-auto px-6 py-16 space-y-16 md:space-y-24">
+
+        <section id="introduccion" class="reveal-on-scroll">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-center gradient-text-header">Introducción: Fundamentos Avanzados</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        Este curso se adentra en los principios avanzados que gobiernan los fenómenos energéticos y la combustión. Se abordarán temas como la termodinámica de no equilibrio, la cinética química detallada en llamas y detonaciones (e.g., mecanismos GRI-Mech, San Diego), y la mecánica de continuos aplicada a materiales bajo cargas extremas (e.g., modelos constitutivos para altas tasas de deformación).
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Se analizarán críticamente los modelos teóricos y computacionales (e.g., DNS, LES en combustión; hidrocódigos con modelos de detonación como ZND, CJ) y las técnicas experimentales de diagnóstico avanzado (LDV, PLIF, Schlieren de alta velocidad) utilizadas en la investigación de frontera.
+                    </p>
+                </div>
+                <div class="md:w-1/2">
+                     <img src="https://placehold.co/600x400/e0e7ff/4338ca?text=Modelado+Avanzado" alt="[Imagen de Modelado Avanzado]" class="rounded-lg shadow-xl mx-auto" onerror="this.src='https://placehold.co/600x400/e0e7ff/4338ca?text=Error+Imagen'; this.alt='Error al cargar imagen de Modelado Avanzado';">
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider reveal-on-scroll"></div>
+
+        <section id="explosivos" class="reveal-on-scroll">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text-header">Ciencia y Tecnología de Explosivos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 reveal-on-scroll hover:shadow-lg transition-shadow duration-300">
+                    <h3 class="text-xl font-bold mb-3 text-indigo-700">Modelado de Detonación</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm">
+                        Análisis de teorías de detonación (CJ, ZND, no-ideal). Aplicación de hidrocódigos (e.g., AUTODYN, LS-DYNA) y desarrollo de modelos de iniciación y crecimiento de la reacción (e.g., Lee-Tarver).
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 reveal-on-scroll hover:shadow-lg transition-shadow duration-300" style="transition-delay: 0.1s;">
+                    <h3 class="text-xl font-bold mb-3 text-indigo-700">Materiales Energéticos</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm">
+                        Caracterización y desarrollo de explosivos de baja sensibilidad (IM), co-cristales, nanolaminados reactivos (nanothermites). Relación estructura-propiedad y química de descomposición.
+                    </p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 reveal-on-scroll hover:shadow-lg transition-shadow duration-300" style="transition-delay: 0.2s;">
+                    <h3 class="text-xl font-bold mb-3 text-indigo-700">Seguridad y Efectos</h3>
+                    <p class="text-gray-600 leading-relaxed text-sm">
+                        Evaluación de sensibilidad (impacto, fricción, ESD). Predicción de efectos de la onda expansiva (blast). Interacción explosión-estructura. Fragmentación. Normativas (e.g., UN TDG).
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-indigo-50 p-8 rounded-lg shadow-inner border border-indigo-200 reveal-on-scroll">
+                 <h3 class="text-2xl font-bold mb-6 text-center text-indigo-800">Explorador Conceptual de Iniciación</h3>
+                 <p class="text-sm text-center text-gray-600 mb-6 max-w-2xl mx-auto">
+                    Esta herramienta ilustra conceptualmente cómo la proporción entre iniciador, booster y carga principal afecta las características de una voladura. <strong class="text-red-700">No es una guía práctica y no representa formulaciones reales.</strong> Los explosivos son peligrosos y deben ser manejados únicamente por profesionales cualificados.
+                 </p>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                     <div class="md:col-span-2 space-y-4">
+                         <div>
+                            <label for="initiator" class="block text-sm font-medium text-gray-700">Iniciador (% Conceptual: Sensibilidad Alta, Baja Energía)</label>
+                            <input type="range" id="initiator" name="initiator" min="1" max="10" value="2" class="mt-1">
+                            <span id="initiator-value" class="text-sm text-indigo-600 font-semibold">2%</span>
+                         </div>
+                         <div>
+                            <label for="booster" class="block text-sm font-medium text-gray-700">Booster (% Conceptual: Sensibilidad Media, Alta Potencia)</label>
+                            <input type="range" id="booster" name="booster" min="5" max="30" value="10" class="mt-1">
+                            <span id="booster-value" class="text-sm text-indigo-600 font-semibold">10%</span>
+                         </div>
+                          <div>
+                            <label for="main_charge" class="block text-sm font-medium text-gray-700">Carga Principal (% Conceptual: Baja Sensibilidad, Alta Energía Total)</label>
+                            <input type="range" id="main_charge" name="main_charge" min="60" max="94" value="88" class="mt-1">
+                            <span id="main_charge-value" class="text-sm text-indigo-600 font-semibold">88%</span>
+                         </div>
+                     </div>
+                     <div class="md:col-span-1">
+                         <p class="font-semibold text-gray-800 mb-2">Implicaciones Conceptuales:</p>
+                         <div id="mixer-output" class="interactive-output space-y-2">
+                            <p>Ajuste los deslizadores para ver las implicaciones...</p>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+             <p class="text-center text-gray-500 text-sm mt-8 reveal-on-scroll">
+                (Futuras secciones podrían incluir: Visualizador de Onda Expansiva, Comparador de Parámetros de Explosivos)
+             </p>
+        </section>
+
+        <div class="section-divider reveal-on-scroll"></div>
+
+        <section id="ingenieria-incendios" class="reveal-on-scroll">
+             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text-header">Ingeniería de Seguridad contra Incendios</h2>
+             <div class="flex flex-col-reverse md:flex-row items-center gap-8">
+                 <div class="md:w-1/2">
+                     <img src="https://placehold.co/600x400/ede9fe/5b21b6?text=Simulación+FDS" alt="[Imagen de Simulación de Incendio FDS]" class="rounded-lg shadow-xl mx-auto" onerror="this.src='https://placehold.co/600x400/ede9fe/5b21b6?text=Error+Imagen'; this.alt='Error al cargar imagen de Simulación FDS';">
+                </div>
+                <div class="md:w-1/2">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        Enfoque en el **Diseño Basado en Prestaciones (PBD)** según marcos internacionales (e.g., Eurocódigos, SFPE). Uso avanzado de herramientas de simulación como **FDS (Fire Dynamics Simulator)** para modelar la dinámica del fuego, el movimiento del humo y la visibilidad.
+                    </p>
+                     <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4 text-base">
+                        <li>Análisis de escenarios de incendio complejos (túneles, atrios, fachadas ventiladas).</li>
+                        <li>Comportamiento de materiales bajo fuego: ensayos estándar (cono calorimétrico, SBI) y modelos de pirólisis.</li>
+                        <li>Diseño y análisis de sistemas de protección activa (rociadores ESFR, water mist, control de humos) y pasiva (materiales ignífugos, sectorización).</li>
+                        <li>Modelado de la evacuación (e.g., Pathfinder, STEPS) y análisis del comportamiento humano.</li>
+                        <li>Análisis de la respuesta estructural al fuego (e.g., mediante SAFIR, OpenSees).</li>
+                    </ul>
+                     <p class="text-lg text-gray-700 leading-relaxed">
+                        Se enfatiza la cuantificación de incertidumbres y el análisis de riesgo en el marco del PBD.
+                    </p>
+                      <p class="text-center text-gray-500 text-sm mt-8 reveal-on-scroll">
+                        (Futuras secciones podrían incluir: Explorador de Curvas de Fuego, Comparador de Materiales)
+                     </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider reveal-on-scroll"></div>
+
+        <section id="inspiracion" class="reveal-on-scroll">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center gradient-text-header">Inspiración y Liderazgo en el Campo</h2>
+            <div class="flex flex-col md:flex-row items-center bg-white p-8 rounded-lg shadow-md border border-gray-200">
+                 <div class="md:w-1/3 mb-6 md:mb-0 md:mr-8 flex-shrink-0">
+                    <img src="https://placehold.co/400x400/d1d5db/1f2937?text=Investigador" alt="[Imagen genérica de Investigador]" class="rounded-full shadow-lg mx-auto border-4 border-indigo-300 w-48 h-48 md:w-64 md:h-64 object-cover" onerror="this.src='https://placehold.co/400x400/d1d5db/1f2937?text=Error+Imagen'; this.alt='Error al cargar imagen de Investigador';">
+                </div>
+                <div class="md:w-2/3">
+                    <h3 class="text-2xl font-bold mb-3 text-indigo-700">Investigación de Vanguardia</h3>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        Este curso se inspira en las contribuciones de líderes mundiales en ingeniería de seguridad contra incendios y ciencia de explosivos, como el **Prof. José Luis Torero** (actualmente en University College London) y otros pioneros en instituciones como *Imperial College, Lund University, FM Global, Sandia National Labs*, etc.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Se estudiarán trabajos seminales y actuales en áreas como la dinámica del fuego en condiciones extremas (microgravedad, túneles), comportamiento de materiales compuestos, explosivos insensibles, modelado multi-escala y análisis de riesgo avanzado. El objetivo es conectar a los estudiantes con las preguntas abiertas y los desafíos que definen la investigación actual.
+                    </p>
+                     <a href="https://www.sfpe.org/" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-800 transition-colors duration-300 mt-4 inline-block font-semibold">
+                        Visitar SFPE (Society of Fire Protection Engineers) &rarr;
+                     </a>
+                </div>
+            </div>
+        </section>
+
+         <div class="section-divider reveal-on-scroll"></div>
+
+        <section id="curso" class="reveal-on-scroll text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 gradient-text-header">Estructura del Curso (Propuesta)</h2>
+            <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto mb-8">
+                Diseñado para estudiantes de doctorado, este curso combinaría módulos temáticos avanzados, seminarios de investigación con análisis crítico de publicaciones recientes (*journal club*), talleres de modelado computacional (uso de software relevante como FDS, Autodyn, Cantera) y el desarrollo de un proyecto de investigación original o revisión sistemática.
+            </p>
+            <div class="flex justify-center">
+                 <a href="mailto:info.phdcurso.hipotetico@institucion.edu?subject=Consulta%20Curso%20Doctoral%20(Esquema)" class="px-8 py-4 bg-indigo-600 text-white font-bold rounded-lg shadow-lg hover:bg-indigo-700 transition-colors duration-300">
+                    Contacto para Consultas (Hipotético)
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 text-center p-6 mt-16 md:mt-24">
+        <p>&copy; 2025 Esquema Conceptual de Curso Doctoral.</p>
+        <p class="text-sm mt-2">Contenido con fines ilustrativos y académicos.</p>
+    </footer>
+
+    <script>
+        /**
+         * Checks if an element is at least partially within the browser viewport.
+         * @param {Element} element The DOM element to check.
+         * @returns {boolean} True if the element is in the viewport, false otherwise.
+         */
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top < (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.bottom >= 0 &&
+                rect.left >= 0 &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        /**
+         * Adds the 'visible' class to elements with 'reveal-on-scroll'
+         * when they enter the viewport.
+         */
+        function revealElementsOnScroll() {
+            const elements = document.querySelectorAll('.reveal-on-scroll');
+            elements.forEach(element => {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+                // Optional: remove class if element scrolls out of view upwards
+                // else if (!isInViewport(element) && element.classList.contains('visible')) {
+                //    element.classList.remove('visible');
+                // }
+            });
+        }
+
+        /**
+         * Sets up the interactive explosive mixer sliders and output display.
+         */
+        function setupMixer() {
+            // Get references to DOM elements
+            const initiatorSlider = document.getElementById('initiator');
+            const boosterSlider = document.getElementById('booster');
+            const mainChargeSlider = document.getElementById('main_charge');
+            const initiatorValueSpan = document.getElementById('initiator-value');
+            const boosterValueSpan = document.getElementById('booster-value');
+            const mainChargeValueSpan = document.getElementById('main_charge-value');
+            const outputDiv = document.getElementById('mixer-output');
+
+            // Ensure all elements exist before proceeding
+            if (!initiatorSlider || !boosterSlider || !mainChargeSlider ||
+                !initiatorValueSpan || !boosterValueSpan || !mainChargeValueSpan || !outputDiv) {
+                console.error("Mixer elements not found. Aborting setup.");
+                return;
+            }
+
+            /**
+             * Updates the output display based on current slider values.
+             * Provides conceptual implications of the mixture percentages.
+             */
+            function updateMixerOutput() {
+                const initiator = parseInt(initiatorSlider.value);
+                const booster = parseInt(boosterSlider.value);
+                const mainCharge = parseInt(mainChargeSlider.value);
+
+                // Update displayed percentages next to sliders
+                initiatorValueSpan.textContent = `${initiator}%`;
+                boosterValueSpan.textContent = `${booster}%`;
+                mainChargeValueSpan.textContent = `${mainCharge}%`;
+
+                // Array to hold implication messages
+                let implications = [];
+
+                // --- Conceptual Implications Logic ---
+
+                // Initiator implications
+                if (initiator < 3) {
+                    implications.push("<strong>Iniciador bajo:</strong> Riesgo incrementado de fallo de iniciación del booster, especialmente en condiciones adversas o con boosters menos sensibles.");
+                } else if (initiator > 7) {
+                     implications.push("<strong>Iniciador alto:</strong> Mayor coste y sensibilidad general del sistema. Podría ser innecesario si el booster es suficientemente sensible. Aumenta riesgo de iniciación accidental.");
+                } else {
+                     implications.push("<strong>Iniciador:</strong> Proporción estándar, generalmente adecuada para iniciar boosters comunes de forma fiable.");
+                }
+
+                // Booster implications
+                if (booster < 8) {
+                    implications.push("<strong>Booster bajo:</strong> Riesgo significativo de fallo de iniciación de la carga principal (especialmente si es poco sensible como ANFO puro). Puede resultar en una detonación parcial o nula.");
+                } else if (booster > 20) {
+                    implications.push("<strong>Booster alto:</strong> Aumenta notablemente el coste. Genera una onda de choque inicial muy potente, lo que puede causar sobre-rotura (pulverización) cerca del barreno y reducir la eficiencia en la fractura lejana.");
+                } else {
+                     implications.push("<strong>Booster:</strong> Rango típico para iniciar cargas principales estándar de forma eficaz, equilibrando fiabilidad y coste.");
+                }
+
+                 // Main Charge implications
+                 if (mainCharge < 70) {
+                     implications.push("<strong>Carga principal baja:</strong> Menor energía total liberada para realizar trabajo (fragmentación, desplazamiento). Puede ser insuficiente para el objetivo deseado.");
+                 } else if (mainCharge > 90 && booster < 10) {
+                     implications.push("<strong>Carga principal alta con booster bajo:</strong> Requiere un booster muy eficiente para asegurar la iniciación completa y estable de toda la columna explosiva.");
+                 }
+                 else {
+                     implications.push("<strong>Carga principal:</strong> Proporciona la mayor parte de la energía. Su tipo (e.g., ANFO vs Emulsión) determina la resistencia al agua y la densidad de energía.");
+                 }
+
+                 // Specific interaction notes (conceptual examples)
+                 if (booster > 15 && mainCharge < 80) {
+                     implications.push("<em>Interacción:</em> Alto booster con carga principal reducida sugiere un enfoque en la potencia inicial sobre la energía total (e.g., para rocas muy duras, corte preciso, o cargas de diámetro pequeño).");
+                 }
+                 if (initiator < 3 && booster < 8) {
+                     implications.push("<strong class='text-red-600'>ADVERTENCIA CONCEPTUAL: Combinación de bajo iniciador y bajo booster maximiza el riesgo de fallo total de detonación. Configuración muy poco fiable.</strong>");
+                 }
+
+
+                // Display implications in the output div
+                // Use innerHTML carefully; here it's safe as we control the content.
+                outputDiv.innerHTML = implications.map(imp => `<p class="mb-1">${imp}</p>`).join('');
+            }
+
+            // Add event listeners to sliders to update output on change
+            initiatorSlider.addEventListener('input', updateMixerOutput);
+            boosterSlider.addEventListener('input', updateMixerOutput);
+            mainChargeSlider.addEventListener('input', updateMixerOutput);
+
+            // Initial calculation and display when the page loads
+            updateMixerOutput();
+        }
+
+        // --- Event Listeners ---
+        // Run setup functions after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+             revealElementsOnScroll(); // Initial check for elements in view
+             setupMixer();             // Setup the interactive mixer
+        });
+        // Listen for scroll events to trigger animations
+        window.addEventListener('scroll', revealElementsOnScroll);
+
+    </script>
+
+</body>
+</html>
